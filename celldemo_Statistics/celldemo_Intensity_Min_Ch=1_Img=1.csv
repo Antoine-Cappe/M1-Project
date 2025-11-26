@@ -1,0 +1,9 @@
+
+Intensity Min Ch=1 Img=1
+ ==================== 
+Intensity Min,Unit,Category,Channel,Image,Time,Set 1,ID,
+11,,Surface,1,Image 1,1,Class B,0,
+11,,Surface,1,Image 1,1,Class B,2,
+3,,Surface,1,Image 1,1,Class B,4,
+26,,Surface,1,Image 1,1,Class B,6,
+11,,Surface,1,Image 1,1,Class A,8,

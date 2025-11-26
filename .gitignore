@@ -1,0 +1,16 @@
+result/**
+
+@parameter/**
+gridfitdir/**
+layout/**
+layoutdoc/**
+Simu1/**
+Simu2/**
+tools/**
+units/**
+
+*.asv
+*.spi
+*.spi_cou
+*.emf
+*.mph

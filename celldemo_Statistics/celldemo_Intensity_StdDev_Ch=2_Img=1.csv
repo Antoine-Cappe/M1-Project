@@ -1,0 +1,9 @@
+
+Intensity StdDev Ch=2 Img=1
+ ==================== 
+Intensity StdDev,Unit,Category,Channel,Image,Time,Set 1,ID,
+15.9686,,Surface,2,Image 1,1,Class B,0,
+26.3089,,Surface,2,Image 1,1,Class B,2,
+31.1399,,Surface,2,Image 1,1,Class B,4,
+20.4484,,Surface,2,Image 1,1,Class B,6,
+19.2579,,Surface,2,Image 1,1,Class A,8,

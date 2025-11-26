@@ -1,0 +1,9 @@
+
+Intensity Max Ch=2 Img=1
+ ==================== 
+Intensity Max,Unit,Category,Channel,Image,Time,Set 1,ID,
+151,,Surface,2,Image 1,1,Class B,0,
+198,,Surface,2,Image 1,1,Class B,2,
+249,,Surface,2,Image 1,1,Class B,4,
+184,,Surface,2,Image 1,1,Class B,6,
+156,,Surface,2,Image 1,1,Class A,8,
