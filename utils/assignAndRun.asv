@@ -1,0 +1,160 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                              BIOCAD Program
+%                               Release 1.0
+%
+%   Authors: Dalmas Eugenie - Arbache Remi
+%
+%   Release 1.0 : April 2021
+%
+%   Function : Create the approximated IMS cells to a COMSOL model
+%
+%   Called by : Biocad
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Assign the needed value to the tlm struct and other used variables.
+% Input:
+%   app - Biocad application
+function assignAndRun(app)
+    global tlm;
+    
+    % Debug
+    tlm.conf.save = 1;
+    
+    tlm.conf.fem = 54;
+    
+    tlm.conf.src = app.settings.srcDir;
+    tlm.conf.store = app.settings.workingDir;
+    tlm.conf.fig = 1; % deprecated
+    tlm.conf.log = app.LogCheckBox.Value;
+    tlm.conf.figure = app.FigCheckBox.Value;
+    tlm.conf.dim = app.settings.dimensions;
+    % Next 2 become deprecated if we can load .m from COMSOL
+    tlm.conf.micro = 1;
+    tlm.conf.Milo = 1;
+    
+    tlm.conf.Cell = 0; % app.cells.number;
+    tlm.conf.Membrane = 0;
+    tlm.conf.Nucleus = 0;
+    tlm.conf.Mitocho = 0;
+    tlm.conf.points = app.settings.probes;
+    tlm.conf.mesh = app.MeshdensitySlider.Value;
+        
+    TL = 1; % Transport Lattice
+    FE = 0; % Finite Elements
+    AN = 0; % Analytical
+    
+    for study = app.StudiesListBox.Value
+        if strcmp(study, 'Finite Elements')
+            FE = 1;
+        elseif strcmp(study, 'Analytical')
+            AN = 1;
+        end
+    end
+    
+    % Define the type of analysis
+    if (TL==1 && FE==0 && AN==0)
+        tlm.conf.calcul = 0;
+    elseif (TL==1 && FE==1 && AN==0)
+        tlm.conf.calcul = 1;
+    elseif (TL==1 && FE==1 && AN==1)
+        tlm.conf.calcul=2;
+    elseif (TL==1 && FE==0 && AN==1)
+        tlm.conf.calcul = 3;
+    end
+    
+    tlm.conf.Shape = 0; % biocells shape = ellipsoidal
+    
+    currentDate = string(datetime);
+    tlm.conf.Name = strcat('Simul ',strrep(currentDate, ':', '-'));
+    tlm.conf.Name = strrep(tlm.conf.Name, ' ', '_');
+    
+    mkdir(tlm.conf.store, tlm.conf.Name)
+    cd(strcat(tlm.conf.store, "\", tlm.conf.Name))
+    
+    tlm.conf.step = 'filename.step'; % deprecated -> .m COMSOL
+    tlm.conf.gds = 'filename.gds';   % idem
+    % Electrical components
+    
+    tlm.var.frequence.step = app.PointsperdecadeEditField.Value;
+    % Minimum frequency 
+    switch app.minFrequencyUnitDropDown.Value
+        case "Hz"
+            tlm.var.frequence.min = app.minFrequencyEditField.Value;
+        case "kHz"
+            tlm.var.frequence.min = app.minFrequencyEditField.Value * 1000;
+        case "MHz"
+            tlm.var.frequence.min = app.minFrequencyEditField.Value * 1000000;
+    end
+    % Maximum frequency
+    switch app.maxFrequencyUnitDropDown.Value
+        case "Hz"
+            tlm.var.frequence.max = app.maxFrequencyEditField.Value;
+        case "kHz"
+            tlm.var.frequence.max = app.maxFrequencyEditField.Value * 1000;
+        case "MHz"
+            tlm.var.frequence.max = app.maxFrequencyEditField.Value * 1000000;
+    end
+    % Intermediate frequency
+    switch app.maxFrequencyUnitDropDown.Value
+        case "Hz"
+            tlm.var.frequence.max = app.maxFrequencyEditField.Value;
+        case "kHz"
+            tlm.var.frequence.max = app.maxFrequencyEditField.Value * 1000;
+        case "MHz"
+            tlm.var.frequence.max = app.maxFrequencyEditField.Value * 1000000;
+    end
+    % Tension
+    switch app.VoltageUnitDropDown.Value
+        case "V"
+            tlm.var.v0 = app.VoltageDropEditField.Value;
+        case "mV"
+            tlm.var.v0 = app.VoltageDropEditField.Value / 1000;
+        case "µV"
+            tlm.var.v0 = app.VoltageDropEditField.Value / 1000000;
+        case "nV"
+            tlm.var.v0 = app.VoltageDropEditField.Value / 1000000000;
+    end
+    
+    
+    % Initialize other geometry parameters
+    app.loadedModel.model.mesh('mesh1').feature('size').set('hauto',tlm.conf.mesh);
+    app.loadedModel.model.mesh('mesh1').run;
+    
+    tlm.model = app.loadedModel.model;
+
+    tlm = IniGeoPhy(tlm,tlm.model,app);
+    
+    tlm.conf.Init = 1;
+    if tlm.conf.Init == 1
+        % calibration
+        % TODO : run adequate IniPara function
+    end
+    
+    if tlm.conf.log == 1 % open log file
+        name = sprintf('%s_postprocess.log', tlm.conf.Name);
+        fil = fopen(name, 'w');
+    else
+        fil = 0;
+    end
+    
+    % Adapt model mesh density based on user input
+    app.loadedModel.model.mesh('mesh1').feature('size').set('hauto',tlm.conf.mesh);
+    app.loadedModel.model.mesh('mesh1').run;
+    
+    %tlm.model = app.loadedModel.model;
+    
+    [tlm,model] = Compute(tlm,fil, tlm.model);
+    
+    % Postprocess the various analysis
+    tlm = Postprocess(tlm,fil, app,model);
+    
+    if tlm.conf.log == 1
+        fclose(fil); % close log file
+    end
+    app.lastResultFolderName = tlm.conf.Name;
+    cd(tlm.conf.src);
+    %ajouté par vsnz le 09/10/2024
+    clear app;
+end
