@@ -88,16 +88,16 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                         tlm.result{i}{j}=1; % this segment is in the electrode (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
                         % Resistance
                         tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/3;
-                        % Capacité
+                        % Capacitï¿½
                         tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/long^2*3;
                     else
                         % Resistance R1
                         tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
-                        % Capacité C1
+                        % Capacitï¿½ C1
                         tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
                         % Resistance R2
                         tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
-                        % Capacité C2
+                        % Capacitï¿½ C2
                         tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
                     end
       
@@ -111,7 +111,7 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                     
                     % Resistance
                     tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/3;
-                    % Capacité
+                    % Capacitï¿½
                     tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/long^2*3;
               end
               
@@ -137,16 +137,16 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                     tlm.result{i}{j}=4; % this segment is in the electrolyte (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
                     % Resistance
                     tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                    % Capacité
+                    % Capacitï¿½
                     tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
                  else
                     % Resistance R1
                     tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
-                    % Capacité C1
+                    % Capacitï¿½ C1
                     tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
                     % Resistance R2
                     tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
-                    % Capacité C2
+                    % Capacitï¿½ C2
                     tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
                  end
           
@@ -160,7 +160,7 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                     
                  % Resistance
                  tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                 % Capacité
+                 % Capacitï¿½
                  tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
                     
               end
@@ -187,16 +187,16 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                     tlm.result{i}{j}=10; % this segment is in the electrolyte (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
                     % Resistance
                     tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                    % Capacité
+                    % Capacitï¿½
                     tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
                  else
                     % Resistance R1
                     tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
-                    % Capacité C1
+                    % Capacitï¿½ C1
                     tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
                     % Resistance R2
                     tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
-                    % Capacité C2
+                    % Capacitï¿½ C2
                     tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
                  end
           
@@ -210,7 +210,7 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                     
                  % Resistance
                  tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                 % Capacité
+                 % Capacitï¿½
                  tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
                     
               end
@@ -237,16 +237,16 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                     tlm.result{i}{j}=6; % this segment is in the nucleus(1) (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
                     % Resistance
                     tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                    % Capacité
+                    % Capacitï¿½
                     tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
                  else
                     % Resistance R1
                     tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
-                    % Capacité C1
+                    % Capacitï¿½ C1
                     tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
                     % Resistance R2
                     tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
-                    % Capacité C2
+                    % Capacitï¿½ C2
                     tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
                  end
           
@@ -260,7 +260,7 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                     
                   % Resistance
                   tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                  % Capacité
+                  % Capacitï¿½
                   tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
                     
               end
@@ -287,16 +287,16 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                     tlm.result{i}{j}=12; % this segment is in the cytoplasm(2) (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
                     % Resistance
                     tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                    % Capacité
+                    % Capacitï¿½
                     tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
                  else
                     % Resistance R1
                     tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
-                    % Capacité C1
+                    % Capacitï¿½ C1
                     tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
                     % Resistance R2
                     tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
-                    % Capacité C2
+                    % Capacitï¿½ C2
                     tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
                  end
           
@@ -310,7 +310,7 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                     
                   % Resistance
                   tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                  % Capacité
+                  % Capacitï¿½
                   tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
                     
               end
@@ -337,16 +337,16 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                     tlm.result{i}{j}=8; % this segment is in the mitochon(1) (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
                     % Resistance
                     tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                    % Capacité
+                    % Capacitï¿½
                     tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
                   else
                     % Resistance R1
                     tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
-                    % Capacité C1
+                    % Capacitï¿½ C1
                     tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
                     % Resistance R2
                     tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
-                    % Capacité C2
+                    % Capacitï¿½ C2
                     tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
                   end
           
@@ -360,7 +360,7 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                     
                   % Resistance
                   tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                  % Capacité
+                  % Capacitï¿½
                   tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
                    
               end
@@ -387,16 +387,16 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                     tlm.result{i}{j}=14; % this segment is in the mitocho(2) (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
                     % Resistance
                     tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                    % Capacité
+                    % Capacitï¿½
                     tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
                   else
                     % Resistance R1
                     tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
-                    % Capacité C1
+                    % Capacitï¿½ C1
                     tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
                     % Resistance R2
                     tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
-                    % Capacité C2
+                    % Capacitï¿½ C2
                     tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
                   end
           
@@ -410,7 +410,7 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                     
                   % Resistance
                   tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                  % Capacité
+                  % Capacitï¿½
                   tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
                    
               end
@@ -425,7 +425,7 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                       tlm.result{i}{j-4}=-1;
                   end
                   
-                  % Capacité
+                  % Capacitï¿½
                   tlm.result{i}{j-3}=(sum(tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/long^2)*3;
                     
               end

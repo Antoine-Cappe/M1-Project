@@ -57,7 +57,7 @@ tlm.geom.boundaryEE{size(fem_mesh_p,2)}={};      % boudary point electrode/milOr
 tlm.geom.boundaryEC{2,size(fem_mesh_p,2)}={};    % boudary point  cytoplasme/milOrga
 tlm.geom.boundaryEN{2,size(fem_mesh_p,2)}={};    % boudary point cytoplasme/nucleus
 tlm.geom.boundaryEM{2,size(fem_mesh_p,2)}={};    % boudary point cytoplasme/mitochondria
-tlm.geom.airvol(size(fem_mesh_t,2))=0;           % third of the surface of the triangle in 2D, Sixth of the volume of the tetrahedra in 3D
+tlm.geom.airvol(size(fem_mesh_t,2))=0;           % third of the surface of the triangle in 2D, Sixth of the volume of the tetrahedra in 3D - airvol = tableau de 1 élément ?
 
 for i=1:1:size(fem_mesh_t,1)                        %For each tetrahedron
     for n=1:1:3
@@ -206,16 +206,16 @@ end %for i=1:1:size(fem_mesh_t,1)
 % because there is 6 edge on a tetrahedron, so the volume will be
 % distributed for each edge
 
-for i=1:1:size(fem_mesh_t,1)
-    V11=fem_mesh_p(1,fem_mesh_e(1,i)+1)-fem_mesh_p(1,fem_mesh_e(2,i)+1); 
+for i=1:1:size(fem_mesh_t,1)                       % Ca représente quoi concrètement ?
+    V11=fem_mesh_p(1,fem_mesh_e(1,i)+1)-fem_mesh_p(1,fem_mesh_e(2,i)+1); % Ce vecteur fait 0 si les deux points sont confondus ?
     V12=fem_mesh_p(2,fem_mesh_e(1,i)+1)-fem_mesh_p(2,fem_mesh_e(2,i)+1); 
     V13=fem_mesh_p(3,fem_mesh_e(1,i)+1)-fem_mesh_p(3,fem_mesh_e(2,i)+1);
     V21=fem_mesh_p(1,fem_mesh_e(1,i)+1)-fem_mesh_p(1,fem_mesh_e(3,i)+1);
-    V22=fem_mesh_p(2,fem_mesh_e(1,i)+1)-fem_mesh_p(2,fem_mesh_e(3,i)+1);
+    V22=fem_mesh_p(2,fem_mesh_e(1,i)+1)-fem_mesh_p(2,fem_mesh_e(3,i)+1); % Idem
     V23=fem_mesh_p(3,fem_mesh_e(1,i)+1)-fem_mesh_p(3,fem_mesh_e(3,i)+1);
     V31=fem_mesh_p(1,fem_mesh_e(1,i)+1)-fem_mesh_p(1,fem_mesh_e(4,i)+1);
     V32=fem_mesh_p(2,fem_mesh_e(1,i)+1)-fem_mesh_p(2,fem_mesh_e(4,i)+1);
-    V33=fem_mesh_p(3,fem_mesh_e(1,i)+1)-fem_mesh_p(3,fem_mesh_e(4,i)+1);
+    V33=fem_mesh_p(3,fem_mesh_e(1,i)+1)-fem_mesh_p(3,fem_mesh_e(4,i)+1); % Idem
     MV=[V11 V12 V13;V21 V22 V23;V31 V32 V33];
     tlm.geom.airvol(i)=-det(MV)/36;  % 1/6 of element volume 
 end

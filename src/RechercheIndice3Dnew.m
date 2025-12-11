@@ -19,7 +19,7 @@
 
 function [tlm,model]=RechercheIndice3Dnew(tlm,model)
 
-% Recherche des indices des points aux centres des électrodes et des
+% Recherche des indices des points aux centres des ï¿½lectrodes et des
 % indices des domaines
 
 %Initialization

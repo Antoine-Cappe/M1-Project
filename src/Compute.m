@@ -111,12 +111,12 @@ end
 
 tlm.var.time_for_geometry=toc;
 
-%Message=sprintf('\n\t * Mesh Statitics: %u éléments, %u nodes',size(fem.mesh.t,2),size(fem.mesh.p,2));
-Message=sprintf('\n\t * Mesh Statitics: %u éléments, %u nodes',numelem,numvertex);
+%Message=sprintf('\n\t * Mesh Statitics: %u ï¿½lï¿½ments, %u nodes',size(fem.mesh.t,2),size(fem.mesh.p,2));
+Message=sprintf('\n\t * Mesh Statitics: %u ï¿½lï¿½ments, %u nodes',numelem,numvertex);
 disp(Message);
 if tlm.conf.log==1
-%    fprintf(fil,'\n\t * Mesh Statitics: %u éléments, %u nodes',size(fem.mesh.t,2),size(fem.mesh.p,2));
-    fprintf(fil,'\n\t * Mesh Statitics: %u éléments, %u nodes',numelem,numvertex);
+%    fprintf(fil,'\n\t * Mesh Statitics: %u ï¿½lï¿½ments, %u nodes',size(fem.mesh.t,2),size(fem.mesh.p,2));
+    fprintf(fil,'\n\t * Mesh Statitics: %u ï¿½lï¿½ments, %u nodes',numelem,numvertex);
     fprintf(fil,'\n ');
 end
 Message=sprintf('\n Generate the Netlist for SPICE simulation (file %s.cir)',tlm.conf.Name);
