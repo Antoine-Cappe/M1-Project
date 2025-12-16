@@ -1,0 +1,2697 @@
+Title: simul16-dec-2025_13-23-57.cir
+Date: Tue Dec 16 13:24:14  2025
+Plotname: AC Analysis
+Flags: complex
+No. Variables: 1344
+No. Points: 1
+Variables:
+	0	frequency	frequency grid=3
+	1	v(1)	voltage
+	2	v(2)	voltage
+	3	v(3)	voltage
+	4	v(4)	voltage
+	5	v(5)	voltage
+	6	v(6)	voltage
+	7	v(7)	voltage
+	8	v(8)	voltage
+	9	v(9)	voltage
+	10	v(10)	voltage
+	11	v(11)	voltage
+	12	v(12)	voltage
+	13	v(13)	voltage
+	14	v(14)	voltage
+	15	v(15)	voltage
+	16	v(16)	voltage
+	17	v(17)	voltage
+	18	v(18)	voltage
+	19	v(19)	voltage
+	20	v(20)	voltage
+	21	v(21)	voltage
+	22	v(22)	voltage
+	23	v(23)	voltage
+	24	v(24)	voltage
+	25	v(25)	voltage
+	26	v(26)	voltage
+	27	v(27)	voltage
+	28	v(28)	voltage
+	29	v(29)	voltage
+	30	v(30)	voltage
+	31	v(31)	voltage
+	32	v(32)	voltage
+	33	v(33)	voltage
+	34	v(34)	voltage
+	35	v(35)	voltage
+	36	v(36)	voltage
+	37	v(37)	voltage
+	38	v(38)	voltage
+	39	v(39)	voltage
+	40	v(40)	voltage
+	41	v(41)	voltage
+	42	v(42)	voltage
+	43	v(43)	voltage
+	44	v(44)	voltage
+	45	v(45)	voltage
+	46	v(46)	voltage
+	47	v(47)	voltage
+	48	v(48)	voltage
+	49	v(49)	voltage
+	50	v(50)	voltage
+	51	v(51)	voltage
+	52	v(52)	voltage
+	53	v(53)	voltage
+	54	v(54)	voltage
+	55	v(55)	voltage
+	56	v(56)	voltage
+	57	v(57)	voltage
+	58	v(58)	voltage
+	59	v(59)	voltage
+	60	v(60)	voltage
+	61	v(61)	voltage
+	62	v(62)	voltage
+	63	v(63)	voltage
+	64	v(64)	voltage
+	65	v(65)	voltage
+	66	v(66)	voltage
+	67	v(67)	voltage
+	68	v(68)	voltage
+	69	v(69)	voltage
+	70	v(70)	voltage
+	71	v(71)	voltage
+	72	v(72)	voltage
+	73	v(73)	voltage
+	74	v(74)	voltage
+	75	v(75)	voltage
+	76	v(76)	voltage
+	77	v(77)	voltage
+	78	v(78)	voltage
+	79	v(79)	voltage
+	80	v(80)	voltage
+	81	v(81)	voltage
+	82	v(82)	voltage
+	83	v(83)	voltage
+	84	v(84)	voltage
+	85	v(85)	voltage
+	86	v(86)	voltage
+	87	v(87)	voltage
+	88	v(88)	voltage
+	89	v(89)	voltage
+	90	v(90)	voltage
+	91	v(91)	voltage
+	92	v(92)	voltage
+	93	v(93)	voltage
+	94	v(94)	voltage
+	95	v(95)	voltage
+	96	v(96)	voltage
+	97	v(97)	voltage
+	98	v(98)	voltage
+	99	v(99)	voltage
+	100	v(100)	voltage
+	101	v(101)	voltage
+	102	v(102)	voltage
+	103	v(103)	voltage
+	104	v(104)	voltage
+	105	v(105)	voltage
+	106	v(106)	voltage
+	107	v(107)	voltage
+	108	v(108)	voltage
+	109	v(109)	voltage
+	110	v(110)	voltage
+	111	v(111)	voltage
+	112	v(112)	voltage
+	113	v(113)	voltage
+	114	v(114)	voltage
+	115	v(115)	voltage
+	116	v(116)	voltage
+	117	v(117)	voltage
+	118	v(118)	voltage
+	119	v(119)	voltage
+	120	v(120)	voltage
+	121	v(121)	voltage
+	122	v(122)	voltage
+	123	v(123)	voltage
+	124	v(124)	voltage
+	125	v(125)	voltage
+	126	v(126)	voltage
+	127	v(127)	voltage
+	128	v(128)	voltage
+	129	v(129)	voltage
+	130	v(130)	voltage
+	131	v(131)	voltage
+	132	v(132)	voltage
+	133	v(133)	voltage
+	134	v(134)	voltage
+	135	v(135)	voltage
+	136	v(136)	voltage
+	137	v(137)	voltage
+	138	v(138)	voltage
+	139	v(139)	voltage
+	140	v(140)	voltage
+	141	v(141)	voltage
+	142	v(142)	voltage
+	143	v(143)	voltage
+	144	v(144)	voltage
+	145	v(145)	voltage
+	146	v(146)	voltage
+	147	v(147)	voltage
+	148	v(148)	voltage
+	149	v(149)	voltage
+	150	v(150)	voltage
+	151	v(151)	voltage
+	152	v(152)	voltage
+	153	v(153)	voltage
+	154	v(154)	voltage
+	155	v(155)	voltage
+	156	v(156)	voltage
+	157	v(157)	voltage
+	158	v(158)	voltage
+	159	v(159)	voltage
+	160	v(160)	voltage
+	161	v(161)	voltage
+	162	v(162)	voltage
+	163	v(163)	voltage
+	164	v(164)	voltage
+	165	v(165)	voltage
+	166	v(166)	voltage
+	167	v(167)	voltage
+	168	v(168)	voltage
+	169	v(169)	voltage
+	170	v(170)	voltage
+	171	v(171)	voltage
+	172	v(172)	voltage
+	173	v(173)	voltage
+	174	v(174)	voltage
+	175	v(175)	voltage
+	176	v(176)	voltage
+	177	v(177)	voltage
+	178	v(178)	voltage
+	179	v(179)	voltage
+	180	v(180)	voltage
+	181	v(181)	voltage
+	182	v(182)	voltage
+	183	v(183)	voltage
+	184	v(184)	voltage
+	185	v(185)	voltage
+	186	v(186)	voltage
+	187	v(187)	voltage
+	188	v(188)	voltage
+	189	v(189)	voltage
+	190	v(190)	voltage
+	191	v(191)	voltage
+	192	v(192)	voltage
+	193	v(193)	voltage
+	194	v(194)	voltage
+	195	v(195)	voltage
+	196	v(196)	voltage
+	197	v(197)	voltage
+	198	v(198)	voltage
+	199	v(199)	voltage
+	200	v(200)	voltage
+	201	v(201)	voltage
+	202	v(202)	voltage
+	203	v(203)	voltage
+	204	v(204)	voltage
+	205	v(205)	voltage
+	206	v(206)	voltage
+	207	v(207)	voltage
+	208	v(208)	voltage
+	209	v(209)	voltage
+	210	v(210)	voltage
+	211	v(211)	voltage
+	212	v(212)	voltage
+	213	v(213)	voltage
+	214	v(214)	voltage
+	215	v(215)	voltage
+	216	v(216)	voltage
+	217	v(217)	voltage
+	218	v(218)	voltage
+	219	v(219)	voltage
+	220	v(220)	voltage
+	221	v(221)	voltage
+	222	v(222)	voltage
+	223	v(223)	voltage
+	224	v(224)	voltage
+	225	v(225)	voltage
+	226	v(226)	voltage
+	227	v(227)	voltage
+	228	v(228)	voltage
+	229	v(229)	voltage
+	230	v(230)	voltage
+	231	v(231)	voltage
+	232	v(232)	voltage
+	233	v(233)	voltage
+	234	v(234)	voltage
+	235	v(235)	voltage
+	236	v(236)	voltage
+	237	v(237)	voltage
+	238	v(238)	voltage
+	239	v(239)	voltage
+	240	v(240)	voltage
+	241	v(241)	voltage
+	242	v(242)	voltage
+	243	v(243)	voltage
+	244	v(244)	voltage
+	245	v(245)	voltage
+	246	v(246)	voltage
+	247	v(247)	voltage
+	248	v(248)	voltage
+	249	v(249)	voltage
+	250	v(250)	voltage
+	251	v(251)	voltage
+	252	v(252)	voltage
+	253	v(253)	voltage
+	254	v(254)	voltage
+	255	v(255)	voltage
+	256	v(256)	voltage
+	257	v(257)	voltage
+	258	v(258)	voltage
+	259	v(259)	voltage
+	260	v(260)	voltage
+	261	v(261)	voltage
+	262	v(262)	voltage
+	263	v(263)	voltage
+	264	v(264)	voltage
+	265	v(265)	voltage
+	266	v(266)	voltage
+	267	v(267)	voltage
+	268	v(268)	voltage
+	269	v(269)	voltage
+	270	v(270)	voltage
+	271	v(271)	voltage
+	272	v(272)	voltage
+	273	v(273)	voltage
+	274	v(274)	voltage
+	275	v(275)	voltage
+	276	v(276)	voltage
+	277	v(277)	voltage
+	278	v(278)	voltage
+	279	v(279)	voltage
+	280	v(280)	voltage
+	281	v(281)	voltage
+	282	v(282)	voltage
+	283	v(283)	voltage
+	284	v(284)	voltage
+	285	v(285)	voltage
+	286	v(286)	voltage
+	287	v(287)	voltage
+	288	v(288)	voltage
+	289	v(289)	voltage
+	290	v(290)	voltage
+	291	v(291)	voltage
+	292	v(292)	voltage
+	293	v(293)	voltage
+	294	v(294)	voltage
+	295	v(295)	voltage
+	296	v(296)	voltage
+	297	v(297)	voltage
+	298	v(298)	voltage
+	299	v(299)	voltage
+	300	v(300)	voltage
+	301	v(301)	voltage
+	302	v(302)	voltage
+	303	v(303)	voltage
+	304	v(304)	voltage
+	305	v(305)	voltage
+	306	v(306)	voltage
+	307	v(307)	voltage
+	308	v(308)	voltage
+	309	v(309)	voltage
+	310	v(310)	voltage
+	311	v(311)	voltage
+	312	v(312)	voltage
+	313	v(313)	voltage
+	314	v(314)	voltage
+	315	v(315)	voltage
+	316	v(316)	voltage
+	317	v(317)	voltage
+	318	v(318)	voltage
+	319	v(319)	voltage
+	320	v(320)	voltage
+	321	v(321)	voltage
+	322	v(322)	voltage
+	323	v(323)	voltage
+	324	v(324)	voltage
+	325	v(325)	voltage
+	326	v(326)	voltage
+	327	v(327)	voltage
+	328	v(328)	voltage
+	329	v(329)	voltage
+	330	v(330)	voltage
+	331	v(331)	voltage
+	332	v(332)	voltage
+	333	v(333)	voltage
+	334	v(334)	voltage
+	335	v(335)	voltage
+	336	v(336)	voltage
+	337	v(337)	voltage
+	338	v(338)	voltage
+	339	v(339)	voltage
+	340	v(340)	voltage
+	341	v(341)	voltage
+	342	v(342)	voltage
+	343	v(343)	voltage
+	344	v(344)	voltage
+	345	v(345)	voltage
+	346	v(346)	voltage
+	347	v(347)	voltage
+	348	v(348)	voltage
+	349	v(349)	voltage
+	350	v(350)	voltage
+	351	v(351)	voltage
+	352	v(352)	voltage
+	353	v(353)	voltage
+	354	v(354)	voltage
+	355	v(355)	voltage
+	356	v(356)	voltage
+	357	v(357)	voltage
+	358	v(358)	voltage
+	359	v(359)	voltage
+	360	v(360)	voltage
+	361	v(361)	voltage
+	362	v(362)	voltage
+	363	v(363)	voltage
+	364	v(364)	voltage
+	365	v(365)	voltage
+	366	v(366)	voltage
+	367	v(367)	voltage
+	368	v(368)	voltage
+	369	v(369)	voltage
+	370	v(370)	voltage
+	371	v(371)	voltage
+	372	v(372)	voltage
+	373	v(373)	voltage
+	374	v(374)	voltage
+	375	v(375)	voltage
+	376	v(376)	voltage
+	377	v(377)	voltage
+	378	v(378)	voltage
+	379	v(379)	voltage
+	380	v(380)	voltage
+	381	v(381)	voltage
+	382	v(382)	voltage
+	383	v(383)	voltage
+	384	v(384)	voltage
+	385	v(385)	voltage
+	386	v(386)	voltage
+	387	v(387)	voltage
+	388	v(388)	voltage
+	389	v(389)	voltage
+	390	v(390)	voltage
+	391	v(391)	voltage
+	392	v(392)	voltage
+	393	v(393)	voltage
+	394	v(394)	voltage
+	395	v(395)	voltage
+	396	v(396)	voltage
+	397	v(397)	voltage
+	398	v(398)	voltage
+	399	v(399)	voltage
+	400	v(400)	voltage
+	401	v(401)	voltage
+	402	v(402)	voltage
+	403	v(403)	voltage
+	404	v(404)	voltage
+	405	v(405)	voltage
+	406	v(406)	voltage
+	407	v(407)	voltage
+	408	v(408)	voltage
+	409	v(409)	voltage
+	410	v(410)	voltage
+	411	v(411)	voltage
+	412	v(412)	voltage
+	413	v(413)	voltage
+	414	v(414)	voltage
+	415	v(415)	voltage
+	416	v(416)	voltage
+	417	v(417)	voltage
+	418	v(418)	voltage
+	419	v(419)	voltage
+	420	v(420)	voltage
+	421	v(421)	voltage
+	422	v(422)	voltage
+	423	v(423)	voltage
+	424	v(424)	voltage
+	425	v(425)	voltage
+	426	v(426)	voltage
+	427	v(427)	voltage
+	428	v(428)	voltage
+	429	v(429)	voltage
+	430	v(430)	voltage
+	431	v(431)	voltage
+	432	v(432)	voltage
+	433	v(433)	voltage
+	434	v(434)	voltage
+	435	v(435)	voltage
+	436	v(436)	voltage
+	437	v(437)	voltage
+	438	v(438)	voltage
+	439	v(439)	voltage
+	440	v(440)	voltage
+	441	v(441)	voltage
+	442	v(442)	voltage
+	443	v(443)	voltage
+	444	v(444)	voltage
+	445	v(445)	voltage
+	446	v(446)	voltage
+	447	v(447)	voltage
+	448	v(448)	voltage
+	449	v(449)	voltage
+	450	v(450)	voltage
+	451	v(451)	voltage
+	452	v(452)	voltage
+	453	v(453)	voltage
+	454	v(454)	voltage
+	455	v(455)	voltage
+	456	v(456)	voltage
+	457	v(457)	voltage
+	458	v(458)	voltage
+	459	v(459)	voltage
+	460	v(460)	voltage
+	461	v(461)	voltage
+	462	v(462)	voltage
+	463	v(463)	voltage
+	464	v(464)	voltage
+	465	v(465)	voltage
+	466	v(466)	voltage
+	467	v(467)	voltage
+	468	v(468)	voltage
+	469	v(469)	voltage
+	470	v(470)	voltage
+	471	v(471)	voltage
+	472	v(472)	voltage
+	473	v(473)	voltage
+	474	v(474)	voltage
+	475	v(475)	voltage
+	476	v(476)	voltage
+	477	v(477)	voltage
+	478	v(478)	voltage
+	479	v(479)	voltage
+	480	v(480)	voltage
+	481	v(481)	voltage
+	482	v(482)	voltage
+	483	v(483)	voltage
+	484	v(484)	voltage
+	485	v(485)	voltage
+	486	v(486)	voltage
+	487	v(487)	voltage
+	488	v(488)	voltage
+	489	v(489)	voltage
+	490	v(490)	voltage
+	491	v(491)	voltage
+	492	v(492)	voltage
+	493	v(493)	voltage
+	494	v(494)	voltage
+	495	v(495)	voltage
+	496	v(496)	voltage
+	497	v(497)	voltage
+	498	v(498)	voltage
+	499	v(499)	voltage
+	500	v(500)	voltage
+	501	v(501)	voltage
+	502	v(502)	voltage
+	503	v(503)	voltage
+	504	v(504)	voltage
+	505	v(505)	voltage
+	506	v(506)	voltage
+	507	v(507)	voltage
+	508	v(508)	voltage
+	509	v(509)	voltage
+	510	v(510)	voltage
+	511	v(511)	voltage
+	512	v(512)	voltage
+	513	v(513)	voltage
+	514	v(514)	voltage
+	515	v(515)	voltage
+	516	v(516)	voltage
+	517	v(517)	voltage
+	518	v(518)	voltage
+	519	v(519)	voltage
+	520	v(520)	voltage
+	521	v(521)	voltage
+	522	v(522)	voltage
+	523	v(523)	voltage
+	524	v(524)	voltage
+	525	v(525)	voltage
+	526	v(526)	voltage
+	527	v(527)	voltage
+	528	v(528)	voltage
+	529	v(529)	voltage
+	530	v(530)	voltage
+	531	v(531)	voltage
+	532	v(532)	voltage
+	533	v(533)	voltage
+	534	v(534)	voltage
+	535	v(535)	voltage
+	536	v(536)	voltage
+	537	v(537)	voltage
+	538	v(538)	voltage
+	539	v(539)	voltage
+	540	v(540)	voltage
+	541	v(541)	voltage
+	542	v(542)	voltage
+	543	v(543)	voltage
+	544	v(544)	voltage
+	545	v(545)	voltage
+	546	v(546)	voltage
+	547	v(547)	voltage
+	548	v(548)	voltage
+	549	v(549)	voltage
+	550	v(550)	voltage
+	551	v(551)	voltage
+	552	v(552)	voltage
+	553	v(553)	voltage
+	554	v(554)	voltage
+	555	v(555)	voltage
+	556	v(556)	voltage
+	557	v(557)	voltage
+	558	v(558)	voltage
+	559	v(559)	voltage
+	560	v(560)	voltage
+	561	v(561)	voltage
+	562	v(562)	voltage
+	563	v(563)	voltage
+	564	v(564)	voltage
+	565	v(565)	voltage
+	566	v(566)	voltage
+	567	v(567)	voltage
+	568	v(568)	voltage
+	569	v(569)	voltage
+	570	v(570)	voltage
+	571	v(571)	voltage
+	572	v(572)	voltage
+	573	v(573)	voltage
+	574	v(574)	voltage
+	575	v(575)	voltage
+	576	v(576)	voltage
+	577	v(577)	voltage
+	578	v(578)	voltage
+	579	v(579)	voltage
+	580	v(580)	voltage
+	581	v(581)	voltage
+	582	v(582)	voltage
+	583	v(583)	voltage
+	584	v(584)	voltage
+	585	v(585)	voltage
+	586	v(586)	voltage
+	587	v(587)	voltage
+	588	v(588)	voltage
+	589	v(589)	voltage
+	590	v(590)	voltage
+	591	v(591)	voltage
+	592	v(592)	voltage
+	593	v(593)	voltage
+	594	v(594)	voltage
+	595	v(595)	voltage
+	596	v(596)	voltage
+	597	v(597)	voltage
+	598	v(598)	voltage
+	599	v(599)	voltage
+	600	v(600)	voltage
+	601	v(601)	voltage
+	602	v(602)	voltage
+	603	v(603)	voltage
+	604	v(604)	voltage
+	605	v(605)	voltage
+	606	v(606)	voltage
+	607	v(607)	voltage
+	608	v(608)	voltage
+	609	v(609)	voltage
+	610	v(610)	voltage
+	611	v(611)	voltage
+	612	v(612)	voltage
+	613	v(613)	voltage
+	614	v(614)	voltage
+	615	v(615)	voltage
+	616	v(616)	voltage
+	617	v(617)	voltage
+	618	v(618)	voltage
+	619	v(619)	voltage
+	620	v(620)	voltage
+	621	v(621)	voltage
+	622	v(622)	voltage
+	623	v(623)	voltage
+	624	v(624)	voltage
+	625	v(625)	voltage
+	626	v(626)	voltage
+	627	v(627)	voltage
+	628	v(628)	voltage
+	629	v(629)	voltage
+	630	v(630)	voltage
+	631	v(631)	voltage
+	632	v(632)	voltage
+	633	v(633)	voltage
+	634	v(634)	voltage
+	635	v(635)	voltage
+	636	v(636)	voltage
+	637	v(637)	voltage
+	638	v(638)	voltage
+	639	v(639)	voltage
+	640	v(640)	voltage
+	641	v(641)	voltage
+	642	v(642)	voltage
+	643	v(643)	voltage
+	644	v(644)	voltage
+	645	v(645)	voltage
+	646	v(646)	voltage
+	647	v(647)	voltage
+	648	v(648)	voltage
+	649	v(649)	voltage
+	650	v(650)	voltage
+	651	v(651)	voltage
+	652	v(652)	voltage
+	653	v(653)	voltage
+	654	v(654)	voltage
+	655	v(655)	voltage
+	656	v(656)	voltage
+	657	v(657)	voltage
+	658	v(658)	voltage
+	659	v(659)	voltage
+	660	v(660)	voltage
+	661	v(661)	voltage
+	662	v(662)	voltage
+	663	v(663)	voltage
+	664	v(664)	voltage
+	665	v(665)	voltage
+	666	v(666)	voltage
+	667	v(667)	voltage
+	668	v(668)	voltage
+	669	v(669)	voltage
+	670	v(670)	voltage
+	671	v(671)	voltage
+	672	v(672)	voltage
+	673	v(673)	voltage
+	674	v(674)	voltage
+	675	v(675)	voltage
+	676	v(676)	voltage
+	677	v(677)	voltage
+	678	v(678)	voltage
+	679	v(679)	voltage
+	680	v(680)	voltage
+	681	v(681)	voltage
+	682	v(682)	voltage
+	683	v(683)	voltage
+	684	v(684)	voltage
+	685	v(685)	voltage
+	686	v(686)	voltage
+	687	v(687)	voltage
+	688	v(688)	voltage
+	689	v(689)	voltage
+	690	v(690)	voltage
+	691	v(691)	voltage
+	692	v(692)	voltage
+	693	v(693)	voltage
+	694	v(694)	voltage
+	695	v(695)	voltage
+	696	v(696)	voltage
+	697	v(697)	voltage
+	698	v(698)	voltage
+	699	v(699)	voltage
+	700	v(700)	voltage
+	701	v(701)	voltage
+	702	v(702)	voltage
+	703	v(703)	voltage
+	704	v(704)	voltage
+	705	v(705)	voltage
+	706	v(706)	voltage
+	707	v(707)	voltage
+	708	v(708)	voltage
+	709	v(709)	voltage
+	710	v(710)	voltage
+	711	v(711)	voltage
+	712	v(712)	voltage
+	713	v(713)	voltage
+	714	v(714)	voltage
+	715	v(715)	voltage
+	716	v(716)	voltage
+	717	v(717)	voltage
+	718	v(718)	voltage
+	719	v(719)	voltage
+	720	v(720)	voltage
+	721	v(721)	voltage
+	722	v(722)	voltage
+	723	v(723)	voltage
+	724	v(724)	voltage
+	725	v(725)	voltage
+	726	v(726)	voltage
+	727	v(727)	voltage
+	728	v(728)	voltage
+	729	v(729)	voltage
+	730	v(730)	voltage
+	731	v(731)	voltage
+	732	v(732)	voltage
+	733	v(733)	voltage
+	734	v(734)	voltage
+	735	v(735)	voltage
+	736	v(736)	voltage
+	737	v(737)	voltage
+	738	v(738)	voltage
+	739	v(739)	voltage
+	740	v(740)	voltage
+	741	v(741)	voltage
+	742	v(742)	voltage
+	743	v(743)	voltage
+	744	v(744)	voltage
+	745	v(745)	voltage
+	746	v(746)	voltage
+	747	v(747)	voltage
+	748	v(748)	voltage
+	749	v(749)	voltage
+	750	v(750)	voltage
+	751	v(751)	voltage
+	752	v(752)	voltage
+	753	v(753)	voltage
+	754	v(754)	voltage
+	755	v(755)	voltage
+	756	v(756)	voltage
+	757	v(757)	voltage
+	758	v(758)	voltage
+	759	v(759)	voltage
+	760	v(760)	voltage
+	761	v(761)	voltage
+	762	v(762)	voltage
+	763	v(763)	voltage
+	764	v(764)	voltage
+	765	v(765)	voltage
+	766	v(766)	voltage
+	767	v(767)	voltage
+	768	v(768)	voltage
+	769	v(769)	voltage
+	770	v(770)	voltage
+	771	v(771)	voltage
+	772	v(772)	voltage
+	773	v(773)	voltage
+	774	v(774)	voltage
+	775	v(775)	voltage
+	776	v(776)	voltage
+	777	v(777)	voltage
+	778	v(778)	voltage
+	779	v(779)	voltage
+	780	v(780)	voltage
+	781	v(781)	voltage
+	782	v(782)	voltage
+	783	v(783)	voltage
+	784	v(784)	voltage
+	785	v(785)	voltage
+	786	v(786)	voltage
+	787	v(787)	voltage
+	788	v(788)	voltage
+	789	v(789)	voltage
+	790	v(790)	voltage
+	791	v(791)	voltage
+	792	v(792)	voltage
+	793	v(793)	voltage
+	794	v(794)	voltage
+	795	v(795)	voltage
+	796	v(796)	voltage
+	797	v(797)	voltage
+	798	v(798)	voltage
+	799	v(799)	voltage
+	800	v(800)	voltage
+	801	v(801)	voltage
+	802	v(802)	voltage
+	803	v(803)	voltage
+	804	v(804)	voltage
+	805	v(805)	voltage
+	806	v(806)	voltage
+	807	v(807)	voltage
+	808	v(808)	voltage
+	809	v(809)	voltage
+	810	v(810)	voltage
+	811	v(811)	voltage
+	812	v(812)	voltage
+	813	v(813)	voltage
+	814	v(814)	voltage
+	815	v(815)	voltage
+	816	v(816)	voltage
+	817	v(817)	voltage
+	818	v(818)	voltage
+	819	v(819)	voltage
+	820	v(820)	voltage
+	821	v(821)	voltage
+	822	v(822)	voltage
+	823	v(823)	voltage
+	824	v(824)	voltage
+	825	v(825)	voltage
+	826	v(826)	voltage
+	827	v(827)	voltage
+	828	v(828)	voltage
+	829	v(829)	voltage
+	830	v(830)	voltage
+	831	v(831)	voltage
+	832	v(832)	voltage
+	833	v(833)	voltage
+	834	v(834)	voltage
+	835	v(835)	voltage
+	836	v(836)	voltage
+	837	v(837)	voltage
+	838	v(838)	voltage
+	839	v(839)	voltage
+	840	v(840)	voltage
+	841	v(841)	voltage
+	842	v(842)	voltage
+	843	v(843)	voltage
+	844	v(844)	voltage
+	845	v(845)	voltage
+	846	v(846)	voltage
+	847	v(847)	voltage
+	848	v(848)	voltage
+	849	v(849)	voltage
+	850	v(850)	voltage
+	851	v(851)	voltage
+	852	v(852)	voltage
+	853	v(853)	voltage
+	854	v(854)	voltage
+	855	v(855)	voltage
+	856	v(856)	voltage
+	857	v(857)	voltage
+	858	v(858)	voltage
+	859	v(859)	voltage
+	860	v(860)	voltage
+	861	v(861)	voltage
+	862	v(862)	voltage
+	863	v(863)	voltage
+	864	v(864)	voltage
+	865	v(865)	voltage
+	866	v(866)	voltage
+	867	v(867)	voltage
+	868	v(868)	voltage
+	869	v(869)	voltage
+	870	v(870)	voltage
+	871	v(871)	voltage
+	872	v(872)	voltage
+	873	v(873)	voltage
+	874	v(874)	voltage
+	875	v(875)	voltage
+	876	v(876)	voltage
+	877	v(877)	voltage
+	878	v(878)	voltage
+	879	v(879)	voltage
+	880	v(880)	voltage
+	881	v(881)	voltage
+	882	v(882)	voltage
+	883	v(883)	voltage
+	884	v(884)	voltage
+	885	v(885)	voltage
+	886	v(886)	voltage
+	887	v(887)	voltage
+	888	v(888)	voltage
+	889	v(889)	voltage
+	890	v(890)	voltage
+	891	v(891)	voltage
+	892	v(892)	voltage
+	893	v(893)	voltage
+	894	v(894)	voltage
+	895	v(895)	voltage
+	896	v(896)	voltage
+	897	v(897)	voltage
+	898	v(898)	voltage
+	899	v(899)	voltage
+	900	v(900)	voltage
+	901	v(901)	voltage
+	902	v(902)	voltage
+	903	v(903)	voltage
+	904	v(904)	voltage
+	905	v(905)	voltage
+	906	v(906)	voltage
+	907	v(907)	voltage
+	908	v(908)	voltage
+	909	v(909)	voltage
+	910	v(910)	voltage
+	911	v(911)	voltage
+	912	v(912)	voltage
+	913	v(913)	voltage
+	914	v(914)	voltage
+	915	v(915)	voltage
+	916	v(916)	voltage
+	917	v(917)	voltage
+	918	v(918)	voltage
+	919	v(919)	voltage
+	920	v(920)	voltage
+	921	v(921)	voltage
+	922	v(922)	voltage
+	923	v(923)	voltage
+	924	v(924)	voltage
+	925	v(925)	voltage
+	926	v(926)	voltage
+	927	v(927)	voltage
+	928	v(928)	voltage
+	929	v(929)	voltage
+	930	v(930)	voltage
+	931	v(931)	voltage
+	932	v(932)	voltage
+	933	v(933)	voltage
+	934	v(934)	voltage
+	935	v(935)	voltage
+	936	v(936)	voltage
+	937	v(937)	voltage
+	938	v(938)	voltage
+	939	v(939)	voltage
+	940	v(940)	voltage
+	941	v(941)	voltage
+	942	v(942)	voltage
+	943	v(943)	voltage
+	944	v(944)	voltage
+	945	v(945)	voltage
+	946	v(946)	voltage
+	947	v(947)	voltage
+	948	v(948)	voltage
+	949	v(949)	voltage
+	950	v(950)	voltage
+	951	v(951)	voltage
+	952	v(952)	voltage
+	953	v(953)	voltage
+	954	v(954)	voltage
+	955	v(955)	voltage
+	956	v(956)	voltage
+	957	v(957)	voltage
+	958	v(958)	voltage
+	959	v(959)	voltage
+	960	v(960)	voltage
+	961	v(961)	voltage
+	962	v(962)	voltage
+	963	v(963)	voltage
+	964	v(964)	voltage
+	965	v(965)	voltage
+	966	v(966)	voltage
+	967	v(967)	voltage
+	968	v(968)	voltage
+	969	v(969)	voltage
+	970	v(970)	voltage
+	971	v(971)	voltage
+	972	v(972)	voltage
+	973	v(973)	voltage
+	974	v(974)	voltage
+	975	v(975)	voltage
+	976	v(976)	voltage
+	977	v(977)	voltage
+	978	v(978)	voltage
+	979	v(979)	voltage
+	980	v(980)	voltage
+	981	v(981)	voltage
+	982	v(982)	voltage
+	983	v(983)	voltage
+	984	v(984)	voltage
+	985	v(985)	voltage
+	986	v(986)	voltage
+	987	v(987)	voltage
+	988	v(988)	voltage
+	989	v(989)	voltage
+	990	v(990)	voltage
+	991	v(991)	voltage
+	992	v(992)	voltage
+	993	v(993)	voltage
+	994	v(994)	voltage
+	995	v(995)	voltage
+	996	v(996)	voltage
+	997	v(997)	voltage
+	998	v(998)	voltage
+	999	v(999)	voltage
+	1000	v(1000)	voltage
+	1001	v(1001)	voltage
+	1002	v(1002)	voltage
+	1003	v(1003)	voltage
+	1004	v(1004)	voltage
+	1005	v(1005)	voltage
+	1006	v(1006)	voltage
+	1007	v(1007)	voltage
+	1008	v(1008)	voltage
+	1009	v(1009)	voltage
+	1010	v(1010)	voltage
+	1011	v(1011)	voltage
+	1012	v(1012)	voltage
+	1013	v(1013)	voltage
+	1014	v(1014)	voltage
+	1015	v(1015)	voltage
+	1016	v(1016)	voltage
+	1017	v(1017)	voltage
+	1018	v(1018)	voltage
+	1019	v(1019)	voltage
+	1020	v(1020)	voltage
+	1021	v(1021)	voltage
+	1022	v(1022)	voltage
+	1023	v(1023)	voltage
+	1024	v(1024)	voltage
+	1025	v(1025)	voltage
+	1026	v(1026)	voltage
+	1027	v(1027)	voltage
+	1028	v(1028)	voltage
+	1029	v(1029)	voltage
+	1030	v(1030)	voltage
+	1031	v(1031)	voltage
+	1032	v(1032)	voltage
+	1033	v(1033)	voltage
+	1034	v(1034)	voltage
+	1035	v(1035)	voltage
+	1036	v(1036)	voltage
+	1037	v(1037)	voltage
+	1038	v(1038)	voltage
+	1039	v(1039)	voltage
+	1040	v(1040)	voltage
+	1041	v(1041)	voltage
+	1042	v(1042)	voltage
+	1043	v(1043)	voltage
+	1044	v(1044)	voltage
+	1045	v(1045)	voltage
+	1046	v(1046)	voltage
+	1047	v(1047)	voltage
+	1048	v(1048)	voltage
+	1049	v(1049)	voltage
+	1050	v(1050)	voltage
+	1051	v(1051)	voltage
+	1052	v(1052)	voltage
+	1053	v(1053)	voltage
+	1054	v(1054)	voltage
+	1055	v(1055)	voltage
+	1056	v(1056)	voltage
+	1057	v(1057)	voltage
+	1058	v(1058)	voltage
+	1059	v(1059)	voltage
+	1060	v(1060)	voltage
+	1061	v(1061)	voltage
+	1062	v(1062)	voltage
+	1063	v(1063)	voltage
+	1064	v(1064)	voltage
+	1065	v(1065)	voltage
+	1066	v(1066)	voltage
+	1067	v(1067)	voltage
+	1068	v(1068)	voltage
+	1069	v(1069)	voltage
+	1070	v(1070)	voltage
+	1071	v(1071)	voltage
+	1072	v(1072)	voltage
+	1073	v(1073)	voltage
+	1074	v(1074)	voltage
+	1075	v(1075)	voltage
+	1076	v(1076)	voltage
+	1077	v(1077)	voltage
+	1078	v(1078)	voltage
+	1079	v(1079)	voltage
+	1080	v(1080)	voltage
+	1081	v(1081)	voltage
+	1082	v(1082)	voltage
+	1083	v(1083)	voltage
+	1084	v(1084)	voltage
+	1085	v(1085)	voltage
+	1086	v(1086)	voltage
+	1087	v(1087)	voltage
+	1088	v(1088)	voltage
+	1089	v(1089)	voltage
+	1090	v(1090)	voltage
+	1091	v(1091)	voltage
+	1092	v(1092)	voltage
+	1093	v(1093)	voltage
+	1094	v(1094)	voltage
+	1095	v(1095)	voltage
+	1096	v(1096)	voltage
+	1097	v(1097)	voltage
+	1098	v(1098)	voltage
+	1099	v(1099)	voltage
+	1100	v(1100)	voltage
+	1101	v(1101)	voltage
+	1102	v(1102)	voltage
+	1103	v(1103)	voltage
+	1104	v(1104)	voltage
+	1105	v(1105)	voltage
+	1106	v(1106)	voltage
+	1107	v(1107)	voltage
+	1108	v(1108)	voltage
+	1109	v(1109)	voltage
+	1110	v(1110)	voltage
+	1111	v(1111)	voltage
+	1112	v(1112)	voltage
+	1113	v(1113)	voltage
+	1114	v(1114)	voltage
+	1115	v(1115)	voltage
+	1116	v(1116)	voltage
+	1117	v(1117)	voltage
+	1118	v(1118)	voltage
+	1119	v(1119)	voltage
+	1120	v(1120)	voltage
+	1121	v(1121)	voltage
+	1122	v(1122)	voltage
+	1123	v(1123)	voltage
+	1124	v(1124)	voltage
+	1125	v(1125)	voltage
+	1126	v(1126)	voltage
+	1127	v(1127)	voltage
+	1128	v(1128)	voltage
+	1129	v(1129)	voltage
+	1130	v(1130)	voltage
+	1131	v(1131)	voltage
+	1132	v(1132)	voltage
+	1133	v(1133)	voltage
+	1134	v(1134)	voltage
+	1135	v(1135)	voltage
+	1136	v(1136)	voltage
+	1137	v(1137)	voltage
+	1138	v(1138)	voltage
+	1139	v(1139)	voltage
+	1140	v(1140)	voltage
+	1141	v(1141)	voltage
+	1142	v(1142)	voltage
+	1143	v(1143)	voltage
+	1144	v(1144)	voltage
+	1145	v(1145)	voltage
+	1146	v(1146)	voltage
+	1147	v(1147)	voltage
+	1148	v(1148)	voltage
+	1149	v(1149)	voltage
+	1150	v(1150)	voltage
+	1151	v(1151)	voltage
+	1152	v(1152)	voltage
+	1153	v(1153)	voltage
+	1154	v(1154)	voltage
+	1155	v(1155)	voltage
+	1156	v(1156)	voltage
+	1157	v(1157)	voltage
+	1158	v(1158)	voltage
+	1159	v(1159)	voltage
+	1160	v(1160)	voltage
+	1161	v(1161)	voltage
+	1162	v(1162)	voltage
+	1163	v(1163)	voltage
+	1164	v(1164)	voltage
+	1165	v(1165)	voltage
+	1166	v(1166)	voltage
+	1167	v(1167)	voltage
+	1168	v(1168)	voltage
+	1169	v(1169)	voltage
+	1170	v(1170)	voltage
+	1171	v(1171)	voltage
+	1172	v(1172)	voltage
+	1173	v(1173)	voltage
+	1174	v(1174)	voltage
+	1175	v(1175)	voltage
+	1176	v(1176)	voltage
+	1177	v(1177)	voltage
+	1178	v(1178)	voltage
+	1179	v(1179)	voltage
+	1180	v(1180)	voltage
+	1181	v(1181)	voltage
+	1182	v(1182)	voltage
+	1183	v(1183)	voltage
+	1184	v(1184)	voltage
+	1185	v(1185)	voltage
+	1186	v(1186)	voltage
+	1187	v(1187)	voltage
+	1188	v(1188)	voltage
+	1189	v(1189)	voltage
+	1190	v(1190)	voltage
+	1191	v(1191)	voltage
+	1192	v(1192)	voltage
+	1193	v(1193)	voltage
+	1194	v(1194)	voltage
+	1195	v(1195)	voltage
+	1196	v(1196)	voltage
+	1197	v(1197)	voltage
+	1198	v(1198)	voltage
+	1199	v(1199)	voltage
+	1200	v(1200)	voltage
+	1201	v(1201)	voltage
+	1202	v(1202)	voltage
+	1203	v(1203)	voltage
+	1204	v(1204)	voltage
+	1205	v(1205)	voltage
+	1206	v(1206)	voltage
+	1207	v(1207)	voltage
+	1208	v(1208)	voltage
+	1209	v(1209)	voltage
+	1210	v(1210)	voltage
+	1211	v(1211)	voltage
+	1212	v(1212)	voltage
+	1213	v(1213)	voltage
+	1214	v(1214)	voltage
+	1215	v(1215)	voltage
+	1216	v(1216)	voltage
+	1217	v(1217)	voltage
+	1218	v(1218)	voltage
+	1219	v(1219)	voltage
+	1220	v(1220)	voltage
+	1221	v(1221)	voltage
+	1222	v(1222)	voltage
+	1223	v(1223)	voltage
+	1224	v(1224)	voltage
+	1225	v(1225)	voltage
+	1226	v(1226)	voltage
+	1227	v(1227)	voltage
+	1228	v(1228)	voltage
+	1229	v(1229)	voltage
+	1230	v(1230)	voltage
+	1231	v(1231)	voltage
+	1232	v(1232)	voltage
+	1233	v(1233)	voltage
+	1234	v(1234)	voltage
+	1235	v(1235)	voltage
+	1236	v(1236)	voltage
+	1237	v(1237)	voltage
+	1238	v(1238)	voltage
+	1239	v(1239)	voltage
+	1240	v(1240)	voltage
+	1241	v(1241)	voltage
+	1242	v(1242)	voltage
+	1243	v(1243)	voltage
+	1244	v(1244)	voltage
+	1245	v(1245)	voltage
+	1246	v(1246)	voltage
+	1247	v(1247)	voltage
+	1248	v(1248)	voltage
+	1249	v(1249)	voltage
+	1250	v(1250)	voltage
+	1251	v(1251)	voltage
+	1252	v(1252)	voltage
+	1253	v(1253)	voltage
+	1254	v(1254)	voltage
+	1255	v(1255)	voltage
+	1256	v(1256)	voltage
+	1257	v(1257)	voltage
+	1258	v(1258)	voltage
+	1259	v(1259)	voltage
+	1260	v(1260)	voltage
+	1261	v(1261)	voltage
+	1262	v(1262)	voltage
+	1263	v(1263)	voltage
+	1264	v(1264)	voltage
+	1265	v(1265)	voltage
+	1266	v(1266)	voltage
+	1267	v(1267)	voltage
+	1268	v(1268)	voltage
+	1269	v(1269)	voltage
+	1270	v(1270)	voltage
+	1271	v(1271)	voltage
+	1272	v(1272)	voltage
+	1273	v(1273)	voltage
+	1274	v(1274)	voltage
+	1275	v(1275)	voltage
+	1276	v(1276)	voltage
+	1277	v(1277)	voltage
+	1278	v(1278)	voltage
+	1279	v(1279)	voltage
+	1280	v(1280)	voltage
+	1281	v(1281)	voltage
+	1282	v(1282)	voltage
+	1283	v(1283)	voltage
+	1284	v(1284)	voltage
+	1285	v(1285)	voltage
+	1286	v(1286)	voltage
+	1287	v(1287)	voltage
+	1288	v(1288)	voltage
+	1289	v(1289)	voltage
+	1290	v(1290)	voltage
+	1291	v(1291)	voltage
+	1292	v(1292)	voltage
+	1293	v(1293)	voltage
+	1294	v(1294)	voltage
+	1295	v(1295)	voltage
+	1296	v(1296)	voltage
+	1297	v(1297)	voltage
+	1298	v(1298)	voltage
+	1299	v(1299)	voltage
+	1300	v(1300)	voltage
+	1301	v(1301)	voltage
+	1302	v(1302)	voltage
+	1303	v(1303)	voltage
+	1304	v(1304)	voltage
+	1305	v(1305)	voltage
+	1306	v(1306)	voltage
+	1307	v(1307)	voltage
+	1308	v(1308)	voltage
+	1309	v(1309)	voltage
+	1310	v(1310)	voltage
+	1311	v(1311)	voltage
+	1312	v(1312)	voltage
+	1313	v(1313)	voltage
+	1314	v(1314)	voltage
+	1315	v(1315)	voltage
+	1316	v(1316)	voltage
+	1317	v(1317)	voltage
+	1318	v(1318)	voltage
+	1319	v(1319)	voltage
+	1320	v(1320)	voltage
+	1321	v(1321)	voltage
+	1322	v(1322)	voltage
+	1323	v(1323)	voltage
+	1324	v(1324)	voltage
+	1325	v(1325)	voltage
+	1326	v(1326)	voltage
+	1327	v(1327)	voltage
+	1328	v(1328)	voltage
+	1329	v(1329)	voltage
+	1330	v(1330)	voltage
+	1331	v(1331)	voltage
+	1332	v(1332)	voltage
+	1333	v(1333)	voltage
+	1334	v(1334)	voltage
+	1335	v(1335)	voltage
+	1336	v(1336)	voltage
+	1337	v(1337)	voltage
+	1338	v(1338)	voltage
+	1339	v(1339)	voltage
+	1340	v(1340)	voltage
+	1341	v(1341)	voltage
+	1342	v(1342)	voltage
+	1343	i(vin)	current
+Values:
+ 0	1.000000000000000e+03,0.000000000000000e+00
+	2.499999995661140e-02,-2.413795262360443e-13
+	2.499999995741410e-02,-2.369138961103815e-13
+	2.499999995722757e-02,-2.379516701535366e-13
+	2.499999995708710e-02,-2.387333725442769e-13
+	2.499999995698639e-02,-2.392936766730783e-13
+	2.499999995647325e-02,-2.421484585735524e-13
+	2.499999995631946e-02,-2.430037374803524e-13
+	2.499999995577437e-02,-2.460361993638624e-13
+	2.499999995674267e-02,-2.406493024871402e-13
+	2.499999995689752e-02,-2.397878454522199e-13
+	2.499999995811470e-02,-2.330164758486238e-13
+	2.499999995837243e-02,-2.315824362096003e-13
+	2.499999995643736e-02,-2.423481052014088e-13
+	2.499999995613963e-02,-2.440041003316665e-13
+	2.308601353648149e-02,2.198561895563263e-11
+	2.499999995857120e-02,-2.304767771066880e-13
+	2.499999996241867e-02,-2.090727131055988e-13
+	2.499999995614784e-02,-2.439585345780760e-13
+	2.499999995827986e-02,-2.320975900621284e-13
+	2.499999995695860e-02,-2.394479612765323e-13
+	2.499999995759404e-02,-2.359131543235856e-13
+	2.499999995823383e-02,-2.323538363911014e-13
+	2.499999995699022e-02,-2.392723776417521e-13
+	2.499999995791083e-02,-2.341509363183464e-13
+	2.499999995695197e-02,-2.394852169232023e-13
+	2.499999995690207e-02,-2.397628242551952e-13
+	2.499999995878004e-02,-2.293154478918433e-13
+	2.499999995676785e-02,-2.405094529246553e-13
+	2.499999995603517e-02,-2.445855799148689e-13
+	2.338552387305129e-02,1.851232458981763e-11
+	2.499999995650475e-02,-2.419729932104058e-13
+	2.403077988660497e-02,1.101674357734512e-11
+	2.499999995614201e-02,-2.439908262174997e-13
+	2.363202857337994e-02,1.564510045275106e-11
+	2.350334536020645e-02,1.713951415122411e-11
+	2.499999996231627e-02,-2.096421851284377e-13
+	2.499999995761320e-02,-2.358061646976564e-13
+	2.499999995797122e-02,-2.338146310439510e-13
+	2.499999995752929e-02,-2.362732471581268e-13
+	2.499999995780594e-02,-2.347342092072010e-13
+	2.499999996299763e-02,-2.058517322172470e-13
+	2.499999996058966e-02,-2.192478455827020e-13
+	2.499999995944084e-02,-2.256391411386271e-13
+	2.499999995960342e-02,-2.247345873579094e-13
+	2.342045087903362e-02,1.811053005798896e-11
+	2.499999996084164e-02,-2.178458553590032e-13
+	2.499999995888359e-02,-2.287394990714070e-13
+	2.499999995810037e-02,-2.330965358612270e-13
+	2.499999995515230e-02,-2.494976256975080e-13
+	2.499999995482339e-02,-2.513274521826315e-13
+	2.499999995512282e-02,-2.496617296032963e-13
+	2.320823086576960e-02,2.057251925635937e-11
+	2.328458968540752e-02,1.968534687009139e-11
+	2.305063517874809e-02,2.239976839150513e-11
+	2.190276411676638e-02,3.572704249135206e-11
+	2.329848584271968e-02,1.952410287483368e-11
+	2.295800334939708e-02,2.347581223092171e-11
+	2.208664432705571e-02,3.359380703045201e-11
+	2.228224103122904e-02,3.132091693593191e-11
+	2.116933619344763e-02,4.424278209463389e-11
+	2.499999997277542e-02,-1.514559255463769e-13
+	2.499999996417425e-02,-1.993062555381333e-13
+	2.499999996332480e-02,-2.040318894009677e-13
+	2.499999998293859e-02,-9.491619649297629e-14
+	2.499999996831950e-02,-1.762454403506687e-13
+	2.499999996118635e-02,-2.159285992186819e-13
+	2.499999996125159e-02,-2.155657894906985e-13
+	2.499999996186736e-02,-2.121396833344039e-13
+	2.373068748092286e-02,1.451829182945741e-11
+	2.370355459553389e-02,1.482864868496171e-11
+	2.275541914465353e-02,2.583360993868293e-11
+	2.327343922086902e-02,1.981837956273331e-11
+	2.249751954890414e-02,2.882703186121338e-11
+	2.499999995809899e-02,-2.331042947175871e-13
+	2.499999995606058e-02,-2.444441991352023e-13
+	2.499999995893762e-02,-2.284388407314611e-13
+	2.295835007290647e-02,2.347693544571915e-11
+	2.227617620043908e-02,3.139593332345658e-11
+	2.334057535627286e-02,1.903391375204462e-11
+	2.284516966302212e-02,2.478721066213555e-11
+	2.499999997163111e-02,-1.578223831972626e-13
+	2.499999995643014e-02,-2.423887253049236e-13
+	2.499999997609694e-02,-1.329778597951259e-13
+	2.499999996582710e-02,-1.901114363441005e-13
+	2.500000000000000e-02,0.000000000000000e+00
+	2.499999998298573e-02,-9.465400209198528e-14
+	2.499999996926409e-02,-1.709903391492023e-13
+	2.499999996223990e-02,-2.100674921332689e-13
+	2.499999996025550e-02,-2.211073473328927e-13
+	2.499999997102721e-02,-1.611819139564770e-13
+	2.499999995664921e-02,-2.411700075759867e-13
+	2.499999996253087e-02,-2.084490627465141e-13
+	2.499999996289014e-02,-2.064502941965679e-13
+	2.499999998223738e-02,-9.881724819213075e-14
+	2.325561039274393e-02,2.002484229405519e-11
+	2.299540398567008e-02,2.304213436707918e-11
+	2.499999998329332e-02,-9.294273803302873e-14
+	2.499999996867614e-02,-1.742610948227886e-13
+	2.341065434878956e-02,1.822868413697580e-11
+	2.499999996107011e-02,-2.165749326787214e-13
+	2.394982316216409e-02,1.197125837639466e-11
+	2.499999997998414e-02,-1.113524938313949e-13
+	2.499999996554053e-02,-1.917050529540645e-13
+	2.499999995975130e-02,-2.239121640701863e-13
+	2.400071278837360e-02,1.137541696063676e-11
+	2.369422820975130e-02,1.494461739591856e-11
+	2.277412177655450e-02,2.562104019471681e-11
+	2.328211730970676e-02,1.973066524126641e-11
+	2.401980746709217e-02,1.114993034838858e-11
+	2.499999995709442e-02,-2.386931236774372e-13
+	2.313726094071213e-02,2.139698617949966e-11
+	2.499999995454076e-02,-2.528997521414944e-13
+	2.499999995496193e-02,-2.505568035638086e-13
+	2.499999995509411e-02,-2.498213698968332e-13
+	2.499999995509254e-02,-2.498300868605672e-13
+	2.499999995428947e-02,-2.542977768082641e-13
+	2.499999995450054e-02,-2.531235319066795e-13
+	2.499999995460022e-02,-2.525690601024700e-13
+	2.499999995611742e-02,-2.441285399431826e-13
+	2.499999995536858e-02,-2.482943927894254e-13
+	2.499999995546698e-02,-2.477470495562753e-13
+	2.499999996247755e-02,-2.087455980935169e-13
+	2.499999995745005e-02,-2.367147552000846e-13
+	2.499999995561525e-02,-2.469221508736709e-13
+	2.194490326194761e-02,3.524196206630688e-11
+	2.189600026421155e-02,3.581264837867927e-11
+	2.199054028594161e-02,3.471325047051651e-11
+	2.169354079756776e-02,3.816258993903917e-11
+	2.199537456498682e-02,3.465709026222034e-11
+	2.190356785675780e-02,3.572189306604076e-11
+	2.260569640742583e-02,2.757251081046045e-11
+	2.125945633542880e-02,4.320051555519588e-11
+	2.101464730304563e-02,4.603972533625815e-11
+	2.159965443608606e-02,3.924951826633210e-11
+	2.142137754444546e-02,4.131992961229860e-11
+	2.099802413921086e-02,4.623327796442628e-11
+	2.033259598159763e-02,5.395791582685201e-11
+	2.186073838415682e-02,3.621987552756156e-11
+	2.077305578612021e-02,4.884582436551424e-11
+	2.164751995829258e-02,3.869344074764900e-11
+	2.059744786991500e-02,5.088324518721616e-11
+	1.920964227324070e-02,6.699461065750777e-11
+	2.499999997108105e-02,-1.608822605803266e-13
+	2.499999996122432e-02,-2.157175024273037e-13
+	2.336855651897117e-02,1.872915548400352e-11
+	2.337739162128759e-02,1.864165661299888e-11
+	2.499999995780821e-02,-2.347222357623648e-13
+	2.499999995718972e-02,-2.381630793156789e-13
+	2.499999996216954e-02,-2.104592319641832e-13
+	2.499999996794926e-02,-1.783054012043537e-13
+	2.499999996724472e-02,-1.822249736326524e-13
+	2.499999996488534e-02,-1.953506788008036e-13
+	2.499999996295112e-02,-2.061110156091479e-13
+	2.499999996252922e-02,-2.084582497892772e-13
+	2.499999996147248e-02,-2.143371517969819e-13
+	2.499999995892890e-02,-2.284876855377703e-13
+	2.499999995967967e-02,-2.243109524927377e-13
+	2.298961788619060e-02,2.312541364442103e-11
+	2.499999996372279e-02,-2.018181606262573e-13
+	2.391109560548963e-02,1.244559174001794e-11
+	2.372937609115572e-02,1.454093334829487e-11
+	2.499999996118421e-02,-2.159406815554547e-13
+	2.292047749330264e-02,2.392551605727840e-11
+	2.223652624852092e-02,3.186120192166130e-11
+	2.166794631916557e-02,3.846031224777134e-11
+	2.134600752046164e-02,4.220103582199206e-11
+	2.146309172918361e-02,4.084010565510714e-11
+	2.283647394247490e-02,2.489781410255204e-11
+	2.299704773704461e-02,2.303538475707458e-11
+	2.080810497933738e-02,4.844115672599058e-11
+	2.138106801903849e-02,4.179075292850840e-11
+	2.049526892839577e-02,5.207274596939658e-11
+	2.133932521675614e-02,4.227350824348769e-11
+	2.121078294186911e-02,4.376691355695457e-11
+	2.215031334626424e-02,3.286133551447661e-11
+	2.298586507041227e-02,2.315770926489113e-11
+	2.197666333245036e-02,3.487418678200043e-11
+	2.499999995558986e-02,-2.470633889107306e-13
+	2.499999995661728e-02,-2.413476225564813e-13
+	2.499999995610757e-02,-2.441832943835740e-13
+	2.499999996932858e-02,-1.706318876216098e-13
+	2.499999995799819e-02,-2.336653303527428e-13
+	2.499999997395926e-02,-1.448702622690842e-13
+	2.499999996594967e-02,-1.894293732284420e-13
+	2.499999995924367e-02,-2.267364660241942e-13
+	2.499999995881897e-02,-2.290991176971542e-13
+	2.381420895663150e-02,1.359230752897735e-11
+	2.369044009928800e-02,1.502798158693126e-11
+	2.398166724663885e-02,1.164547486595932e-11
+	2.382011674351553e-02,1.346230383242702e-11
+	2.220873080769769e-02,3.217976882472414e-11
+	2.184421042232435e-02,3.641731707608220e-11
+	2.120093826985855e-02,4.388575342934438e-11
+	2.272926694682859e-02,2.614368619393727e-11
+	2.232726088012557e-02,3.081107754811350e-11
+	2.325004001734627e-02,2.012750974770257e-11
+	2.285457461682563e-02,2.469907677085648e-11
+	2.340341333367886e-02,1.833720389513072e-11
+	2.308627118303912e-02,2.199505436541279e-11
+	2.133976934494934e-02,4.227061743120867e-11
+	2.218606998424878e-02,3.244981634085323e-11
+	2.206265932915015e-02,3.388622699396665e-11
+	2.187564323198058e-02,3.605794127528945e-11
+	2.050615842310768e-02,5.194585130904979e-11
+	2.358571253519341e-02,1.618490799076146e-11
+	2.327480104368602e-02,1.979723197005009e-11
+	2.115566623084451e-02,4.440420693572004e-11
+	2.352675057592784e-02,1.686207188681918e-11
+	2.368588964746821e-02,1.501214585889752e-11
+	2.499999995470587e-02,-2.519812248633363e-13
+	2.499999995478283e-02,-2.515531530049313e-13
+	2.329692020669163e-02,1.953201134483453e-11
+	2.343695870114050e-02,1.790367914846701e-11
+	2.324186805335029e-02,2.016904547672294e-11
+	2.065343799394387e-02,5.023525402422987e-11
+	2.208045449071408e-02,3.367752541548987e-11
+	2.318779679193250e-02,2.080092073243074e-11
+	2.401900909100852e-02,1.118700660407167e-11
+	2.388207221764383e-02,1.276233404558463e-11
+	2.499999995580494e-02,-2.458668936827288e-13
+	2.379412898836242e-02,1.376490383939331e-11
+	2.499999995485762e-02,-2.511370616406418e-13
+	2.380202773421463e-02,1.368511484403048e-11
+	2.499999995620775e-02,-2.436259800208655e-13
+	2.414384492130882e-02,9.705194114394243e-12
+	2.382158988233383e-02,1.344714950397850e-11
+	2.499999995413328e-02,-2.551667362529577e-13
+	2.499999995537594e-02,-2.482534896355097e-13
+	2.499999995433079e-02,-2.540679737737975e-13
+	2.113009290865417e-02,4.470258108575236e-11
+	2.084833337604554e-02,4.797564825695652e-11
+	2.073784812527861e-02,4.925739673690314e-11
+	2.075995027415767e-02,4.899978997328882e-11
+	2.103960986822474e-02,4.575602797716053e-11
+	2.060952282847550e-02,5.074833644724314e-11
+	1.713492426341690e-02,9.108003747471041e-11
+	2.032135070225158e-02,5.409098378054347e-11
+	1.983995365331964e-02,5.967867467870241e-11
+	1.888523375259282e-02,7.076130465986610e-11
+	2.009572194980180e-02,5.670982123460668e-11
+	2.011968435434229e-02,5.643177331687236e-11
+	1.904585376524003e-02,6.889694530282513e-11
+	1.805449667989797e-02,8.040506443253507e-11
+	1.976928431561873e-02,6.050002704704037e-11
+	1.936220109878252e-02,6.522492169205816e-11
+	1.799362471147748e-02,8.111178850598084e-11
+	2.278658743848182e-02,2.548810170443387e-11
+	2.222797060274652e-02,3.197653122645922e-11
+	2.305564660900581e-02,2.237350250021520e-11
+	1.926101512273880e-02,6.640078104149319e-11
+	2.381055961090957e-02,1.358830902815602e-11
+	2.362217486160578e-02,1.578847565489794e-11
+	2.499999995739540e-02,-2.370188380001108e-13
+	2.499999995668351e-02,-2.409792378587037e-13
+	2.499999996176476e-02,-2.127111839959804e-13
+	2.499999996114485e-02,-2.161598560129772e-13
+	2.499999995851753e-02,-2.307762418988401e-13
+	2.230994685543579e-02,3.101362596002469e-11
+	2.247005929031959e-02,2.915848687492419e-11
+	2.349779165290547e-02,1.722827148031936e-11
+	2.315683827924905e-02,2.118301005168404e-11
+	2.122493482546927e-02,4.360691296936794e-11
+	2.047325428814117e-02,5.233058685660615e-11
+	2.066854693411675e-02,5.006604468734364e-11
+	2.094098110967830e-02,4.690253128462932e-11
+	1.992150290456020e-02,5.873456974678664e-11
+	1.949804644970516e-02,6.365036681996372e-11
+	2.144870506283269e-02,4.100799650976829e-11
+	2.191179706252389e-02,3.563239064628238e-11
+	2.168868510101543e-02,3.822390811153647e-11
+	1.984890046762051e-02,5.957647024608970e-11
+	1.858356216871061e-02,7.426487043641167e-11
+	1.980262951885138e-02,6.011322444915491e-11
+	1.980994571752420e-02,6.002961513680540e-11
+	2.084006151596378e-02,4.807029319639644e-11
+	2.140159750790315e-02,4.155261748546725e-11
+	2.499999995560582e-02,-2.469746663433648e-13
+	2.379785469185344e-02,1.371871898265804e-11
+	2.340052584472989e-02,1.836435275142669e-11
+	2.346645363180392e-02,1.758664302548232e-11
+	2.368267068766582e-02,1.507900730121643e-11
+	2.289666103488663e-02,2.421353514863372e-11
+	2.311174300569389e-02,2.170095788731988e-11
+	2.309586108185701e-02,2.191276631178383e-11
+	2.291838896861526e-02,2.393843808204488e-11
+	2.245594989626814e-02,2.930211779822179e-11
+	1.961176030501947e-02,6.232859675322375e-11
+	2.144020678232964e-02,4.110105188416653e-11
+	2.176125184260603e-02,3.737727239953779e-11
+	2.154165969117417e-02,3.993455830491516e-11
+	2.185184284500608e-02,3.633274702812040e-11
+	2.226851649868178e-02,3.150381821410520e-11
+	2.000448708427239e-02,5.777293062439169e-11
+	2.154580841523354e-02,3.988194322906563e-11
+	2.021356138213890e-02,5.534468506950378e-11
+	2.007766177119987e-02,5.692046259624656e-11
+	2.111102434634233e-02,4.493094328707300e-11
+	2.084429780603146e-02,4.802755965539959e-11
+	2.245181220948595e-02,2.935208219212878e-11
+	1.958065502148601e-02,6.268920303397880e-11
+	1.948919383724290e-02,6.374967765865626e-11
+	1.871496718001949e-02,7.273812940714114e-11
+	2.124629176929922e-02,4.334724745573360e-11
+	2.203100966774460e-02,3.423258502927509e-11
+	2.318808552694000e-02,2.079670964812090e-11
+	2.174046820863123e-02,3.760794356540054e-11
+	2.120124335500853e-02,4.387021724447626e-11
+	2.148253179535546e-02,4.060210232015229e-11
+	2.096781527172968e-02,4.657845932574376e-11
+	1.966143509510383e-02,6.175105822461571e-11
+	1.987969850326519e-02,5.921506168226056e-11
+	2.028483373867075e-02,5.451294764908359e-11
+	2.118589468448428e-02,4.406002993220269e-11
+	2.152476992824725e-02,4.012810607050758e-11
+	2.198973987265844e-02,3.473670764618213e-11
+	2.179985677590354e-02,3.692021958764116e-11
+	2.190079388658642e-02,3.576391256246935e-11
+	2.182995752210948e-02,3.657555264380533e-11
+	2.239056184743473e-02,3.007537414487935e-11
+	2.351787189920644e-02,1.697449287930485e-11
+	2.232781868246349e-02,3.080001719692312e-11
+	2.289550366999602e-02,2.421638458584969e-11
+	2.257107089243386e-02,2.797040102254450e-11
+	2.337024813567640e-02,1.868345910198276e-11
+	2.320675721032442e-02,2.058747186312737e-11
+	2.400403968274919e-02,1.132280564039971e-11
+	2.356319671216383e-02,1.644215984645629e-11
+	2.282522316997220e-02,2.501481082234437e-11
+	2.388338410833352e-02,1.272265624936067e-11
+	1.931538854962110e-02,6.576984544098094e-11
+	1.805594944830629e-02,8.038943741128738e-11
+	1.596338855169853e-02,1.046800353529510e-10
+	1.524427624825428e-02,1.130277835159855e-10
+	1.719511495107380e-02,9.038152818396487e-11
+	1.796523259053272e-02,8.144190493100229e-11
+	1.884197475946718e-02,7.126611198966826e-11
+	1.921963451836669e-02,6.688153853953321e-11
+	1.831558926569260e-02,7.737538901047816e-11
+	1.854500378600570e-02,7.471275820300225e-11
+	1.603195395088448e-02,1.038840043702080e-10
+	1.825693735552062e-02,7.805577515403015e-11
+	1.775764643142187e-02,8.385153703247736e-11
+	1.814485068829375e-02,7.935660858071040e-11
+	1.701718849591762e-02,9.244696684910171e-11
+	1.785050700191075e-02,8.277354252295401e-11
+	1.693746887762275e-02,9.337321013088306e-11
+	1.810788709356003e-02,7.978640899496450e-11
+	1.705054759783799e-02,9.205993789400183e-11
+	1.753339432421415e-02,8.645529783927284e-11
+	1.715713149975262e-02,9.082282386908782e-11
+	1.781025756636811e-02,8.324178682321889e-11
+	1.760195245878063e-02,8.565983846437532e-11
+	1.825476841549291e-02,7.808155331954618e-11
+	1.802599367222451e-02,8.073772186886831e-11
+	2.045309667426615e-02,5.256828746980358e-11
+	2.117204609081505e-02,4.422473123059952e-11
+	1.885154483081351e-02,7.115502607221027e-11
+	1.908467476986895e-02,6.844985435731822e-11
+	1.799709062805861e-02,8.107340887111829e-11
+	1.690472727909116e-02,9.375343744195640e-11
+	1.707244339111974e-02,9.180656636357062e-11
+	2.338726580155378e-02,1.850030170917385e-11
+	2.226338336048710e-02,3.155116134244469e-11
+	2.354708554234678e-02,1.663685637649359e-11
+	2.318259010278373e-02,2.087881502656690e-11
+	2.124295822639070e-02,4.339711057815150e-11
+	2.142297894349484e-02,4.130747227452052e-11
+	1.551384824803822e-02,1.098989815225409e-10
+	1.953169385673383e-02,6.326094283381524e-11
+	1.914310333498355e-02,6.777129425974309e-11
+	1.866016613489607e-02,7.337678313546455e-11
+	1.823102347781890e-02,7.835791739186069e-11
+	1.799784586089068e-02,8.106462245475843e-11
+	1.661973140035198e-02,9.706182187151193e-11
+	1.738287470895481e-02,8.820338666221440e-11
+	1.957026167403072e-02,6.281306645726860e-11
+	2.011286149673300e-02,5.651473258214843e-11
+	2.056083912666789e-02,5.131447610340264e-11
+	1.808725295927778e-02,8.002713312733308e-11
+	1.795363784025903e-02,8.157758168387373e-11
+	1.889519087698343e-02,7.064835087586099e-11
+	1.720978205793113e-02,9.021247792072046e-11
+	2.123166708250517e-02,4.352514675055151e-11
+	2.276866832947490e-02,2.567199982376430e-11
+	2.304102661239064e-02,2.250771349163710e-11
+	2.241770491121631e-02,2.974786537406359e-11
+	2.215649435395826e-02,3.279454874982934e-11
+	2.108978207492494e-02,4.516778322577760e-11
+	2.056216227546543e-02,5.130128966331869e-11
+	1.888658994024997e-02,7.074714196329627e-11
+	2.031789838605717e-02,5.413137378373949e-11
+	2.144437401104494e-02,4.105849264512246e-11
+	1.983599480539891e-02,5.972816526263776e-11
+	1.971795479240767e-02,6.109927483272251e-11
+	1.845000579607404e-02,7.581655319512054e-11
+	1.986345854373796e-02,5.941092538754203e-11
+	2.218219272547623e-02,3.248107769944522e-11
+	2.101647171295740e-02,4.601683115900500e-11
+	1.882640537177495e-02,7.144445702956736e-11
+	1.893784153359517e-02,7.014981132679922e-11
+	1.898398720406100e-02,6.961288814859096e-11
+	1.714017190883973e-02,9.101887854304911e-11
+	1.834149722504387e-02,7.707274852735046e-11
+	2.012913623061310e-02,5.631680118927888e-11
+	2.095367875000891e-02,4.674337759056254e-11
+	2.043467575934806e-02,5.277006670391998e-11
+	2.099831909399402e-02,4.622562797731676e-11
+	1.962007988504566e-02,6.222832231456271e-11
+	1.857538941045577e-02,7.435621990376280e-11
+	2.046044214903304e-02,5.246991643875646e-11
+	1.916112644761090e-02,6.755480697302399e-11
+	1.931398199656858e-02,6.578337599201321e-11
+	1.872398049230409e-02,7.263325212702975e-11
+	1.920003341513614e-02,6.710595798551176e-11
+	1.956608285023118e-02,6.286053116260950e-11
+	2.031170137542992e-02,5.420684689389692e-11
+	1.997486645811849e-02,5.811608467136895e-11
+	2.013854622377119e-02,5.621043125347770e-11
+	2.038583610217836e-02,5.334218445340760e-11
+	2.039009075491381e-02,5.329419277998565e-11
+	2.018690259695340e-02,5.565170570373507e-11
+	2.059091997889515e-02,5.095985146045594e-11
+	2.165171597941894e-02,3.864451060894667e-11
+	2.189399399382413e-02,3.582946645914842e-11
+	2.140650853765580e-02,4.149117330921623e-11
+	2.201292488255158e-02,3.444679687988362e-11
+	1.945538835616934e-02,6.414381168580395e-11
+	2.226908952226598e-02,3.147229100740095e-11
+	1.804024165762159e-02,8.056811358607798e-11
+	1.716255265954340e-02,9.076033056447082e-11
+	1.565961561263302e-02,1.082067367651248e-10
+	1.519060459768222e-02,1.136508838234829e-10
+	1.470712936923923e-02,1.192633422737647e-10
+	1.506711457986286e-02,1.150843043000344e-10
+	1.398600755396985e-02,1.276343872337968e-10
+	1.519917644290715e-02,1.135510977635225e-10
+	1.410925644814887e-02,1.262035606716372e-10
+	1.330992307959085e-02,1.354827384996263e-10
+	1.672000599576519e-02,9.589697549709458e-11
+	1.764330011853909e-02,8.517954666138383e-11
+	1.642371786565671e-02,9.933621618898186e-11
+	1.715730624579025e-02,9.082069886700589e-11
+	1.626507268671104e-02,1.011781629805711e-10
+	1.668402029842303e-02,9.631520076844787e-11
+	1.612812749379155e-02,1.027672739526482e-10
+	1.684849046155938e-02,9.440513603098423e-11
+	1.602746039009418e-02,1.039359350091486e-10
+	1.579069119622552e-02,1.066840119799403e-10
+	1.550183629063320e-02,1.100383761953713e-10
+	1.459294454308665e-02,1.205889855038883e-10
+	1.394632254202329e-02,1.280951285300607e-10
+	1.585276446216382e-02,1.059644989834152e-10
+	1.623686970523864e-02,1.015059426428389e-10
+	1.708011585256093e-02,9.171700647545787e-11
+	1.773399755949410e-02,8.412741374541450e-11
+	1.912215970813951e-02,6.801454919369815e-11
+	1.819768305182028e-02,7.874472983098860e-11
+	1.829187039606774e-02,7.765190345211476e-11
+	1.504578613022559e-02,1.153323467746665e-10
+	1.589615717455989e-02,1.054611069776608e-10
+	1.627891802447983e-02,1.010179799448397e-10
+	1.496559969654613e-02,1.162631439050933e-10
+	2.142251727188939e-02,4.130796124503802e-11
+	2.009264695835753e-02,5.674714423730449e-11
+	1.951399996670638e-02,6.346451651739285e-11
+	1.562944455743208e-02,1.085568809051258e-10
+	1.435173081873672e-02,1.233890496152926e-10
+	1.392917813150696e-02,1.282941551907543e-10
+	1.510074542924371e-02,1.146942285530716e-10
+	1.484231688643666e-02,1.176941723109454e-10
+	1.870851115412507e-02,7.281605968788159e-11
+	1.761935868423609e-02,8.545835571863152e-11
+	1.595038121710279e-02,1.048315934468500e-10
+	1.636956880228699e-02,9.996554850734441e-11
+	1.868613534262727e-02,7.307546836285844e-11
+	1.885932050298931e-02,7.106470877808136e-11
+	1.692032823394540e-02,9.357249609003741e-11
+	1.614649732622929e-02,1.025551150824715e-10
+	1.851558681905687e-02,7.505514654880610e-11
+	1.712806509809411e-02,9.116110685784432e-11
+	2.039681895104384e-02,5.321430067156656e-11
+	2.175002065120360e-02,3.749978149606006e-11
+	2.091436424495011e-02,4.720375345418340e-11
+	1.724356798216772e-02,8.981871418418517e-11
+	1.964489094365412e-02,6.194446935718913e-11
+	1.858688990523167e-02,7.422550665555458e-11
+	1.943748706803672e-02,6.435178201762267e-11
+	1.882753302028982e-02,7.143302192426843e-11
+	1.894009235390090e-02,7.012535507767646e-11
+	1.700867734634345e-02,9.254673561598798e-11
+	1.841943896821472e-02,7.617013418345918e-11
+	1.799505376330268e-02,8.109703008947352e-11
+	1.899231307120994e-02,6.951754237113299e-11
+	1.735571477189593e-02,8.851562569216082e-11
+	2.003201396388772e-02,5.744610450348436e-11
+	1.961799880472350e-02,6.225240548094091e-11
+	1.971696437727236e-02,6.110419096674657e-11
+	1.518900239996265e-02,1.136684687035674e-10
+	1.654652106948134e-02,9.790947877687687e-11
+	1.697292640289285e-02,9.295888928930438e-11
+	1.579287804505290e-02,1.066579984706371e-10
+	1.879899343231580e-02,7.175972268412316e-11
+	1.899128196325288e-02,6.952812729827758e-11
+	1.894459049614029e-02,7.006962208057569e-11
+	1.805276138255042e-02,8.042346328841161e-11
+	1.641388388384789e-02,9.944858923056857e-11
+	1.723284689967571e-02,8.994109817051005e-11
+	1.806607842582030e-02,8.026796990287699e-11
+	1.708012870854671e-02,9.171366607524187e-11
+	1.768003747661569e-02,8.475127845647077e-11
+	1.873161150969138e-02,7.254586541403368e-11
+	1.884674848849712e-02,7.120961946383866e-11
+	1.961473394720880e-02,6.229279150082404e-11
+	1.881724620776382e-02,7.155078645510981e-11
+	1.975453361675417e-02,6.067009126759245e-11
+	1.981609812130303e-02,5.995356366381572e-11
+	2.098956128273490e-02,4.633009755519808e-11
+	2.036029150556286e-02,5.363481863651074e-11
+	1.843132931607894e-02,7.603027476751013e-11
+	1.965364027661159e-02,6.183865921309036e-11
+	1.646761730532566e-02,9.882430177876900e-11
+	1.516190475187292e-02,1.139842909005123e-10
+	1.517251596261413e-02,1.138607010487166e-10
+	1.452132849167881e-02,1.214200264376685e-10
+	1.470651602357716e-02,1.192699688618378e-10
+	1.444929421283183e-02,1.222556452951220e-10
+	1.386232055685794e-02,1.290699575609429e-10
+	1.450682087823642e-02,1.215884509859860e-10
+	1.417912877084579e-02,1.253925671618642e-10
+	1.392911204224593e-02,1.282948314802855e-10
+	1.331478290273016e-02,1.354262895754174e-10
+	1.322779891455881e-02,1.364359807247746e-10
+	1.227112163760031e-02,1.475417864118486e-10
+	1.340029052181128e-02,1.344333108094042e-10
+	1.205191043147932e-02,1.500864091464738e-10
+	1.087096596230979e-02,1.637959792876394e-10
+	1.612397537446998e-02,1.028157834657415e-10
+	1.537419178855433e-02,1.115196871102937e-10
+	1.599426887286481e-02,1.043217123327984e-10
+	1.652163013992678e-02,9.819917644137407e-11
+	1.567100627946024e-02,1.080736573585387e-10
+	1.497270985803722e-02,1.161789768478053e-10
+	1.512094978178177e-02,1.144587256556872e-10
+	1.443388727044950e-02,1.224342386493312e-10
+	1.564083524926407e-02,1.084235661274579e-10
+	1.498301268812682e-02,1.160593641959158e-10
+	1.366223906811534e-02,1.313927920100791e-10
+	1.315988250810122e-02,1.372243753390811e-10
+	1.354700949649713e-02,1.327302790522645e-10
+	1.363450614178270e-02,1.317133725999730e-10
+	1.288339720655311e-02,1.404338923656825e-10
+	1.157978423479735e-02,1.555668650384321e-10
+	1.236980492757133e-02,1.463958065475213e-10
+	1.079845227448532e-02,1.646369259361141e-10
+	1.182919484524738e-02,1.526714379723130e-10
+	1.289753888372627e-02,1.402696972392816e-10
+	1.472084579915409e-02,1.191040600902685e-10
+	1.440444023542763e-02,1.227768839181641e-10
+	1.489454111394991e-02,1.170877040444040e-10
+	1.616399862486235e-02,1.023513854016145e-10
+	1.729405245591602e-02,8.923369151092831e-11
+	1.380561440499132e-02,1.297283510519587e-10
+	1.393508037324109e-02,1.282255720076319e-10
+	1.490411403573213e-02,1.169767415787242e-10
+	1.900608241879238e-02,6.935879635910682e-11
+	1.789723462238323e-02,8.223139730406775e-11
+	1.469942899607789e-02,1.193523466668853e-10
+	1.289211943143600e-02,1.403324954638570e-10
+	1.368743479810207e-02,1.311000575801693e-10
+	1.240376489039540e-02,1.460014746512051e-10
+	1.354721112448352e-02,1.327278213818363e-10
+	1.702793516315595e-02,9.232288938941668e-11
+	1.421140941588420e-02,1.250174960456114e-10
+	1.522549803168024e-02,1.132457707030879e-10
+	1.491957409877417e-02,1.167967726021467e-10
+	1.601388768232689e-02,1.040939593217837e-10
+	1.505289641546125e-02,1.152491784361312e-10
+	1.665437803460534e-02,9.665907752397338e-11
+	1.588056082867169e-02,1.056419093103757e-10
+	1.881986998886300e-02,7.151926131511502e-11
+	1.894810119857490e-02,7.002945335347666e-11
+	1.776404197680140e-02,8.377666448714076e-11
+	1.790384997338307e-02,8.215286790782597e-11
+	1.581433036874520e-02,1.064089129138268e-10
+	1.797479187948136e-02,8.133042364976524e-11
+	1.855205607643788e-02,7.462723097383275e-11
+	1.881210977561897e-02,7.160915903641523e-11
+	1.866816602344830e-02,7.327932477765018e-11
+	1.687478936034523e-02,9.409990168214742e-11
+	1.689313520952758e-02,9.388736309068256e-11
+	1.754766842832441e-02,8.628754072182065e-11
+	1.637499933031996e-02,9.989995981751715e-11
+	1.802220129155656e-02,8.077793037832023e-11
+	1.478888169170622e-02,1.183121701469682e-10
+	1.512374418924678e-02,1.144249298033578e-10
+	1.430540121344540e-02,1.239249570064869e-10
+	1.545867356851239e-02,1.105373155011357e-10
+	1.736686621800847e-02,8.838536894956645e-11
+	1.727876437166680e-02,8.940800041158792e-11
+	1.579039038063339e-02,1.066859284334643e-10
+	1.496979963566326e-02,1.162115980078202e-10
+	1.589338265062464e-02,1.054901339934632e-10
+	1.502709610511223e-02,1.155463342186658e-10
+	1.593953433821606e-02,1.049562029690719e-10
+	1.594798325611100e-02,1.048573581498519e-10
+	1.719801508936655e-02,9.034704560019817e-11
+	1.678337407719477e-02,9.516090978850007e-11
+	1.629081507189124e-02,1.008782321263542e-10
+	1.776698747025729e-02,8.374138193364080e-11
+	1.859350365197323e-02,7.414640548776705e-11
+	1.673579223549142e-02,9.571215473619623e-11
+	1.763359122035913e-02,8.528950375963965e-11
+	1.382622100534925e-02,1.294866619742898e-10
+	1.400683876122961e-02,1.273898809106295e-10
+	1.412313177453426e-02,1.260418558488769e-10
+	1.334151694159325e-02,1.351157104429072e-10
+	1.360182994599826e-02,1.320936873784082e-10
+	1.187511981188877e-02,1.521381857489390e-10
+	1.349229446195453e-02,1.333650191902777e-10
+	1.296263420205474e-02,1.395135940246863e-10
+	1.273709246951504e-02,1.421310427791343e-10
+	1.262579435246389e-02,1.434236486616285e-10
+	1.208542748050715e-02,1.496968824228765e-10
+	1.223928652298870e-02,1.479101218821642e-10
+	1.100829223373732e-02,1.622013910038203e-10
+	1.009101439620431e-02,1.728495290688279e-10
+	1.249130637020537e-02,1.449855304648584e-10
+	1.171377118672003e-02,1.540114856451126e-10
+	1.079429057880625e-02,1.646857672204560e-10
+	9.621659008562539e-03,1.782991062810381e-10
+	1.132286777259670e-02,1.585490291883634e-10
+	9.224698518252191e-03,1.829074790620066e-10
+	9.847215347177351e-03,1.756803607482162e-10
+	8.765503561503657e-03,1.882387475237166e-10
+	7.603512133214020e-03,2.017289306553723e-10
+	8.739870905525526e-03,1.885354815316145e-10
+	1.478429038057607e-02,1.183667735311774e-10
+	1.276097272032818e-02,1.418531248779887e-10
+	1.410835274764603e-02,1.262122874868761e-10
+	1.464692384024783e-02,1.199614749390277e-10
+	1.442263104852737e-02,1.225644801949594e-10
+	1.468307948560103e-02,1.195413775701426e-10
+	1.339500825105476e-02,1.344932716266904e-10
+	1.279560448709063e-02,1.414517742089241e-10
+	1.378193120790729e-02,1.300015382764984e-10
+	1.410232601719666e-02,1.262820935781835e-10
+	1.116500561090394e-02,1.603816379149104e-10
+	1.226384958010028e-02,1.476256505794048e-10
+	1.201745563847082e-02,1.504843139634117e-10
+	1.305675613286764e-02,1.384188438958670e-10
+	1.167403047722730e-02,1.544709782812334e-10
+	1.231140580556990e-02,1.470715207295139e-10
+	1.044457551737584e-02,1.687447633096118e-10
+	9.302997814701642e-03,1.819970799465374e-10
+	9.108325049022948e-03,1.842571682774587e-10
+	9.792236326891961e-03,1.763176517478719e-10
+	1.163165534251436e-02,1.549642968760533e-10
+	9.292943971466943e-03,1.821137621149799e-10
+	1.015215978979078e-02,1.721394261849403e-10
+	1.109401559523133e-02,1.612057404238545e-10
+	1.250491083463535e-02,1.448269342895588e-10
+	1.104073929754490e-02,1.618240489492508e-10
+	1.175296151360046e-02,1.535559402750851e-10
+	1.217730628738352e-02,1.486302644558032e-10
+	1.376472065641224e-02,1.302020841526155e-10
+	1.376756341057037e-02,1.301695542930890e-10
+	1.339424188941226e-02,1.345030063828562e-10
+	1.387625515484525e-02,1.289074550801674e-10
+	1.510991394726277e-02,1.145868911816318e-10
+	1.289525006918972e-02,1.402958150801425e-10
+	1.394925515255741e-02,1.280604012641270e-10
+	1.510464550871693e-02,1.146473380663222e-10
+	1.659463658821246e-02,9.735134478115986e-11
+	1.540568959116763e-02,1.111532191456530e-10
+	1.285158235001253e-02,1.408020898228896e-10
+	1.238598245152347e-02,1.462075760832125e-10
+	1.146835284517570e-02,1.568597295973427e-10
+	1.262549239979070e-02,1.434269448817907e-10
+	8.178333533097215e-03,1.950535259941979e-10
+	1.258923433489370e-02,1.438475101652223e-10
+	1.495958976126044e-02,1.163317028003002e-10
+	1.358568673778352e-02,1.322803518801195e-10
+	1.446962086435533e-02,1.220195174194917e-10
+	1.467982595020985e-02,1.195794344725270e-10
+	1.648127106383862e-02,9.866642702040961e-11
+	1.647204215697641e-02,9.877342382347645e-11
+	1.563077894738111e-02,1.085393214838984e-10
+	1.546751562131693e-02,1.104347453916772e-10
+	1.443581057180294e-02,1.224105420595387e-10
+	1.558558414463112e-02,1.090641587727477e-10
+	1.671849433856001e-02,9.591231120770526e-11
+	1.603041163196770e-02,1.039001186486956e-10
+	1.666953385076006e-02,9.648070944433383e-11
+	1.539536017362024e-02,1.112728637479418e-10
+	1.370805807701489e-02,1.308594046727212e-10
+	1.323942580286486e-02,1.362989969454003e-10
+	1.450343363134918e-02,1.216261937516702e-10
+	1.533374173527523e-02,1.119870187468873e-10
+	1.579462048689887e-02,1.066368517436635e-10
+	1.337755379492075e-02,1.346951375590287e-10
+	1.264234012904683e-02,1.432296304288120e-10
+	1.233391732932204e-02,1.468095943965542e-10
+	1.497796985421081e-02,1.161166832123168e-10
+	1.442532971574483e-02,1.225319460790340e-10
+	1.414564474175293e-02,1.257785170787291e-10
+	1.324209213270880e-02,1.362670954322430e-10
+	1.434530362024161e-02,1.234614832484150e-10
+	1.324944926286800e-02,1.361818464524904e-10
+	1.224820345840287e-02,1.478063353287059e-10
+	1.524830960341319e-02,1.129793700285946e-10
+	1.374085556442193e-02,1.304779424231338e-10
+	1.606885689461575e-02,1.034537643190056e-10
+	1.559013019708771e-02,1.090111368412044e-10
+	1.609906824437717e-02,1.031030137100449e-10
+	1.264574125344781e-02,1.431913789805272e-10
+	1.236899829890274e-02,1.464022005916242e-10
+	1.232885885801677e-02,1.468701433409867e-10
+	1.188793256901631e-02,1.519893063183318e-10
+	1.051978804305988e-02,1.678713965980030e-10
+	1.188809844897898e-02,1.519868618737626e-10
+	1.165903084376814e-02,1.546459176547062e-10
+	1.093057539273358e-02,1.631028016135048e-10
+	9.825018666873468e-03,1.759369903469088e-10
+	1.021210025373653e-02,1.714425031745716e-10
+	9.776193492797737e-03,1.765033161757637e-10
+	8.674016855911994e-03,1.892986227147759e-10
+	7.971908054810536e-03,1.974503316023307e-10
+	7.337147029965261e-03,2.048194316942550e-10
+	9.378332966086948e-03,1.811231380629658e-10
+	1.015028459631007e-02,1.721612510319592e-10
+	8.695113385942052e-03,1.890549705474810e-10
+	8.250114991200038e-03,1.942214510189986e-10
+	6.890598073497122e-03,2.100051569678014e-10
+	8.728960890214625e-03,1.886611906712288e-10
+	7.036018064250074e-03,2.083173627290270e-10
+	7.517740727600863e-03,2.027243067683460e-10
+	6.999981363251287e-03,2.087364495355485e-10
+	3.421531939217236e-03,2.502907505188241e-10
+	1.828588586884678e-03,2.687945699961335e-10
+	6.505970645479883e-03,2.144707117158292e-10
+	5.750803095825655e-03,2.232403467701310e-10
+	4.511587731820504e-03,2.376279433746633e-10
+	5.213509555049190e-08,2.900399797024365e-10
+	5.213589940982730e-08,2.900444517637652e-10
+	1.882609454076744e-03,2.681662284734645e-10
+	5.213507971458094e-08,2.900398916034844e-10
+	1.481786972126680e-03,2.728229490255389e-10
+	2.840070595947198e-03,2.570429987483464e-10
+	1.287304656911405e-03,2.750832752155104e-10
+	7.966987612721846e-03,1.975071247475365e-10
+	8.153183334462084e-03,1.953446586744352e-10
+	9.116448851532236e-03,1.841621981482796e-10
+	1.073456302007784e-02,1.653757109707843e-10
+	1.124106347104015e-02,1.594958471876547e-10
+	1.278934696882709e-02,1.415231922456934e-10
+	1.296150474823130e-02,1.395256476861090e-10
+	1.236063909443592e-02,1.464999709650485e-10
+	1.252881762468354e-02,1.445479679727374e-10
+	1.160257347768865e-02,1.553000462805791e-10
+	1.214825504144565e-02,1.489652127093700e-10
+	1.241824158338399e-02,1.458310947416039e-10
+	1.294246883869517e-02,1.397455314089013e-10
+	1.052233643874977e-02,1.678416750858497e-10
+	1.101414119093525e-02,1.621321014643464e-10
+	1.051999356057038e-02,1.678685834032950e-10
+	1.038208803849147e-02,1.694680592953026e-10
+	9.603253613967161e-03,1.785086631504913e-10
+	6.302352790334653e-03,2.168340157587635e-10
+	9.012082132876402e-03,1.853709500411625e-10
+	1.074848042523822e-02,1.652134903705073e-10
+	9.812684010636938e-03,1.760766676950127e-10
+	7.849735078578094e-03,1.988677007835413e-10
+	8.613295200915042e-03,1.900037230422860e-10
+	9.149098217157666e-03,1.837827716945348e-10
+	7.647182075689918e-03,2.012188494995677e-10
+	9.034873483761941e-03,1.851089667700213e-10
+	1.009238614590167e-02,1.728325000903715e-10
+	8.990699229470888e-03,1.856219331105169e-10
+	9.663008730823012e-03,1.778174083265181e-10
+	1.105957481446634e-02,1.616044005750789e-10
+	1.048748232346521e-02,1.682457437721778e-10
+	1.261207782698348e-02,1.435818009642735e-10
+	1.273832105622555e-02,1.421164393304812e-10
+	1.330359720494316e-02,1.355544002059837e-10
+	1.415701843365304e-02,1.256476429682028e-10
+	1.158394837604511e-02,1.555169807170647e-10
+	1.273261682007749e-02,1.421826554601122e-10
+	1.407561948785588e-02,1.265921374106910e-10
+	1.396307537349935e-02,1.278989543492314e-10
+	1.473615576398278e-02,1.189246020775120e-10
+	9.562723967905778e-03,1.789802095639923e-10
+	1.139378406124582e-02,1.577241344701354e-10
+	1.093448912487041e-02,1.630561370282443e-10
+	6.975141173907904e-03,2.090220808355959e-10
+	5.705286255610727e-03,2.237656732764141e-10
+	4.020452231351813e-03,2.433292610064674e-10
+	1.086349046694152e-02,1.638800966173433e-10
+	1.202624430037264e-02,1.503822361149014e-10
+	1.335909067150600e-02,1.349102543296040e-10
+	1.513094262528132e-02,1.143412894534576e-10
+	1.382744811721022e-02,1.294725857265637e-10
+	1.394568139513531e-02,1.281001538258755e-10
+	1.361491930530288e-02,1.319393850895565e-10
+	1.475059291670977e-02,1.187563886484173e-10
+	1.436164464250477e-02,1.232714759222016e-10
+	1.467475873359332e-02,1.196365482259797e-10
+	1.355255368100274e-02,1.326638956061459e-10
+	1.244809135905472e-02,1.454846381427428e-10
+	1.390304914325718e-02,1.285946329055754e-10
+	1.183873438500106e-02,1.525577545994432e-10
+	1.100229299184215e-02,1.622671843098747e-10
+	1.058704737866259e-02,1.670870923769283e-10
+	1.323279569510534e-02,1.363749842944952e-10
+	1.140037938856723e-02,1.576457863266440e-10
+	1.032967677968322e-02,1.700745602798524e-10
+	1.270066155724147e-02,1.425523451855118e-10
+	1.236764808336174e-02,1.464177806482681e-10
+	1.124841780169328e-02,1.594098043136069e-10
+	1.022319650764959e-02,1.713122158253215e-10
+	1.134703205909128e-02,1.582663034316405e-10
+	1.025209771776485e-02,1.709760666944266e-10
+	1.290840450452015e-02,1.401407152410454e-10
+	1.361083151640716e-02,1.319868509966841e-10
+	1.009012852244425e-02,1.728560235380638e-10
+	1.062614746694072e-02,1.666349937190654e-10
+	1.026424082219941e-02,1.708350752190288e-10
+	9.694042294744923e-03,1.774531100737629e-10
+	9.743281019148311e-03,1.768848185442648e-10
+	7.658459431749319e-03,2.010886711100617e-10
+	8.997218686399288e-03,1.855466370520137e-10
+	9.018793981875377e-03,1.852947543684298e-10
+	7.688147513586918e-03,2.007413118216625e-10
+	1.812332132418912e-03,2.689804604987363e-10
+	3.501748104702448e-03,2.493543539638844e-10
+	5.195329531801360e-03,2.296871359112508e-10
+	6.749952427043016e-03,2.116351090381252e-10
+	6.727071741518926e-03,2.119009352128214e-10
+	8.239274661689836e-03,1.943442072706294e-10
+	7.768868012739228e-03,1.998056396645075e-10
+	6.715806258017459e-03,2.120321132286814e-10
+	1.326554892381155e-03,2.746186186022911e-10
+	2.043839611964777e-03,2.662865055526698e-10
+	5.179990031852147e-03,2.298635548756737e-10
+	4.411178139617692e-03,2.387915063223652e-10
+	3.163585851215068e-03,2.532799766125423e-10
+	4.189065088989667e-03,2.413709279406541e-10
+	7.849400148862217e-03,1.988716118134158e-10
+	6.195659724593179e-03,2.180683866430052e-10
+	5.182064263292268e-03,2.298399608899498e-10
+	5.849145838851500e-03,2.220948116908797e-10
+	3.427630491964455e-03,2.502171742068132e-10
+	5.143678913481524e-03,2.302879908615705e-10
+	5.938142346437217e-03,2.210611831900316e-10
+	4.887344923318952e-03,2.332658944351913e-10
+	2.698992592986818e-03,2.586812455409296e-10
+	3.532053958998766e-03,2.490026537414290e-10
+	2.030609242341815e-03,2.664389646950607e-10
+	3.457476098511787e-03,2.498668378902793e-10
+	1.790044272234966e-03,2.692338415407409e-10
+	4.284748732532350e-03,2.402611790864064e-10
+	3.753063769754067e-03,2.464358902417731e-10
+	5.213578678224408e-08,2.900438251896384e-10
+	5.213460258266632e-08,2.900372372047739e-10
+	5.213277298087266e-08,2.900270586933558e-10
+	5.213512805465511e-08,2.900401605308536e-10
+	1.596134342686017e-03,2.714856681515907e-10
+	5.213450589423780e-08,2.900366993039703e-10
+	5.213409356000867e-08,2.900344053902481e-10
+	5.213437594838667e-08,2.900359763841913e-10
+	1.901657374092676e-03,2.679414057154952e-10
+	5.213546879323196e-08,2.900420561408752e-10
+	2.206139369128416e-03,2.644020524680970e-10
+	1.155794749423545e-03,2.766088098944844e-10
+	7.156200155604244e-03,2.069179040048121e-10
+	8.435943690303448e-03,1.920601805913524e-10
+	9.449930018717108e-03,1.802878135421692e-10
+	1.066892448145820e-02,1.661370803723776e-10
+	1.111122449449194e-02,1.610029731192428e-10
+	1.180446522997304e-02,1.529555390020489e-10
+	1.105715377403461e-02,1.616308844745875e-10
+	1.100085661787883e-02,1.622841496742360e-10
+	1.088464569147773e-02,1.636327013406588e-10
+	9.069764795926088e-03,1.847013406231827e-10
+	9.542428653089805e-03,1.792157671964898e-10
+	8.862736579255785e-03,1.871052820598911e-10
+	7.659164015732582e-03,2.010768176574780e-10
+	8.531130691969606e-03,1.909543803981993e-10
+	9.402985177668443e-03,1.808324773789771e-10
+	8.617861165036140e-03,1.899470567706211e-10
+	8.979268431195056e-03,1.857509806421867e-10
+	5.141428625256801e-03,2.303110577263971e-10
+	8.851535597815131e-03,1.872329887027244e-10
+	9.238633236548143e-03,1.827394643695980e-10
+	7.414618884566371e-03,2.039144259255088e-10
+	8.162172289192611e-03,1.952355721003903e-10
+	8.916927768220617e-03,1.864739451002736e-10
+	7.726109235973461e-03,2.003001554113575e-10
+	6.797968621026875e-03,2.110765832289866e-10
+	6.505815049677101e-03,2.144672701390168e-10
+	7.728392234198033e-03,2.002753273232742e-10
+	7.792363171154629e-03,1.995334802755752e-10
+	7.447355510582987e-03,2.035366834495877e-10
+	9.066684750199222e-03,1.847386418501853e-10
+	8.640530968374825e-03,1.896859388941197e-10
+	9.932891853367359e-03,1.746826024929173e-10
+	1.209729492385090e-02,1.495569576619701e-10
+	1.309306978259810e-02,1.379977786740794e-10
+	1.195572722717342e-02,1.511997556670137e-10
+	1.292170873455959e-02,1.399865597294311e-10
+	1.100137281995143e-02,1.622788743919376e-10
+	1.202962269409421e-02,1.503424255426004e-10
+	1.275362412049655e-02,1.419377448166283e-10
+	9.443567125388293e-03,1.803617788096231e-10
+	8.756782540171749e-03,1.883339510943648e-10
+	8.948061975934398e-03,1.861142855493144e-10
+	5.110903163513554e-03,2.306654070891636e-10
+	2.852055272665729e-03,2.568965064280558e-10
+	1.365508052904312e-03,2.741653721945144e-10
+	5.213559424680385e-08,2.900427540690241e-10
+	4.141501502869512e-03,2.419213910337925e-10
+	4.682583389076169e-03,2.356336414801681e-10
+	2.941843969750667e-03,2.558507623925606e-10
+	5.213338069558259e-08,2.900304395553217e-10
+	1.009964557942207e-02,1.727458820361972e-10
+	1.062525646957202e-02,1.666439653148109e-10
+	1.106038009158720e-02,1.615925823998264e-10
+	1.113347670145457e-02,1.607440067146579e-10
+	1.224933444563930e-02,1.477911301907935e-10
+	1.121914060586222e-02,1.597495903819109e-10
+	1.260096934572075e-02,1.437093500107205e-10
+	1.253326240840547e-02,1.444952558100887e-10
+	1.163604846105064e-02,1.549101722185694e-10
+	1.091380105904331e-02,1.632940499758224e-10
+	1.116709289661959e-02,1.603536931765692e-10
+	1.047666437072537e-02,1.683681551949161e-10
+	8.388867493487651e-03,1.926035106672702e-10
+	9.176548605123180e-03,1.834599048489473e-10
+	9.048001343598556e-03,1.849521773526087e-10
+	1.022925292428428e-02,1.712401475229566e-10
+	9.705628037500469e-03,1.773183008046517e-10
+	9.127808556466983e-03,1.840257762869516e-10
+	1.067490480124640e-02,1.660670067898147e-10
+	9.910975059497765e-03,1.749346360831964e-10
+	1.030843829094017e-02,1.703209951227730e-10
+	9.924074643178068e-03,1.747834799012592e-10
+	1.033776097269669e-02,1.699809035590748e-10
+	9.540326442710889e-03,1.792376467334159e-10
+	1.126756554719308e-02,1.591874374106092e-10
+	8.813522214398619e-03,1.876743688540750e-10
+	9.233179839295665e-03,1.828031452048806e-10
+	8.321561523725681e-03,1.933845220412667e-10
+	7.457979121532459e-03,2.034092617261151e-10
+	7.598668724847569e-03,2.017757451755012e-10
+	5.213279562202943e-08,2.900271846515231e-10
+	5.213305810539315e-08,2.900286449091195e-10
+	8.693768197348327e-04,2.799281313437245e-10
+	5.213280442440625e-08,2.900272336212437e-10
+	5.213237213317033e-08,2.900248286819282e-10
+	5.213246119181885e-08,2.900253241364466e-10
+	7.381282291568455e-03,2.043028281468809e-10
+	6.243731008931306e-03,2.175064349061060e-10
+	5.630227786106660e-03,2.246299735708765e-10
+	2.242974146386795e-03,2.639722081281970e-10
+	3.902724487616223e-03,2.446946032053229e-10
+	5.420225072726036e-03,2.270730014125205e-10
+	5.504748615611827e-03,2.260891857094747e-10
+	6.567458491805071e-03,2.137514255132875e-10
+	5.329688445362306e-03,2.281175740613310e-10
+	4.740931312486738e-03,2.349545264824293e-10
+	5.930651035428699e-03,2.211438860351857e-10
+	1.941165305433165e-03,2.674746228557343e-10
+	3.658770266669230e-03,2.475251995361542e-10
+	3.057683974946028e-03,2.545038974153250e-10
+	5.437687651564591e-03,2.268673022902801e-10
+	4.317815985585092e-03,2.398698033056789e-10
+	4.307383587474825e-03,2.399945938524049e-10
+	3.446303384906173e-03,2.499958834113532e-10
+	3.781275187206329e-03,2.461038374361684e-10
+	1.726672812018862e-03,2.699584425667805e-10
+	5.213159040029315e-08,2.900204797153620e-10
+	1.476330443080096e-03,2.728590965603119e-10
+	5.212979058191755e-08,2.900104668962004e-10
+	1.671198951951606e-03,2.706092623136310e-10
+	5.213173385536337e-08,2.900212777901577e-10
+	1.265846764295325e-03,2.753148262723479e-10
+	5.213089547668743e-08,2.900166136894956e-10
+	5.213188780815226e-08,2.900221342662563e-10
+	5.213096779935217e-08,2.900170160377352e-10
+	2.885584551826221e-03,2.565048035026528e-10
+	5.213269192775777e-08,2.900266077755352e-10
+	5.213309348661322e-08,2.900288417432769e-10
+	1.076878897386774e-03,2.775075872675259e-10
+	1.204854321110390e-03,2.760318495970513e-10
+	6.627869432020215e-03,2.130486091899506e-10
+	7.656963308872357e-03,2.011015083430290e-10
+	7.600930758201660e-03,2.017502697452148e-10
+	7.620057023441968e-03,2.015275978729040e-10
+	6.448128899297230e-03,2.151322761214452e-10
+	8.927253885680789e-03,1.863536037967540e-10
+	9.634422767635707e-03,1.781448852377999e-10
+	8.346906307816144e-03,1.930900675603507e-10
+	8.485089401261716e-03,1.914869104622920e-10
+	7.662352918348765e-03,2.010386379967634e-10
+	6.439768251734873e-03,2.152305192813383e-10
+	7.346012444599294e-03,2.047096425691831e-10
+	7.242230380612286e-03,2.059141390576356e-10
+	8.152795267772758e-03,1.953432330661392e-10
+	7.158628898794785e-03,2.068837706425410e-10
+	6.496468356969165e-03,2.145707385214813e-10
+	3.730622999638454e-03,2.466848526391993e-10
+	5.311229174888063e-03,2.283283695189333e-10
+	5.213199982587838e-08,2.900227574476114e-10
+	5.213171268394055e-08,2.900211600084829e-10
+	7.465600573633403e-03,2.033204640011553e-10
+	5.987033056598780e-03,2.204847233121846e-10
+	4.216571356230220e-03,2.410368958880925e-10
+	3.507200540391695e-03,2.492723582724939e-10
+	5.233960776998308e-03,2.292254394435213e-10
+	6.002684837454036e-03,2.203018692101538e-10
+	6.047514276733356e-03,2.197848438561172e-10
+	4.591043943545537e-03,2.366905591094465e-10
+	6.487328195123460e-03,2.146795061544134e-10
+	5.054875463175398e-03,2.313077919442373e-10
+	6.259503080436394e-03,2.173258842346358e-10
+	7.012851421869019e-03,2.085777259180435e-10
+	7.472030682921020e-03,2.032482778621566e-10
+	8.349411628637091e-03,1.930624384533566e-10
+	1.070664033383951e-02,1.656989461101350e-10
+	9.495909933919027e-03,1.797531140811906e-10
+	1.055017234688631e-02,1.675150487689812e-10
+	8.344015051339460e-03,1.931241236947883e-10
+	7.170771866985487e-03,2.067429758602424e-10
+	3.925604345127785e-03,2.444223599636878e-10
+	1.491772438800735e-03,2.726928527344614e-10
+	5.213287171656419e-08,2.900276079835793e-10
+	3.351133833688037e-03,2.510902255304698e-10
+	3.557285367042752e-03,2.486928964721009e-10
+	1.671771765724579e-03,2.705926581269111e-10
+	5.213170004986802e-08,2.900210897221225e-10
+	8.671085094583413e-03,1.893271250504741e-10
+	9.815036906432669e-03,1.760482775037201e-10
+	9.784025245085455e-03,1.764082424531636e-10
+	1.041567066174232e-02,1.690761598437692e-10
+	1.039550319678767e-02,1.693102571186505e-10
+	1.072165181568388e-02,1.655243304378863e-10
+	1.011523456808866e-02,1.725635802221875e-10
+	9.815007616856551e-03,1.760485666084679e-10
+	8.855258297803531e-03,1.871891515319401e-10
+	7.780091699335279e-03,1.996697258372233e-10
+	7.342772528248896e-03,2.047465333147660e-10
+	8.629393535160982e-03,1.898111758478435e-10
+	9.142250942752405e-03,1.838577766292005e-10
+	8.232769824908608e-03,1.944147019085001e-10
+	7.418384582215596e-03,2.038679229587813e-10
+	8.528970526032572e-03,1.909765794213615e-10
+	8.977132761741861e-03,1.857745079378862e-10
+	9.376685167748904e-03,1.811365494097997e-10
+	7.249648559529517e-03,2.058263811931968e-10
+	7.288132121428873e-03,2.053801857740248e-10
+	5.801975883066560e-03,2.226322631513879e-10
+	6.316706105550079e-03,2.166562776339456e-10
+	5.049665010788184e-03,2.313656727446097e-10
+	6.079577378635451e-03,2.194080154227665e-10
+	5.213157416916754e-08,2.900203894177429e-10
+	5.213190611380131e-08,2.900222361049621e-10
+	5.213135863161071e-08,2.900191903308734e-10
+	5.687301119269065e-03,2.239635785699500e-10
+	4.700982878495991e-03,2.354116190063124e-10
+	3.109613066846926e-03,2.538837279039018e-10
+	2.401384015763757e-03,2.621198957746263e-10
+	4.819791914370573e-03,2.340355092201317e-10
+	4.210184807611139e-03,2.411070278059136e-10
+	4.806499223335783e-03,2.341881354257995e-10
+	1.610393266923441e-03,2.713011416900361e-10
+	2.494401327413143e-03,2.610315365271788e-10
+	3.478893515875322e-03,2.495995592618065e-10
+	5.212766823931761e-08,2.899986597977975e-10
+	5.212809536310346e-08,2.900010359893570e-10
+	1.558609158519069e-03,2.718964014102555e-10
+	5.212719648531693e-08,2.899960353177166e-10
+	1.925568272990579e-03,2.676337252395338e-10
+	1.147094604988145e-03,2.766628138676715e-10
+	1.637793481465009e-03,2.709719377870939e-10
+	5.212645963101802e-08,2.899919360214061e-10
+	5.212556354789075e-08,2.899869508971088e-10
+	5.212480608919364e-08,2.899827369735910e-10
+	5.212541039219849e-08,2.899860988554202e-10
+	5.212832655202521e-08,2.900023221485091e-10
+	5.212809453647781e-08,2.900010313906462e-10
+	5.212577121109080e-08,2.899881061770322e-10
+	1.187321731649475e-03,2.761945101115466e-10
+	5.212627529511718e-08,2.899909105167810e-10
+	5.625782984145018e-03,2.246749511380930e-10
+	6.425876686269593e-03,2.153877188640140e-10
+	6.075087090471460e-03,2.194593117857552e-10
+	4.527206596964006e-03,2.374239726103679e-10
+	6.933414781113334e-03,2.094970662353796e-10
+	7.182599587301272e-03,2.066044794559780e-10
+	7.263523773649748e-03,2.056650898011604e-10
+	5.609200554647985e-03,2.248685123414350e-10
+	4.802346292631572e-03,2.342303882755622e-10
+	5.687973107608549e-03,2.239530874384554e-10
+	7.031910250037941e-03,2.083535858233505e-10
+	5.862294628819852e-03,2.219292433128693e-10
+	6.242396908281222e-03,2.175171836759266e-10
+	6.158265742339807e-03,2.184935577954005e-10
+	4.768010818538574e-03,2.346323702917286e-10
+	2.718403762070682e-03,2.584171029484888e-10
+	3.507504116802472e-03,2.492589777100605e-10
+	2.940177908702988e-03,2.558442932920663e-10
+	5.212928510189434e-08,2.900076547902002e-10
+	5.651629015003769e-03,2.243769446149664e-10
+	3.622826329527884e-03,2.479315780904379e-10
+	5.024987193127441e-03,2.316522772365267e-10
+	2.428227526145525e-03,2.617905416186835e-10
+	3.686067683302986e-03,2.471928539707867e-10
+	2.472557235330524e-03,2.612870567813501e-10
+	5.212559173942715e-08,2.899871077333666e-10
+	1.827279854076900e-03,2.687700282694481e-10
+	5.212478021313549e-08,2.899825930189269e-10
+	4.412093702083541e-03,2.387622411722414e-10
+	3.994887720009382e-03,2.436090066522982e-10
+	5.613402479690998e-03,2.248211561014934e-10
+	5.723070221540133e-03,2.235494849171041e-10
+	6.409983677345155e-03,2.155742715380465e-10
+	6.266235861515748e-03,2.172415761168563e-10
+	7.012660173419095e-03,2.085776441136322e-10
+	8.725710692173238e-03,1.886930042570413e-10
+	8.693216737432573e-03,1.890701330747213e-10
+	7.945083200060777e-03,1.977541897068504e-10
+	6.675472995411238e-03,2.124912629461019e-10
+	5.424897763414939e-03,2.270072292641940e-10
+	3.450697838575371e-03,2.499254991705175e-10
+	2.898823472201765e-03,2.563255524881680e-10
+	1.810380591475456e-03,2.689769078295881e-10
+	5.213018994055848e-08,2.900126886236407e-10
+	2.331022828317546e-03,2.629219620637382e-10
+	1.477047560617479e-03,2.728349982969636e-10
+	5.212757875422623e-08,2.899981619708979e-10
+	5.212871754238784e-08,2.900044973212176e-10
+	7.011382843302234e-03,2.085923873080569e-10
+	7.767065604926568e-03,1.998208782608590e-10
+	8.862045338900733e-03,1.871104738363497e-10
+	8.739322647604511e-03,1.885348638198909e-10
+	6.293049145939620e-03,2.169306893230160e-10
+	6.387297654330689e-03,2.158364257748639e-10
+	7.095539385042953e-03,2.076156197760201e-10
+	6.300012050377593e-03,2.168505408128528e-10
+	6.352409245133890e-03,2.162416464881899e-10
+	7.254531719103388e-03,2.057698479763443e-10
+	6.598186211025064e-03,2.133882399019876e-10
+	6.409311886842524e-03,2.155804914671627e-10
+	7.928530156434873e-03,1.979466231009457e-10
+	5.600375551932803e-03,2.249697450673350e-10
+	3.680698778044457e-03,2.472574464050132e-10
+	4.164896310569361e-03,2.416350906614968e-10
+	3.654381752616852e-03,2.475614032436636e-10
+	4.377653890223532e-03,2.391592995846331e-10
+	5.212642594417464e-08,2.899917486134424e-10
+	5.212534971741807e-08,2.899857613071380e-10
+	3.862353435492045e-03,2.451374813922493e-10
+	3.849994189328206e-03,2.452821807095568e-10
+	3.493544544842044e-03,2.494144323669713e-10
+	2.667176743859354e-03,2.590151633061805e-10
+	1.822977925254910e-03,2.688058274985656e-10
+	2.988764450579495e-03,2.552720232551252e-10
+	2.705747387547180e-03,2.585564117828076e-10
+	1.401285467861806e-03,2.736911545309824e-10
+	1.726733464339388e-03,2.699125623320697e-10
+	1.232968123154274e-03,2.756429827078560e-10
+	5.211759734506456e-08,2.899426330095380e-10
+	5.211971034250185e-08,2.899543881185976e-10
+	5.212409367776276e-08,2.899787736587922e-10
+	5.212326699907720e-08,2.899741746479650e-10
+	5.211847285366837e-08,2.899475036728577e-10
+	5.211489073830262e-08,2.899275755101716e-10
+	5.210383293475664e-08,2.898660583099125e-10
+	2.885804644352021e-03,2.564709621303265e-10
+	5.263124531640241e-03,2.288847661624428e-10
+	4.123877911197798e-03,2.421067817007169e-10
+	4.594302960824755e-03,2.366438626286642e-10
+	6.028575969161598e-03,2.199993477270875e-10
+	4.223201894236712e-03,2.409516793804157e-10
+	5.043558500958531e-03,2.314318014647092e-10
+	5.031107140570972e-03,2.315774811761267e-10
+	4.278783666623338e-03,2.403062797456131e-10
+	3.099215249656996e-03,2.539973404390529e-10
+	2.201713855706855e-03,2.644047198903596e-10
+	1.526802415789447e-03,2.722364807523409e-10
+	5.211884604006258e-08,2.899495797978577e-10
+	5.212411560904081e-08,2.899788956677168e-10
+	4.713329802640200e-03,2.352673023865047e-10
+	4.133452041937343e-03,2.419961341976992e-10
+	4.220320655974256e-03,2.409924806140294e-10
+	3.635805847492297e-03,2.477772833403442e-10
+	2.092601344176366e-03,2.657002719794219e-10
+	2.188157216504073e-03,2.645895871702791e-10
+	1.181650442656227e-03,2.762800170303392e-10
+	2.957090550646399e-03,2.556599051285567e-10
+	1.388109674104154e-03,2.738617697690387e-10
+	1.542415719676900e-03,2.720851950874950e-10
+	5.212359499161235e-08,2.899759993487297e-10
+	5.212658650570554e-08,2.899926418555929e-10
+	5.212399115946632e-08,2.899782033250526e-10
+	5.212647836889738e-08,2.899920402647216e-10
+	5.025689503693217e-03,2.316413071348777e-10
+	5.894035155093702e-03,2.215621243383097e-10
+	6.187686616234768e-03,2.181541308563541e-10
+	5.419038513945744e-03,2.270760110417262e-10
+	4.338089559353600e-03,2.396234427138267e-10
+	1.764961455232769e-03,2.694787825984984e-10
+	3.986168350674387e-03,2.437073102540333e-10
+	2.585235278206717e-03,2.599663023311872e-10
+	3.122388134153170e-03,2.537333397345647e-10
+	2.020748107639891e-03,2.665231382768886e-10
+	1.776341670817094e-03,2.693568898476950e-10
+	5.212774437433216e-08,2.899990833550802e-10
+	5.212404999101895e-08,2.899785306190167e-10
+	5.212566691074050e-08,2.899875259293139e-10
+	4.931311055507505e-03,2.327387848869572e-10
+	6.301360229254038e-03,2.168352017287043e-10
+	4.922970505537147e-03,2.328335322609441e-10
+	5.469179128676781e-03,2.264944024296721e-10
+	5.191064376394726e-03,2.297225094625330e-10
+	4.751072049914341e-03,2.348301492576522e-10
+	5.136730259347591e-03,2.303530399995369e-10
+	3.826416063084398e-03,2.455621064451310e-10
+	4.615528812151897e-03,2.364049635932088e-10
+	3.770503040084834e-03,2.462084518585785e-10
+	2.748010391550765e-03,2.580850388231441e-10
+	3.016082548556545e-03,2.549695875983517e-10
+	1.836752158844449e-03,2.686658185087849e-10
+	1.617342416870043e-03,2.712013944499425e-10
+	3.107751227677083e-03,2.538928970798885e-10
+	2.857949394361139e-03,2.567897172879974e-10
+	5.211596277111072e-08,2.899335394845395e-10
+	1.490261152607201e-03,2.726452234710045e-10
+	1.554050995818777e-03,2.719010292594647e-10
+	5.210380218090103e-08,2.898658872189280e-10
+	1.046561418240435e-03,2.778056377561638e-10
+	1.142532375264551e-03,2.766622203159988e-10
+	5.211371464662488e-08,2.899210326315153e-10
+	5.210229994171730e-08,2.898575299038279e-10
+	5.210365480292894e-08,2.898650673200462e-10
+	5.211656139885437e-08,2.899368697935585e-10
+	5.208902097104247e-08,2.897836558206199e-10
+	5.210209787612425e-08,2.898564057646571e-10
+	2.050889536391010e-03,2.661623598542247e-10
+	3.417275043367574e-03,2.503087611502359e-10
+	3.783070364694394e-03,2.460610729434664e-10
+	3.786853908319088e-03,2.460200493072996e-10
+	2.706788588527418e-03,2.585514143316829e-10
+	1.491823046997617e-03,2.726457943618686e-10
+	5.211757566589299e-08,2.899425124031832e-10
+	5.212139278531340e-08,2.899637479495048e-10
+	3.116020637311954e-03,2.538090449952193e-10
+	2.898564224290720e-03,2.563358076823551e-10
+	5.212850592094221e-08,2.900033200206487e-10
+	5.212803472915027e-08,2.900006986682548e-10
+	1.298904776320790e-03,2.749169432967016e-10
+	5.212920256713552e-08,2.900071956296840e-10
+	5.212134367016591e-08,2.899634747102380e-10
+	5.212916709630234e-08,2.900069982969710e-10
+	1.665718128640927e-03,2.706524931591658e-10
+	5.212741639311532e-08,2.899972587173179e-10
+	5.212191482868192e-08,2.899666522013698e-10
+	5.212727162680270e-08,2.899964533477721e-10
+	5.212804277397593e-08,2.900007434235405e-10
+	5.212833222788860e-08,2.900023537247382e-10
+	3.157549953476600e-03,2.533278778324264e-10
+	3.240270490080750e-03,2.523678516640252e-10
+	3.285206356155314e-03,2.518483467717160e-10
+	5.212415105608505e-08,2.899790928681242e-10
+	1.894710545692780e-03,2.679863516893775e-10
+	1.837361242797922e-03,2.686523133776933e-10
+	5.212582565310525e-08,2.899884090509966e-10
+	5.212448117070408e-08,2.899809293745246e-10
+	1.577913396460910e-03,2.716696199473834e-10
+	2.597231520833967e-03,2.598365494720512e-10
+	3.548733054234997e-03,2.487899518886597e-10
+	2.941886260306435e-03,2.558299008095645e-10
+	3.570126181972300e-03,2.485383592631434e-10
+	3.804011615071116e-03,2.458246353296284e-10
+	2.750924974642210e-03,2.580489169194709e-10
+	2.810306014861526e-03,2.573615136921800e-10
+	2.712229127445842e-03,2.585015191969396e-10
+	1.819918794143733e-03,2.688528944344920e-10
+	1.099461703859987e-03,2.772259761373458e-10
+	1.164164547597145e-03,2.764656386597999e-10
+	1.744603145145600e-03,2.697088911302279e-10
+	1.347595556968393e-03,2.743105804469247e-10
+	5.211396968196602e-08,2.899224514539922e-10
+	5.211477736944756e-08,2.899269448121996e-10
+	5.210966806065575e-08,2.898985205080094e-10
+	5.212027287767996e-08,2.899575176360955e-10
+	5.211001808125112e-08,2.899004677560830e-10
+	5.211408815745163e-08,2.899231105613825e-10
+	1.723890879883076e-03,2.699655458843740e-10
+	5.211999678525705e-08,2.899559816680555e-10
+	1.865233621539451e-03,2.683188677406001e-10
+	2.354679782036103e-03,2.626470501237695e-10
+	1.680016816462956e-03,2.704714140656345e-10
+	5.212252413861010e-08,2.899700419379264e-10
+	1.610611234157045e-03,2.712870051332697e-10
+	1.560473674067327e-03,2.718713702425418e-10
+	5.212822214658139e-08,2.900017413161534e-10
+	5.212884309559298e-08,2.900051958037019e-10
+	5.212652384018744e-08,2.899922932323734e-10
+	5.212126858562834e-08,2.899630569970360e-10
+	5.212746099606998e-08,2.899975068542113e-10
+	5.212630905838140e-08,2.899910983499236e-10
+	5.212765932276043e-08,2.899986101929173e-10
+	1.842436635635420e-03,2.685991508928764e-10
+	2.007479354262821e-03,2.666846556889190e-10
+	5.212622874585356e-08,2.899906515521798e-10
+	5.212609314005841e-08,2.899898971447742e-10
+	5.212571554305924e-08,2.899877964825495e-10
+	1.530002165547671e-03,2.722303416129029e-10
+	5.212818642687375e-08,2.900015425989104e-10
+	1.968404078826325e-03,2.671394465203821e-10
+	1.557877050331228e-03,2.719030558036435e-10
+	1.977648645549019e-03,2.670289077113236e-10
+	1.574206484578293e-03,2.717171612878197e-10
+	5.212496154826607e-08,2.899836018295691e-10
+	5.211886312456104e-08,2.899496748430400e-10
+	5.211970453346293e-08,2.899543558015635e-10
+	5.211878209503430e-08,2.899492240564312e-10
+	5.212632926745280e-08,2.899912107778257e-10
+	5.212609027021276e-08,2.899898811791395e-10
+	5.212666745148898e-08,2.899930921763265e-10
+	5.212672085494130e-08,2.899933892724696e-10
+	5.212458674930545e-08,2.899815167334922e-10
+	5.212674411019937e-08,2.899935186470206e-10
+	5.212797668659944e-08,2.900003757637126e-10
+	5.212705106697276e-08,2.899952263208193e-10
+	5.212881848844472e-08,2.900050589082805e-10
+	5.212785248925542e-08,2.899996848242464e-10
+	5.212506592831169e-08,2.899841825206710e-10
+	5.212705837204516e-08,2.899952669606810e-10
+	5.212639907938633e-08,2.899915991582679e-10
+	5.212790899482651e-08,2.899999991782233e-10
+	5.212709873430962e-08,2.899954915055904e-10
+	-1.041785581037402e-04,-5.795673116435971e-07
+

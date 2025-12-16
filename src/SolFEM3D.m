@@ -98,13 +98,13 @@ end
 %model.component('comp1').physics('ec').create('term1', 'Terminal', 2); % Pourquoi 2
 %model.component('comp1').physics('ec').feature('term1').selection.set([1]); %sur surface 1
 
-%model.component('comp1').physics('ec').feature('term1').set('TerminalType', 'Voltage');
-%model.component('comp1').physics('ec').feature('term1').set('V0', 0.025); %Valeur du voltage à remplacer par la valeur donnée dans l interface
+model.component('comp1').physics('ec').feature('term1').set('TerminalType', 'Voltage');
+model.component('comp1').physics('ec').feature('term1').set('V0', 0.025); %Valeur du voltage à remplacer par la valeur donnée dans l interface
 
 % On affecte la valeur du potentiel dans la base de données COMSOL à
 % partir de la valeur donnée dans l interface BIOCAD
 
-model.component('comp1').physics('cir').feature('V1').set('value', {num2str(tlm.var.v0)});
+%           model.component('comp1').physics('cir').feature('V1').set('value', {num2str(tlm.var.v0)});
 
 
 %model.study.remove('std1'); % a retirer en regime de non debug
@@ -208,11 +208,11 @@ model.sol('sol1').feature('s1').feature('i1').set('linsolver', 'bicgstab');
 model.sol('sol1').feature('s1').feature('i1').set('nlinnormuse', true);
 model.sol('sol1').feature('s1').feature('i1').create('mg1', 'Multigrid');
 model.sol('sol1').feature('s1').feature('i1').feature('mg1').set('hybridization', 'multi');
-model.sol('sol1').feature('s1').feature('i1').feature('mg1').set('hybridvar', {'comp1_V' 'comp1_ec_term1_V0_ode'});
+%       model.sol('sol1').feature('s1').feature('i1').feature('mg1').set('hybridvar', {'comp1_V' 'comp1_ec_term1_V0_ode'});
 model.sol('sol1').feature('s1').feature('i1').create('dp1', 'DirectPreconditioner');
 model.sol('sol1').feature('s1').feature('i1').feature('dp1').set('linsolver', 'pardiso');
 model.sol('sol1').feature('s1').feature('i1').feature('dp1').set('hybridization', 'multi');
-model.sol('sol1').feature('s1').feature('i1').feature('dp1').set('hybridvar', {'comp1_currents'});
+%       model.sol('sol1').feature('s1').feature('i1').feature('dp1').set('hybridvar', {'comp1_currents'});
 model.sol('sol1').feature('s1').feature('fc1').set('linsolver', 'i1');
 model.sol('sol1').feature('s1').feature.remove('fcDef');
 model.sol('sol1').feature('s1').feature.remove('seDef');
@@ -225,7 +225,7 @@ data = mpheval(model,'V');
 %data = mpheval(model,'(cir.v_2-cir.v_0)/cir.R1.i');
 
 %model.result.numerical.create('gev1', 'EvalGlobal');
-model.result.numerical('gev1').setIndex('expr', '(cir.v_2-cir.v_0)/cir.R1.i', 0);
+%               model.result.numerical('gev1').setIndex('expr', '(cir.v_2-cir.v_0)/cir.R1.i', 0);
 toto=model.result.table.tags;
 model.result.table.remove('tbl1');
 model.result.table.create('tbl1', 'Table');
