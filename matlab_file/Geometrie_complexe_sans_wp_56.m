@@ -1,0 +1,475 @@
+function out = model
+%
+% Geometrie_complexe_sans_wp_56.m
+%
+% Model exported on Jan 10 2025, 10:41 by COMSOL 5.6.0.401.
+
+import com.comsol.model.*
+import com.comsol.model.util.*
+
+model = ModelUtil.create('Model');
+
+model.modelPath('C:\Users\enzo3\Documents\BIOCAD-2_vsnz');
+
+model.component.create('comp1', true);
+
+model.component('comp1').geom.create('geom1', 3);
+
+model.component('comp1').mesh.create('mesh1');
+
+model.component('comp1').physics.create('ec', 'ConductiveMedia', 'geom1');
+
+model.study.create('std1');
+model.study('std1').create('freq', 'Frequency');
+model.study('std1').feature('freq').activate('ec', true);
+
+% To import content from file, use:
+% model.param.loadFile('FILENAME');
+model.param.set('h_verre', '1[mm]', 'hauteur du bloc 1 en verre');
+model.param.set('L_verre', '3[mm]', 'longueur du bloc 1 en verre');
+model.param.set('l_verre', '3[cm]', 'largeur du bloc 1 en verre');
+model.param.set('h_PDMS', '3[mm]', 'hauteur du bloc 2 en PDMS');
+model.param.set('L_PDMS', '3[mm]', 'longueur du bloc 2 en PDMS');
+model.param.set('l_PDMS', '3[cm]', 'largeur du bloc 2 en PDMS');
+model.param.set('r_tube_ext', '1[mm]', 'rayon des tubes');
+model.param.set('r_tube_int', '0.25[mm]', 'rayon interieur des tubes');
+model.param.set('h_tube', '1[mm]', 'hauteur des tubes');
+model.param.set('h_electrode', '250[pm]', 'hauteur des electrodes');
+model.param.set('L_electrode', '0.250[mm]', 'longueur des electrodes');
+model.param.set('l_electrode', '0.250[mm]', 'largeur des electrodes');
+model.param.set('alpha', ['75[' native2unicode(hex2dec({'00' 'b0'}), 'unicode') ']'], 'angle entre bloc 1, 2 et 4');
+model.param.set('h_puit', '3[mm]', 'hauteur du puit');
+model.param.set('L_puit', '2[mm]', 'longueur du puit');
+model.param.set('l_trapeze', ['h_puit*tan(90[' native2unicode(hex2dec({'00' 'b0'}), 'unicode') ']-alpha)'], 'largeur haut du trapeze');
+model.param.set('l_haut_puit', 'l_haut_puit2+4*r_tube_ext', 'largeur du bloc puit');
+model.param.set('l_base_puit', 'l_haut_puit-(2*l_trapeze)', 'largeur haut du puit du bloc');
+model.param.set('l_haut_puit2', '2[cm]', 'largeur haut du puit du bloc 2');
+model.param.set('l_base_puit2', 'l_haut_puit2-(2*l_trapeze2)', 'largeur du bloc2 puit');
+model.param.set('l_trapeze2', ['h_puit2*tan(90[' native2unicode(hex2dec({'00' 'b0'}), 'unicode') ']-alpha)'], 'largeur haut du trapeze2');
+model.param.set('h_puit2', '2.5[mm]', 'hauteur haut du puit');
+model.param.set('l_tumoroide', ['(h_puit-h_puit2)*tan(90[' native2unicode(hex2dec({'00' 'b0'}), 'unicode') ']-alpha)']);
+
+model.component('comp1').geom('geom1').create('hex1', 'Hexahedron');
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '((l_PDMS-l_haut_puit)/2)+l_trapeze', 0, 0);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '(L_PDMS-L_puit)/2', 1, 0);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', 'h_verre', 2, 0);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', 'h_verre', 2, 1);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', 'h_verre', 2, 2);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', 'h_verre', 2, 3);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '((l_PDMS-l_haut_puit)/2)+l_trapeze', 0, 1);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '((L_PDMS-L_puit)/2)+L_puit', 1, 1);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '(((l_PDMS-l_haut_puit)/2)+l_trapeze)+l_base_puit', 0, 2);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '((L_PDMS-L_puit)/2)+L_puit', 1, 2);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '(((l_PDMS-l_haut_puit)/2)+l_trapeze)+l_base_puit', 0, 3);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '(L_PDMS-L_puit)/2', 1, 3);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '((l_PDMS-l_haut_puit)/2)+l_trapeze-l_tumoroide', 0, 4);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '((l_PDMS-l_haut_puit)/2)+l_trapeze-l_tumoroide', 0, 5);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '(((l_PDMS-l_haut_puit)/2)+l_trapeze)+l_base_puit+l_tumoroide', 0, 6);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '(((l_PDMS-l_haut_puit)/2)+l_trapeze)+l_base_puit+l_tumoroide', 0, 7);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '(L_PDMS-L_puit)/2', 1, 4);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '((L_PDMS-L_puit)/2)+L_puit', 1, 5);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '((L_PDMS-L_puit)/2)+L_puit', 1, 6);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', '(L_PDMS-L_puit)/2', 1, 7);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', 'h_verre+(h_puit-h_puit2)', 2, 4);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', 'h_verre+(h_puit-h_puit2)', 2, 5);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', 'h_verre+(h_puit-h_puit2)', 2, 6);
+model.component('comp1').geom('geom1').feature('hex1').setIndex('p', 'h_verre+(h_puit-h_puit2)', 2, 7);
+model.component('comp1').geom('geom1').run('hex1');
+model.component('comp1').geom('geom1').run('hex1');
+model.component('comp1').geom('geom1').create('cha1', 'Chamfer3D');
+model.component('comp1').geom('geom1').feature.remove('cha1');
+model.component('comp1').geom('geom1').feature('hex1').label('Tumoroide');
+model.component('comp1').geom('geom1').run('hex1');
+model.component('comp1').geom('geom1').create('blk1', 'Block');
+model.component('comp1').geom('geom1').feature('blk1').label('Block 1_verre');
+model.component('comp1').geom('geom1').feature('blk1').set('size', {'l_verre' 'L_verre' '1'});
+model.component('comp1').geom('geom1').feature('blk1').setIndex('size', 'h_verre', 2);
+model.component('comp1').geom('geom1').run('blk1');
+model.component('comp1').geom('geom1').run('blk1');
+model.component('comp1').geom('geom1').create('imp1', 'Import');
+model.component('comp1').geom('geom1').feature('imp1').set('filename', ['C:\Users\enzo3\Downloads\geom' native2unicode(hex2dec({'00' 'e9'}), 'unicode') 'trie complexe.mphtxt']);
+model.component('comp1').geom('geom1').feature('imp1').importData;
+model.component('comp1').geom('geom1').run('imp1');
+model.component('comp1').geom('geom1').feature('imp1').set('type', 'file');
+model.component('comp1').geom('geom1').feature.remove('imp1');
+model.component('comp1').geom('geom1').run('blk1');
+model.component('comp1').geom('geom1').create('imp1', 'Import');
+model.component('comp1').geom('geom1').feature('imp1').set('filename', ['C:\Users\enzo3\Downloads\geom' native2unicode(hex2dec({'00' 'e9'}), 'unicode') 'trie complexe.mphtxt']);
+model.component('comp1').geom('geom1').feature('imp1').importData;
+model.component('comp1').geom('geom1').runPre('imp1');
+model.component('comp1').geom('geom1').run('imp1');
+
+model.component('comp1').view('view1').set('transparency', false);
+
+model.component('comp1').geom('geom1').feature.remove('imp1');
+model.component('comp1').geom('geom1').run('fin');
+model.component('comp1').geom('geom1').run('blk1');
+model.component('comp1').geom('geom1').create('blk2', 'Block');
+model.component('comp1').geom('geom1').feature('blk2').label('Block 2_PDMS');
+model.component('comp1').geom('geom1').feature('blk2').set('size', {'l_PDMS' 'L_PDMS' '1'});
+model.component('comp1').geom('geom1').feature('blk2').setIndex('size', 'h_PDMS', 2);
+model.component('comp1').geom('geom1').feature('blk2').set('pos', {'0' '0' 'h_verre'});
+model.component('comp1').geom('geom1').run('blk2');
+
+model.component('comp1').view('view1').set('renderwireframe', true);
+
+model.component('comp1').geom('geom1').run('blk2');
+model.component('comp1').geom('geom1').create('hex2', 'Hexahedron');
+model.component('comp1').geom('geom1').feature('hex2').label('Hexahedron 2_Tumoroide+milieu de culture+PDMS');
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '((l_PDMS-l_haut_puit)/2)+l_trapeze', 0, 0);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '(L_PDMS-L_puit)/2', 1, 0);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', 'h_verre', 2, 0);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', 'h_verre', 2, 1);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', 'h_verre', 2, 2);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', 'h_verre', 2, 3);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '((l_PDMS-l_haut_puit)/2)+l_trapeze', 0, 1);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '((L_PDMS-L_puit)/2)+L_puit', 1, 1);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '(((l_PDMS-l_haut_puit)/2)+l_trapeze)+l_base_puit', 0, 2);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '((L_PDMS-L_puit)/2)+L_puit', 1, 2);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '(((l_PDMS-l_haut_puit)/2)+l_trapeze)+l_base_puit', 0, 3);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '(L_PDMS-L_puit)/2', 1, 3);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '((l_PDMS-l_haut_puit2)/2)-2*r_tube_ext', 0, 4);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '(L_PDMS-L_puit)/2', 1, 4);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', 'h_verre+h_puit', 2, 4);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '((l_PDMS-l_haut_puit2)/2)-2*r_tube_ext', 0, 5);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '((L_PDMS-L_puit)/2)+L_puit', 1, 5);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', 'h_verre+h_puit', 2, 5);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '((l_PDMS-l_haut_puit2)/2)+2*l_trapeze2+l_base_puit2+2*r_tube_ext', 0, 6);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '((L_PDMS-L_puit)/2)+L_puit', 1, 6);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', 'h_verre+h_puit', 2, 6);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '((l_PDMS-l_haut_puit2)/2)+2*l_trapeze2+l_base_puit2+2*r_tube_ext', 0, 7);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', '(L_PDMS-L_puit)/2', 1, 7);
+model.component('comp1').geom('geom1').feature('hex2').setIndex('p', 'h_verre+h_puit', 2, 7);
+model.component('comp1').geom('geom1').run('hex2');
+model.component('comp1').geom('geom1').run('hex2');
+model.component('comp1').geom('geom1').create('dif1', 'Difference');
+model.component('comp1').geom('geom1').feature('dif1').selection('input').set({'hex2'});
+model.component('comp1').geom('geom1').feature('dif1').selection('input').init;
+model.component('comp1').geom('geom1').feature('dif1').selection('input').set({'blk2'});
+model.component('comp1').geom('geom1').feature('dif1').selection('input2').set({'hex2'});
+model.component('comp1').geom('geom1').run('dif1');
+model.component('comp1').geom('geom1').feature('hex1').active(false);
+model.component('comp1').geom('geom1').runPre('fin');
+model.component('comp1').geom('geom1').runPre('dif1');
+model.component('comp1').geom('geom1').run('dif1');
+model.component('comp1').geom('geom1').feature.move('blk2', 1);
+model.component('comp1').geom('geom1').feature.move('blk1', 1);
+model.component('comp1').geom('geom1').run('dif1');
+model.component('comp1').geom('geom1').create('blk3', 'Block');
+model.component('comp1').geom('geom1').feature('blk3').label('Block 3_PDMS');
+model.component('comp1').geom('geom1').feature('blk3').set('size', {'l_PDMS' 'L_PDMS' '1'});
+model.component('comp1').geom('geom1').feature('blk3').setIndex('size', 'h_PDMS', 2);
+model.component('comp1').geom('geom1').feature('blk3').set('pos', {'0' '0' '(h_verre+(h_PDMS-h_puit))+h_puit'});
+model.component('comp1').geom('geom1').runPre('fin');
+model.component('comp1').geom('geom1').run('blk3');
+model.component('comp1').geom('geom1').create('hex3', 'Hexahedron');
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '((l_PDMS-l_haut_puit2)/2)+l_trapeze2', 0, 0);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '(L_PDMS-L_puit)/2', 1, 0);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', 'h_verre+(h_PDMS-h_puit2)', 2, 0);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '((l_PDMS-l_haut_puit2)/2)+l_trapeze2', 0, 1);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '((L_PDMS-L_puit)/2)+L_puit', 1, 1);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', 'h_verre+(h_PDMS-h_puit2)', 2, 1);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '(((l_PDMS-l_haut_puit2)/2)+l_trapeze2)+l_base_puit2', 0, 2);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '((L_PDMS-L_puit)/2)+L_puit', 1, 2);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', 'h_verre+(h_PDMS-h_puit2)', 2, 2);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '(((l_PDMS-l_haut_puit2)/2)+l_trapeze2)+l_base_puit2', 0, 3);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '(L_PDMS-L_puit)/2', 1, 3);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', 'h_verre+(h_PDMS-h_puit2)', 2, 3);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '((l_PDMS-l_haut_puit2)/2)', 0, 4);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '(L_PDMS-L_puit)/2', 1, 4);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '(h_verre+(h_PDMS-h_puit))+h_puit', 2, 4);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '((l_PDMS-l_haut_puit2)/2)', 0, 5);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '((L_PDMS-L_puit)/2)+L_puit', 1, 5);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '(h_verre+(h_PDMS-h_puit))+h_puit', 2, 5);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '((l_PDMS-l_haut_puit2)/2)+2*l_trapeze2+l_base_puit2', 0, 6);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '((L_PDMS-L_puit)/2)+L_puit', 1, 6);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '(h_verre+(h_PDMS-h_puit))+h_puit', 2, 6);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '((l_PDMS-l_haut_puit2)/2)+2*l_trapeze2+l_base_puit2', 0, 7);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '(L_PDMS-L_puit)/2', 1, 7);
+model.component('comp1').geom('geom1').feature('hex3').setIndex('p', '(h_verre+(h_PDMS-h_puit))+h_puit', 2, 7);
+model.component('comp1').geom('geom1').runPre('fin');
+model.component('comp1').geom('geom1').run('hex3');
+model.component('comp1').geom('geom1').create('cyl1', 'Cylinder');
+model.component('comp1').geom('geom1').feature('cyl1').set('r', 'r_tube_ext');
+model.component('comp1').geom('geom1').feature('cyl1').set('h', 'h_PDMS+h_tube');
+model.component('comp1').geom('geom1').feature('cyl1').set('pos', {'((l_PDMS-l_haut_puit2)/2)-r_tube_ext' '0' '0'});
+model.component('comp1').geom('geom1').feature('cyl1').setIndex('pos', 'L_PDMS/2', 1);
+model.component('comp1').geom('geom1').feature('cyl1').setIndex('pos', '(h_verre+(h_PDMS-h_puit))+h_puit', 2);
+model.component('comp1').geom('geom1').run('cyl1');
+model.component('comp1').geom('geom1').run('cyl1');
+model.component('comp1').geom('geom1').create('cyl2', 'Cylinder');
+model.component('comp1').geom('geom1').feature('cyl2').set('r', 'r_tube_ext');
+model.component('comp1').geom('geom1').feature('cyl2').set('h', 'h_PDMS+h_tube');
+model.component('comp1').geom('geom1').feature('cyl2').set('pos', {'((l_PDMS-l_haut_puit2)/2)+2*l_trapeze2+l_base_puit2+r_tube_ext' '0' '0'});
+model.component('comp1').geom('geom1').feature('cyl2').setIndex('pos', 'L_PDMS/2', 1);
+model.component('comp1').geom('geom1').feature('cyl2').setIndex('pos', '(h_verre+(h_PDMS-h_puit))+h_puit', 2);
+model.component('comp1').geom('geom1').run('cyl2');
+model.component('comp1').geom('geom1').run('cyl2');
+model.component('comp1').geom('geom1').create('cyl3', 'Cylinder');
+model.component('comp1').geom('geom1').feature('cyl3').label('Tube_Inlet');
+model.component('comp1').geom('geom1').feature('cyl3').set('r', 'r_tube_int');
+model.component('comp1').geom('geom1').feature('cyl3').set('h', 'h_PDMS+h_tube');
+model.component('comp1').geom('geom1').feature('cyl3').set('pos', {'((l_PDMS-l_haut_puit2)/2)-r_tube_ext' '0' '0'});
+model.component('comp1').geom('geom1').feature('cyl3').setIndex('pos', 'L_PDMS/2', 1);
+model.component('comp1').geom('geom1').feature('cyl3').setIndex('pos', '(h_verre+(h_PDMS-h_puit))+h_puit', 2);
+model.component('comp1').geom('geom1').run('cyl3');
+model.component('comp1').geom('geom1').run('cyl3');
+model.component('comp1').geom('geom1').create('cyl4', 'Cylinder');
+model.component('comp1').geom('geom1').feature('cyl4').label('Tube_Outlet');
+model.component('comp1').geom('geom1').feature('cyl4').set('r', 'r_tube_int');
+model.component('comp1').geom('geom1').feature('cyl4').set('h', 'h_PDMS+h_tube');
+model.component('comp1').geom('geom1').feature('cyl4').set('pos', {'((l_PDMS-l_haut_puit2)/2)+2*l_trapeze2+l_base_puit2+r_tube_ext' '0' '0'});
+model.component('comp1').geom('geom1').feature('cyl4').setIndex('pos', 'L_PDMS/2', 1);
+model.component('comp1').geom('geom1').feature('cyl4').setIndex('pos', '(h_verre+(h_PDMS-h_puit))+h_puit', 2);
+model.component('comp1').geom('geom1').run('cyl4');
+model.component('comp1').geom('geom1').run('cyl4');
+model.component('comp1').geom('geom1').create('dif2', 'Difference');
+model.component('comp1').geom('geom1').feature('dif2').selection('input').set({'blk3' 'cyl1' 'cyl2'});
+model.component('comp1').geom('geom1').feature('dif2').selection('input2').set({'cyl3' 'cyl4'});
+model.component('comp1').geom('geom1').run('dif2');
+model.component('comp1').geom('geom1').feature('hex1').active(true);
+model.component('comp1').geom('geom1').run('hex1');
+model.component('comp1').geom('geom1').run('dif2');
+model.component('comp1').geom('geom1').feature.move('hex1', 11);
+model.component('comp1').geom('geom1').run('hex1');
+model.component('comp1').geom('geom1').run('hex1');
+model.component('comp1').geom('geom1').create('wp1', 'WorkPlane');
+model.component('comp1').geom('geom1').feature('wp1').set('unite', true);
+model.component('comp1').geom('geom1').feature('wp1').set('quickz', 'L_PDMS/2');
+model.component('comp1').geom('geom1').feature('wp1').set('quickplane', 'xz');
+model.component('comp1').geom('geom1').feature('wp1').set('quicky', 'L_PDMS/2');
+model.component('comp1').geom('geom1').run('wp1');
+model.component('comp1').geom('geom1').run('wp1');
+model.component('comp1').geom('geom1').create('wp2', 'WorkPlane');
+model.component('comp1').geom('geom1').feature('wp2').set('unite', true);
+model.component('comp1').geom('geom1').feature('wp2').set('quickz', 'h_verre');
+model.component('comp1').geom('geom1').run('wp2');
+model.component('comp1').geom('geom1').feature('wp2').geom.create('sq1', 'Square');
+model.component('comp1').geom('geom1').feature('wp2').geom.feature('sq1').set('size', '250e-6');
+model.component('comp1').geom('geom1').feature('wp2').geom.feature('sq1').set('pos', {'l_base_puit/5+(l_PDMS-l_base_puit)/2' '0'});
+model.component('comp1').geom('geom1').feature('wp2').geom.feature('sq1').setIndex('pos', 'L_verre/2', 1);
+model.component('comp1').geom('geom1').feature('wp2').geom.run('sq1');
+model.component('comp1').geom('geom1').feature('wp2').geom.run('sq1');
+model.component('comp1').geom('geom1').feature('wp2').geom.create('arr1', 'Array');
+model.component('comp1').geom('geom1').feature('wp2').geom.feature('arr1').selection('input').set({'sq1'});
+model.component('comp1').geom('geom1').feature('wp2').geom.feature('arr1').set('displ', {'3*4.5e-3' '0'});
+model.component('comp1').geom('geom1').feature('wp2').geom.feature('arr1').set('fullsize', [2 1]);
+model.component('comp1').geom('geom1').feature('wp2').geom.run('arr1');
+model.component('comp1').geom('geom1').run;
+model.component('comp1').geom('geom1').feature('wp2').geom.label('Electrodes');
+
+model.component('comp1').material.create('mat1', 'Common');
+model.component('comp1').material('mat1').propertyGroup.create('Enu', 'Young''s modulus and Poisson''s ratio');
+model.component('comp1').material('mat1').propertyGroup.create('RefractiveIndex', 'Refractive index');
+model.component('comp1').material('mat1').label('Silica glass');
+model.component('comp1').material('mat1').set('family', 'custom');
+model.component('comp1').material('mat1').set('customspecular', [1 1 1]);
+model.component('comp1').material('mat1').set('diffuse', 'custom');
+model.component('comp1').material('mat1').set('customambient', [1 1 1]);
+model.component('comp1').material('mat1').set('noise', true);
+model.component('comp1').material('mat1').set('fresnel', 0.99);
+model.component('comp1').material('mat1').set('roughness', 0.02);
+model.component('comp1').material('mat1').set('metallic', 0);
+model.component('comp1').material('mat1').set('pearl', 0);
+model.component('comp1').material('mat1').set('diffusewrap', 0);
+model.component('comp1').material('mat1').set('clearcoat', 0);
+model.component('comp1').material('mat1').propertyGroup('def').set('relpermeability', {'1' '0' '0' '0' '1' '0' '0' '0' '1'});
+model.component('comp1').material('mat1').propertyGroup('def').set('electricconductivity', {'1e-14[S/m]' '0' '0' '0' '1e-14[S/m]' '0' '0' '0' '1e-14[S/m]'});
+model.component('comp1').material('mat1').propertyGroup('def').set('thermalexpansioncoefficient', {'0.55e-6[1/K]' '0' '0' '0' '0.55e-6[1/K]' '0' '0' '0' '0.55e-6[1/K]'});
+model.component('comp1').material('mat1').propertyGroup('def').set('heatcapacity', '703[J/(kg*K)]');
+model.component('comp1').material('mat1').propertyGroup('def').set('relpermittivity', {'3.75' '0' '0' '0' '3.75' '0' '0' '0' '3.75'});
+model.component('comp1').material('mat1').propertyGroup('def').set('density', '2203[kg/m^3]');
+model.component('comp1').material('mat1').propertyGroup('def').set('thermalconductivity', {'1.38[W/(m*K)]' '0' '0' '0' '1.38[W/(m*K)]' '0' '0' '0' '1.38[W/(m*K)]'});
+model.component('comp1').material('mat1').propertyGroup('Enu').set('youngsmodulus', '73.1e9[Pa]');
+model.component('comp1').material('mat1').propertyGroup('Enu').set('poissonsratio', '0.17');
+model.component('comp1').material('mat1').propertyGroup('RefractiveIndex').set('n', '');
+model.component('comp1').material('mat1').propertyGroup('RefractiveIndex').set('ki', '');
+model.component('comp1').material('mat1').propertyGroup('RefractiveIndex').set('n', '');
+model.component('comp1').material('mat1').propertyGroup('RefractiveIndex').set('ki', '');
+model.component('comp1').material('mat1').propertyGroup('RefractiveIndex').set('n', {'1.45' '0' '0' '0' '1.45' '0' '0' '0' '1.45'});
+model.component('comp1').material('mat1').propertyGroup('RefractiveIndex').set('ki', {'0' '0' '0' '0' '0' '0' '0' '0' '0'});
+model.component('comp1').material('mat1').set('groups', {});
+model.component('comp1').material('mat1').set('family', 'custom');
+model.component('comp1').material('mat1').set('lighting', 'cooktorrance');
+model.component('comp1').material('mat1').set('fresnel', 0.99);
+model.component('comp1').material('mat1').set('roughness', 0.02);
+model.component('comp1').material('mat1').set('metallic', 0);
+model.component('comp1').material('mat1').set('pearl', 0);
+model.component('comp1').material('mat1').set('diffusewrap', 0);
+model.component('comp1').material('mat1').set('clearcoat', 0);
+model.component('comp1').material('mat1').set('reflectance', 0);
+model.component('comp1').material('mat1').set('ambient', 'custom');
+model.component('comp1').material('mat1').set('customambient', [1 1 1]);
+model.component('comp1').material('mat1').set('diffuse', 'custom');
+model.component('comp1').material('mat1').set('customdiffuse', [1 1 1]);
+model.component('comp1').material('mat1').set('specular', 'custom');
+model.component('comp1').material('mat1').set('customspecular', [1 1 1]);
+model.component('comp1').material('mat1').set('noisecolor', 'custom');
+model.component('comp1').material('mat1').set('customnoisecolor', [0 0 0]);
+model.component('comp1').material('mat1').set('noisescale', 0);
+model.component('comp1').material('mat1').set('noise', 'off');
+model.component('comp1').material('mat1').set('noisefreq', 1);
+model.component('comp1').material('mat1').set('normalnoisebrush', '0');
+model.component('comp1').material('mat1').set('normalnoisetype', '0');
+model.component('comp1').material('mat1').set('alpha', 1);
+model.component('comp1').material.create('mat2', 'Common');
+model.component('comp1').material('mat2').label(['Tumoro' native2unicode(hex2dec({'00' 'ef'}), 'unicode') 'de']);
+model.component('comp1').material.create('mat3', 'Common');
+model.component('comp1').material('mat3').propertyGroup.create('Enu', 'Young''s modulus and Poisson''s ratio');
+model.component('comp1').material('mat3').label('PDMS - Polydimethylsiloxane');
+model.component('comp1').material('mat3').propertyGroup('def').set('thermalexpansioncoefficient', {'9e-4[1/K]' '0' '0' '0' '9e-4[1/K]' '0' '0' '0' '9e-4[1/K]'});
+model.component('comp1').material('mat3').propertyGroup('def').set('heatcapacity', '1460[J/(kg*K)]');
+model.component('comp1').material('mat3').propertyGroup('def').set('relpermittivity', {'2.75' '0' '0' '0' '2.75' '0' '0' '0' '2.75'});
+model.component('comp1').material('mat3').propertyGroup('def').set('density', '970[kg/m^3]');
+model.component('comp1').material('mat3').propertyGroup('def').set('thermalconductivity', {'0.16[W/(m*K)]' '0' '0' '0' '0.16[W/(m*K)]' '0' '0' '0' '0.16[W/(m*K)]'});
+model.component('comp1').material('mat3').propertyGroup('Enu').set('youngsmodulus', '750[kPa]');
+model.component('comp1').material('mat3').propertyGroup('Enu').set('poissonsratio', '0.49');
+model.component('comp1').material('mat3').set('groups', {});
+model.component('comp1').material('mat3').set('family', 'plastic');
+model.component('comp1').material.create('mat4', 'Common');
+model.component('comp1').material('mat4').propertyGroup.create('Enu', 'Young''s modulus and Poisson''s ratio');
+model.component('comp1').material('mat4').label('Au - Gold');
+model.component('comp1').material('mat4').set('family', 'gold');
+model.component('comp1').material('mat4').propertyGroup('def').set('electricconductivity', {'45.6e6[S/m]' '0' '0' '0' '45.6e6[S/m]' '0' '0' '0' '45.6e6[S/m]'});
+model.component('comp1').material('mat4').propertyGroup('def').set('thermalexpansioncoefficient', {'14.2e-6[1/K]' '0' '0' '0' '14.2e-6[1/K]' '0' '0' '0' '14.2e-6[1/K]'});
+model.component('comp1').material('mat4').propertyGroup('def').set('heatcapacity', '129[J/(kg*K)]');
+model.component('comp1').material('mat4').propertyGroup('def').set('density', '19300[kg/m^3]');
+model.component('comp1').material('mat4').propertyGroup('def').set('thermalconductivity', {'317[W/(m*K)]' '0' '0' '0' '317[W/(m*K)]' '0' '0' '0' '317[W/(m*K)]'});
+model.component('comp1').material('mat4').propertyGroup('Enu').set('youngsmodulus', '70e9[Pa]');
+model.component('comp1').material('mat4').propertyGroup('Enu').set('poissonsratio', '0.44');
+model.component('comp1').material('mat4').set('groups', {});
+model.component('comp1').material('mat4').set('family', 'gold');
+model.component('comp1').material.create('mat5', 'Common');
+model.component('comp1').material('mat5').propertyGroup('def').func.create('eta', 'Piecewise');
+model.component('comp1').material('mat5').propertyGroup('def').func.create('Cp', 'Piecewise');
+model.component('comp1').material('mat5').propertyGroup('def').func.create('rho', 'Piecewise');
+model.component('comp1').material('mat5').propertyGroup('def').func.create('k', 'Piecewise');
+model.component('comp1').material('mat5').propertyGroup('def').func.create('cs', 'Interpolation');
+model.component('comp1').material('mat5').propertyGroup('def').func.create('an1', 'Analytic');
+model.component('comp1').material('mat5').propertyGroup('def').func.create('an2', 'Analytic');
+model.component('comp1').material('mat5').propertyGroup('def').func.create('an3', 'Analytic');
+model.component('comp1').material('mat5').label('Water');
+model.component('comp1').material('mat5').set('family', 'water');
+model.component('comp1').material('mat5').propertyGroup('def').func('eta').set('arg', 'T');
+model.component('comp1').material('mat5').propertyGroup('def').func('eta').set('pieces', {'273.15' '413.15' '1.3799566804-0.021224019151*T^1+1.3604562827E-4*T^2-4.6454090319E-7*T^3+8.9042735735E-10*T^4-9.0790692686E-13*T^5+3.8457331488E-16*T^6'; '413.15' '553.75' '0.00401235783-2.10746715E-5*T^1+3.85772275E-8*T^2-2.39730284E-11*T^3'});
+model.component('comp1').material('mat5').propertyGroup('def').func('eta').set('argunit', 'K');
+model.component('comp1').material('mat5').propertyGroup('def').func('eta').set('fununit', 'Pa*s');
+model.component('comp1').material('mat5').propertyGroup('def').func('Cp').set('arg', 'T');
+model.component('comp1').material('mat5').propertyGroup('def').func('Cp').set('pieces', {'273.15' '553.75' '12010.1471-80.4072879*T^1+0.309866854*T^2-5.38186884E-4*T^3+3.62536437E-7*T^4'});
+model.component('comp1').material('mat5').propertyGroup('def').func('Cp').set('argunit', 'K');
+model.component('comp1').material('mat5').propertyGroup('def').func('Cp').set('fununit', 'J/(kg*K)');
+model.component('comp1').material('mat5').propertyGroup('def').func('rho').set('arg', 'T');
+model.component('comp1').material('mat5').propertyGroup('def').func('rho').set('smooth', 'contd1');
+model.component('comp1').material('mat5').propertyGroup('def').func('rho').set('pieces', {'273.15' '293.15' '0.000063092789034*T^3-0.060367639882855*T^2+18.9229382407066*T-950.704055329848'; '293.15' '373.15' '0.000010335053319*T^3-0.013395065634452*T^2+4.969288832655160*T+432.257114008512'});
+model.component('comp1').material('mat5').propertyGroup('def').func('rho').set('argunit', 'K');
+model.component('comp1').material('mat5').propertyGroup('def').func('rho').set('fununit', 'kg/m^3');
+model.component('comp1').material('mat5').propertyGroup('def').func('k').set('arg', 'T');
+model.component('comp1').material('mat5').propertyGroup('def').func('k').set('pieces', {'273.15' '553.75' '-0.869083936+0.00894880345*T^1-1.58366345E-5*T^2+7.97543259E-9*T^3'});
+model.component('comp1').material('mat5').propertyGroup('def').func('k').set('argunit', 'K');
+model.component('comp1').material('mat5').propertyGroup('def').func('k').set('fununit', 'W/(m*K)');
+model.component('comp1').material('mat5').propertyGroup('def').func('cs').set('table', {'273' '1403';  ...
+'278' '1427';  ...
+'283' '1447';  ...
+'293' '1481';  ...
+'303' '1507';  ...
+'313' '1526';  ...
+'323' '1541';  ...
+'333' '1552';  ...
+'343' '1555';  ...
+'353' '1555';  ...
+'363' '1550';  ...
+'373' '1543'});
+model.component('comp1').material('mat5').propertyGroup('def').func('cs').set('interp', 'piecewisecubic');
+model.component('comp1').material('mat5').propertyGroup('def').func('cs').set('argunit', 'K');
+model.component('comp1').material('mat5').propertyGroup('def').func('cs').set('fununit', 'm/s');
+model.component('comp1').material('mat5').propertyGroup('def').func('an1').label('Analytic ');
+model.component('comp1').material('mat5').propertyGroup('def').func('an1').set('funcname', 'alpha_p');
+model.component('comp1').material('mat5').propertyGroup('def').func('an1').set('expr', '-1/rho(T)*d(rho(T),T)');
+model.component('comp1').material('mat5').propertyGroup('def').func('an1').set('args', {'T'});
+model.component('comp1').material('mat5').propertyGroup('def').func('an1').set('argunit', 'K');
+model.component('comp1').material('mat5').propertyGroup('def').func('an1').set('fununit', '1/K');
+model.component('comp1').material('mat5').propertyGroup('def').func('an1').set('plotargs', {'T' '273.15' '373.15'});
+model.component('comp1').material('mat5').propertyGroup('def').func('an2').set('funcname', 'gamma_w');
+model.component('comp1').material('mat5').propertyGroup('def').func('an2').set('expr', '1+(T/Cp(T))*(alpha_p(T)*cs(T))^2');
+model.component('comp1').material('mat5').propertyGroup('def').func('an2').set('args', {'T'});
+model.component('comp1').material('mat5').propertyGroup('def').func('an2').set('argunit', 'K');
+model.component('comp1').material('mat5').propertyGroup('def').func('an2').set('fununit', '1');
+model.component('comp1').material('mat5').propertyGroup('def').func('an2').set('plotargs', {'T' '273.15' '373.15'});
+model.component('comp1').material('mat5').propertyGroup('def').func('an3').set('funcname', 'muB');
+model.component('comp1').material('mat5').propertyGroup('def').func('an3').set('expr', '2.79*eta(T)');
+model.component('comp1').material('mat5').propertyGroup('def').func('an3').set('args', {'T'});
+model.component('comp1').material('mat5').propertyGroup('def').func('an3').set('argunit', 'K');
+model.component('comp1').material('mat5').propertyGroup('def').func('an3').set('fununit', 'Pa*s');
+model.component('comp1').material('mat5').propertyGroup('def').func('an3').set('plotargs', {'T' '273.15' '553.75'});
+model.component('comp1').material('mat5').propertyGroup('def').set('thermalexpansioncoefficient', '');
+model.component('comp1').material('mat5').propertyGroup('def').set('bulkviscosity', '');
+model.component('comp1').material('mat5').propertyGroup('def').set('thermalexpansioncoefficient', {'alpha_p(T)' '0' '0' '0' 'alpha_p(T)' '0' '0' '0' 'alpha_p(T)'});
+model.component('comp1').material('mat5').propertyGroup('def').set('bulkviscosity', 'muB(T)');
+model.component('comp1').material('mat5').propertyGroup('def').set('dynamicviscosity', 'eta(T)');
+model.component('comp1').material('mat5').propertyGroup('def').set('ratioofspecificheat', 'gamma_w(T)');
+model.component('comp1').material('mat5').propertyGroup('def').set('electricconductivity', {'5.5e-6[S/m]' '0' '0' '0' '5.5e-6[S/m]' '0' '0' '0' '5.5e-6[S/m]'});
+model.component('comp1').material('mat5').propertyGroup('def').set('heatcapacity', 'Cp(T)');
+model.component('comp1').material('mat5').propertyGroup('def').set('density', 'rho(T)');
+model.component('comp1').material('mat5').propertyGroup('def').set('thermalconductivity', {'k(T)' '0' '0' '0' 'k(T)' '0' '0' '0' 'k(T)'});
+model.component('comp1').material('mat5').propertyGroup('def').set('soundspeed', 'cs(T)');
+model.component('comp1').material('mat5').propertyGroup('def').addInput('temperature');
+model.component('comp1').material('mat5').set('groups', {});
+model.component('comp1').material('mat5').set('family', 'water');
+model.component('comp1').material('mat2').propertyGroup('def').set('relpermittivity', '');
+model.component('comp1').material('mat2').propertyGroup('def').set('electricconductivity', '');
+model.component('comp1').material('mat2').propertyGroup('def').set('thermalexpansioncoefficient', '');
+model.component('comp1').material('mat2').propertyGroup('def').set('relpermittivity', {'5.5e-6[S/m]'});
+model.component('comp1').material('mat2').propertyGroup('def').set('electricconductivity', {'81'});
+model.component('comp1').material('mat2').propertyGroup('def').set('thermalexpansioncoefficient', {'alpha_p(T)'});
+model.component('comp1').material('mat2').propertyGroup('def').set('electricconductivity', {});
+model.component('comp1').material('mat2').propertyGroup('def').set('relpermittivity', {'81'});
+model.component('comp1').material('mat2').propertyGroup('def').set('electricconductivity', {'5.5e-6[S/m]'});
+model.component('comp1').material('mat2').propertyGroup('def').set('thermalexpansioncoefficient', {});
+model.component('comp1').material('mat2').selection.set([6]);
+model.component('comp1').material('mat1').selection.set([1]);
+model.component('comp1').material('mat4').selection.geom('geom1', 2);
+model.component('comp1').material('mat4').selection.set([50 51]);
+model.component('comp1').material('mat5').selection.all;
+
+model.component('comp1').view('view1').set('renderwireframe', false);
+
+model.component('comp1').material('mat5').selection.set([6 7 8 9]);
+
+model.component('comp1').view('view1').set('renderwireframe', true);
+
+model.component('comp1').material('mat5').selection.set([]);
+model.component('comp1').material('mat3').selection.set([2 3 4 5 7 8 9]);
+model.component('comp1').material('mat3').propertyGroup('def').set('electricconductivity', {'1e-14'});
+model.component('comp1').material('mat5').selection.geom('geom1', 2);
+model.component('comp1').material('mat5').selection.set([14 16 25 45 52 54 55 65 66 72 74 80]);
+model.component('comp1').material.remove('mat5');
+
+model.component('comp1').physics('ec').create('term1', 'Terminal', 2);
+model.component('comp1').physics('ec').feature('term1').selection.set([50]);
+model.component('comp1').physics('ec').feature('term1').set('TerminalType', 'Voltage');
+model.component('comp1').physics('ec').feature('term1').set('V0', 0);
+
+model.label('Untitled.mph');
+
+model.component('comp1').physics('ec').feature('term1').selection.set([51]);
+model.component('comp1').physics('ec').feature('term1').set('V0', 0.025);
+model.component('comp1').physics('ec').create('gnd1', 'Ground', 2);
+model.component('comp1').physics('ec').feature('gnd1').selection.set([51]);
+model.component('comp1').physics('ec').feature('term1').selection.set([50]);
+
+model.component('comp1').mesh('mesh1').run;
+
+model.study('std1').feature('freq').set('loadparameters', 'C:\Users\enzo3\Documents\BIOCAD-2_vsnz\freq.txt');
+model.study('std1').feature('freq').set('plist', '1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 20000 30000 40000 50000 60000 70000 80000 90000 100000 200000 300000 400000 500000 600000 700000 800000 900000');
+
+model.label(['G' native2unicode(hex2dec({'00' 'e9'}), 'unicode') 'om' native2unicode(hex2dec({'00' 'e9'}), 'unicode') 'trie complexe_5.6.mph']);
+
+model.component('comp1').geom('geom1').feature('wp1').active(false);
+model.component('comp1').geom('geom1').run('wp1');
+model.component('comp1').geom('geom1').run('fin');
+model.component('comp1').geom('geom1').feature('wp2').active(false);
+model.component('comp1').geom('geom1').run('fin');
+model.component('comp1').geom('geom1').feature.remove('wp1');
+model.component('comp1').geom('geom1').feature.remove('wp2');
+
+out = model;

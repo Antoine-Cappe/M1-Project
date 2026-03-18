@@ -1,1 +1,0 @@
-(cir.v_2-cir.v_0)/cir.R1.i Ω ""
