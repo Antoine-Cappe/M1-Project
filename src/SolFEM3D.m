@@ -91,7 +91,7 @@ Y_complex = mphglobal(model, 'ec.Y11');
 % Calcul de l'impédance (Z = 1 / Y). 
 % Note : On met un signe '-' au cas où le courant serait orienté vers l'extérieur dans COMSOL,
 % ce qui est souvent le cas quand on a des admittances négatives comme ici.
-Z_complex = conj(-1 ./ Y_complex);
+Z_complex = 1 ./ Y_complex;
 
 % On s'assure que Z_complex est bien sous forme de colonne
 Z_complex = Z_complex(:); 
