@@ -19,7 +19,7 @@
 
 function [tlm,model]=RechercheIndice3Dnew(tlm,model)
 
-% Recherche des indices des points aux centres des électrodes et des
+% Recherche des indices des points aux centres des ï¿½lectrodes et des
 % indices des domaines
 
 %Initialization
@@ -45,9 +45,9 @@ while i<=size(fem_mesh_p,2) %Loop on the total number of nodes to find the right
 %        ZZ = tlm.var.OrigineZ+tlm.var.EpaisseurChambre/2;
 
         Coord3=model.component('comp1').geom('geom1').obj('pt2').getVertexCoord();
-        XX = Coord3(1);
-        YY = Coord3(2);
-        ZZ = Coord3(3);
+        XX = Coord3(1)* tlm.var.scale;
+        YY = Coord3(2)* tlm.var.scale;
+        ZZ = Coord3(3)* tlm.var.scale;
 
 %    end
 %    if tlm.conf.points==1
@@ -103,9 +103,9 @@ while i<=size(fem_mesh_p,2) %Loop on the total number of nodes to find the right
 %        ZZ = tlm.var.OrigineZ+tlm.var.EpaisseurChambre/2;
         
         Coord4=model.component('comp1').geom('geom1').obj('pt3').getVertexCoord();
-        XX = Coord4(1);
-        YY = Coord4(2);
-        ZZ = Coord4(3);
+        XX = Coord4(1)* tlm.var.scale;
+        YY = Coord4(2)* tlm.var.scale;
+        ZZ = Coord4(3)* tlm.var.scale;
 
 
 %    end
@@ -137,10 +137,10 @@ while i<=size(fem_mesh_p,2) %Loop on the total number of nodes to find the right
         ZZ=tlm.var.OrigineZ+tlm.var.EpaisseurChambre-tlm.var.Epsilon;
         
         Coord1=model.component('comp1').geom('geom1').obj('pt1').getVertexCoord();
-        XX = Coord1(1);
-        YY = Coord1(2);
-        ZZ = Coord1(3);
-  
+        XX = Coord1(1)* tlm.var.scale;
+        YY = Coord1(2)* tlm.var.scale;
+        ZZ = Coord1(3)* tlm.var.scale;
+
 %    end
     if (abs(fem_mesh_p(1,i)-XX)<1e-10) && ...
                (abs(fem_mesh_p(2,i)-YY)<1e-10)&&...
@@ -201,9 +201,9 @@ while i<=size(fem_mesh_p,2) %Loop on the total number of nodes to find the right
 % If there is a Cell
     if tlm.conf.Cell==1 % one cell 
         Coord2=model.component('comp1').geom('geom1').obj('pt2').getVertexCoord();
-        XX = Coord2(1);
-        YY = Coord2(2);
-        ZZ = Coord2(3);
+        XX = Coord2(1)* tlm.var.scale;
+        YY = Coord2(2)* tlm.var.scale;
+        ZZ = Coord2(3)* tlm.var.scale;
 
         
         if (abs(fem_mesh_p(1,i)-XX)<1e-10) && ...
