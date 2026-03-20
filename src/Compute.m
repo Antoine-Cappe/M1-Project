@@ -209,11 +209,13 @@ cd('src');
 
 % Run circuit from shell
 % the command must include the '&' character for matlab to continue running and not wait for the end of the execution
-system(sprintf('ngspice \"%s\\%s\\%s.cir\"', tlm.conf.store, tlm.conf.Name, tlm.conf.Name));
+%system(sprintf('ngspice \"%s\\%s\\%s.cir\"', tlm.conf.store, tlm.conf.Name, tlm.conf.Name));
+system(sprintf('"C:\\Program Files\\XyceNF_7.10\\bin\\Xyce.exe" \"%s\\%s\\%s.cir\"', tlm.conf.store, tlm.conf.Name, tlm.conf.Name));
 
 % move resulting files in tlm.conf.store/tlm.conf.Name ( results directory)
-movefile('*.spi_cou', strcat(tlm.conf.store, "\", tlm.conf.Name));
-movefile('*.spi', strcat(tlm.conf.store, "\", tlm.conf.Name));
+%movefile('*.spi_cou', strcat(tlm.conf.store, "\", tlm.conf.Name));
+%movefile('*.spi', strcat(tlm.conf.store, "\", tlm.conf.Name));
+movefile('*.prn', strcat(tlm.conf.store, "\", tlm.conf.Name));
 
 % go to said directory
 cd(strcat(tlm.conf.store, "\", tlm.conf.Name));

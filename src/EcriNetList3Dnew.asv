@@ -89,41 +89,27 @@ fprintf(fid, '******************************************************************
  %   fprintf(fid, '  WRITE %s.spi vdb(%u,%u)-vdb(%u)-66 vp(%u,%u)-vp(%u) \n', ...
   %          tlm.conf.Name,tlm.ind.pt.elec2,tlm.ind.pt.elec1,tlm.ind.pt.elec1,tlm.ind.pt.elec2,tlm.ind.pt.elec1,tlm.ind.pt.elec1);
 %elseif tlm.conf.points==4
-% -   fprintf(fid, '  WRITE %s.spi db(v(%u)) ph(v(%u)) db(v(%u)) ph(v(%u)) db(v(%u)) ph(v(%u)) \n', ...
- %   fprintf(fid, '  WRITE %s.spi vdb(%u)-vdb(%u)-66 vp(%u,%u)-vp(%u) \n', ...
-%            tlm.conf.Name,tlm.ind.pt.mesu2,tlm.ind.pt.mesu1,tlm.ind.pt.elec1,tlm.ind.pt.mesu2,tlm.ind.pt.mesu1,tlm.ind.pt.elec1);
-%-    fprintf(fid, '  PLOT VDB(%u,%u)-VDB(%u)-100 \n', ...                              % .PLOT generates the .cou file for exploitation of the results by Xelga                             
-% -           tlm.ind.pt.mesu2, tlm.ind.pt.mesu1, tlm.ind.pt.elec1);                                                 
-%end
-%fprintf(fid,'  DESTROY ALL \n'); 
-%fprintf(fid, '  AC DEC 1 %f %f \n',tlm.var.frequence.min,tlm.var.frequence.min);                        % Wide spectrum analysis, logarithmic variation between 1 and 1e10 Hz, 25 points per decade
-%fprintf(fid, '  WRITE %s all \n',strcat(tlm.conf.Name, "_", num2str(tlm.var.frequence.min), "Hz.spi_cou"));
-%fprintf(fid,'  DESTROY ALL \n'); 
-%ex=round((log10(tlm.var.frequence.max)+log10(tlm.var.frequence.min))/2);
-%if tlm.var.frequence.max==10
- %    ex=0;
-%end
-%f=5*10^ex;
-%fprintf(fid, '  AC DEC 1 %f %f \n',f,f);                        % Wide spectrum analysis, logarithmic variation between 1 and 1e10 Hz, 25 points per decade
-%fprintf(fid, '  WRITE %s.spi_cou all \n',strcat(tlm.conf.Name, "_", num2str(f), "Hz"));
-%fprintf(fid,'  DESTROY ALL \n'); 
-%fprintf(fid, '  AC DEC 1 %f %f \n',tlm.var.frequence.max,tlm.var.frequence.max);                        % Wide spectrum analysis, logarithmic variation between 1 and 1e10 Hz, 25 points per decade
-%fprintf(fid, '  WRITE %s.spi_cou all \n',strcat(tlm.conf.Name, "_", num2str(tlm.var.frequence.max), "Hz"));
-%fprintf(fid,'.ENDC \n');
-% NEW - Xyce compatible:
-% AC sweep with correct frequency range
-fprintf(fid, '.AC DEC %d %g %g\n', round(tlm.var.frequence.step), tlm.var.frequence.min, tlm.var.frequence.max);
-
-% Print voltages AND current through Vin for impedance calculation Z = V/I
-fprintf(fid, '.PRINT AC format=probe file=%s.prn V(%u,%u) I(Vin)\n', ...
-        tlm.conf.Name, tlm.ind.pt.elec2, tlm.ind.pt.elec1);
-
-% Intermediate frequency outputs for potential maps
+%%    fprintf(fid, '  WRITE %s.spi db(v(%u)) ph(v(%u)) db(v(%u)) ph(v(%u)) db(v(%u)) ph(v(%u)) \n', ...
+    fprintf(fid, '  WRITE %s.spi vdb(%u)-vdb(%u)-66 vp(%u,%u)-vp(%u) \n', ...
+            tlm.conf.Name,tlm.ind.pt.mesu2,tlm.ind.pt.mesu1,tlm.ind.pt.elec1,tlm.ind.pt.mesu2,tlm.ind.pt.mesu1,tlm.ind.pt.elec1);
+%    fprintf(fid, '  PLOT VDB(%u,%u)-VDB(%u)-100 \n', ...                              % .PLOT generates the .cou file for exploitation of the results by Xelga                             
+%            tlm.ind.pt.mesu2, tlm.ind.pt.mesu1, tlm.ind.pt.elec1);                                                 
+end
+fprintf(fid,'  DESTROY ALL \n'); 
+fprintf(fid, '  AC DEC 1 %f %f \n',tlm.var.frequence.min,tlm.var.frequence.min);                        % Wide spectrum analysis, logarithmic variation between 1 and 1e10 Hz, 25 points per decade
+fprintf(fid, '  WRITE %s all \n',strcat(tlm.conf.Name, "_", num2str(tlm.var.frequence.min), "Hz.spi_cou"));
+fprintf(fid,'  DESTROY ALL \n'); 
 ex=round((log10(tlm.var.frequence.max)+log10(tlm.var.frequence.min))/2);
 if tlm.var.frequence.max==10
-    ex=0;
+     ex=0;
 end
 f=5*10^ex;
+fprintf(fid, '  AC DEC 1 %f %f \n',f,f);                        % Wide spectrum analysis, logarithmic variation between 1 and 1e10 Hz, 25 points per decade
+fprintf(fid, '  WRITE %s.spi_cou all \n',strcat(tlm.conf.Name, "_", num2str(f), "Hz"));
+fprintf(fid,'  DESTROY ALL \n'); 
+fprintf(fid, '  AC DEC 1 %f %f \n',tlm.var.frequence.max,tlm.var.frequence.max);                        % Wide spectrum analysis, logarithmic variation between 1 and 1e10 Hz, 25 points per decade
+fprintf(fid, '  WRITE %s.spi_cou all \n',strcat(tlm.conf.Name, "_", num2str(tlm.var.frequence.max), "Hz"));
+fprintf(fid,'.ENDC \n');
                                                                                             
 fprintf(fid, 'Vin\t%u\t0\tDC 0 AC %f\n', tlm.ind.pt.elec2,tlm.var.v0);        % Left outer electrode where there is the solicitation (here tlm.var.v0)
 
@@ -719,7 +705,7 @@ for i=1:1:size(fem_mesh_p,2)                                        % Loop on th
             end %for j=7:7:size(tlm.result{i},2)
         end %if size(tlm.result{i},2)~=0
                             
-        % Ajout des éléments parasites
+        % Ajout des Ã©lÃ©ments parasites
         
         aire=0;
         
@@ -845,7 +831,10 @@ for i=1:1:size(fem_mesh_p,2)                                        % Loop on th
         
 end %for i
 
+fprintf(fid, '.control\nquit 13\n\n.endc\n.end\n'); 
+
 fprintf(fid, '.END\n');
+
 fclose(fid);
 
 fclose(fie);

@@ -104,7 +104,7 @@ if (tlm.conf.dim==2)
     numelem=model.component('comp1').mesh('mesh1').getNumElem('tri');
     numvertex=model.component('comp1').mesh('mesh1').getNumVertex();
 else                   
-    [tlm,model]=Geom3Dcad(tlm);
+    % [tlm,model]=Geom3Dcad(tlm);
     numelem=model.component('comp1').mesh('mesh1').getNumElem('tet');
     numvertex=model.component('comp1').mesh('mesh1').getNumVertex();
 end
@@ -209,11 +209,13 @@ cd('src');
 
 % Run circuit from shell
 % the command must include the '&' character for matlab to continue running and not wait for the end of the execution
-system(sprintf('ngspice \"%s\\%s\\%s.cir\"', tlm.conf.store, tlm.conf.Name, tlm.conf.Name));
+%system(sprintf('ngspice \"%s\\%s\\%s.cir\"', tlm.conf.store, tlm.conf.Name, tlm.conf.Name));
+system(sprintf('"C:\\Program Files\\XyceNF_7.10\\bin\\Xyce.exe" \"%s\\%s\\%s.cir\"', tlm.conf.store, tlm.conf.Name, tlm.conf.Name));
 
 % move resulting files in tlm.conf.store/tlm.conf.Name ( results directory)
-movefile('*.spi_cou', strcat(tlm.conf.store, "\", tlm.conf.Name));
-movefile('*.spi', strcat(tlm.conf.store, "\", tlm.conf.Name));
+%movefile('*.spi_cou', strcat(tlm.conf.store, "\", tlm.conf.Name));
+%movefile('*.spi', strcat(tlm.conf.store, "\", tlm.conf.Name));
+movefile('*.prn', strcat(tlm.conf.store, "\", tlm.conf.Name));
 
 % go to said directory
 cd(strcat(tlm.conf.store, "\", tlm.conf.Name));
@@ -349,7 +351,7 @@ elseif tlm.conf.calcul==3
     if tlm.conf.log==1
         fprintf(fil,'\n Time for Geometry is: %u; Time for TLM is: %u; Time for ANA is: %u', tlm.var.time_for_geometry,...
                     tlm.var.time_for_tlm,tlm.var.time_for_ana);
-        fprint
+        % fprint
     end
 else
     Message=sprintf('\n Time for Geometry is: %u; Time for TLM is: %u', tlm.var.time_for_geometry,...

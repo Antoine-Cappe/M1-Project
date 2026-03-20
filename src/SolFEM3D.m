@@ -21,47 +21,81 @@ tlm.sol.fre=[];
 
 global fem_mesh_p;
 
-tlm.conf.Name0=tlm.conf.Name;
+%tlm.conf.Name0=tlm.conf.Name;
 
-name1=sprintf('%s.spi',tlm.conf.Name0);     % Name of the file
-fid=fopen(name1, 'r');                     % Open the File
+%name1=sprintf('%s.spi',tlm.conf.Name0);     % Name of the file
+%fid=fopen(name1, 'r');                     % Open the File
 
-if fid>=0       % The file exists
+%if fid>=0       % The file exists
     
-    tlineref='Values:';
+    %tlineref='Values:';
 
-    i=0;
+    %i=0;
 
+    %while ~feof(fid)
+     %   tlineread = fgetl(fid);
+      %  C = strcmp(tlineref,tlineread);
+       % if C==1
+        %    imul=log10(tlm.var.frequence.max)-log10(tlm.var.frequence.min);
+         %   while i<(tlm.var.frequence.step*imul+1)
+          %          tlineread = fgetl(fid);
+%    -                disp(tlineread);
+          %             tlm.sol.fre(i+1,:)=str2num(tlineread);
+
+           %            tlineread = fgetl(fid);
+%    -                disp(tlineread);
+            %        tlineread = fgetl(fid);
+%  -                  disp(tlineread);
+             %       tlineread = fgetl(fid);
+%   -                 disp(tlineread);
+            %        i=i+1;
+           % end
+           % break
+        %end
+   % end
+
+ %   fclose(fid);
+
+%else
+    
+  %  Message=sprintf('\n\t\t . The SPI File does not exist in the current result directory');
+  %  disp(Message);
+   % SPI=1;
+
+%end
+
+% NEW - reads Xyce .prn file:
+tlm.conf.Name0 = tlm.conf.Name;
+tlm.sol.fre = [];
+
+name1 = sprintf('%s.prn', tlm.conf.Name0);
+fid = fopen(name1, 'r');
+
+if fid >= 0
+    % Read header line (column names)
+    header = fgetl(fid);
+    
+    row = 0;
     while ~feof(fid)
-        tlineread = fgetl(fid);
-        C = strcmp(tlineref,tlineread);
-        if C==1
-            imul=log10(tlm.var.frequence.max)-log10(tlm.var.frequence.min);
-            while i<(tlm.var.frequence.step*imul+1)
-                    tlineread = fgetl(fid);
-%                    disp(tlineread);
-                       tlm.sol.fre(i+1,:)=str2num(tlineread);
-
-                       tlineread = fgetl(fid);
-%                    disp(tlineread);
-                    tlineread = fgetl(fid);
-%                    disp(tlineread);
-                    tlineread = fgetl(fid);
-%                    disp(tlineread);
-                    i=i+1;
+        line = fgetl(fid);
+        if ischar(line) && ~isempty(strtrim(line)) && ~strcmp(strtrim(line), 'End of Xyce(TM) Simulation')
+            vals = str2num(line);
+            if numel(vals) >= 3
+                row = row + 1;
+                % cols: Index, FREQ, Re(V(elec2,elec1)), Im(V(elec2,elec1)), Re(I(Vin)), Im(I(Vin))
+                tlm.sol.fre(row, 1) = vals(1); % index
+                tlm.sol.fre(row, 2) = vals(2); % frequency
+                tlm.sol.fre(row, 3) = vals(3); % Re(V)
+                tlm.sol.fre(row, 4) = vals(4); % Im(V)
+                tlm.sol.fre(row, 5) = vals(5); % Re(I)
+                tlm.sol.fre(row, 6) = vals(6); % Im(I)
             end
-            break
         end
     end
-
     fclose(fid);
-
 else
-    
-    Message=sprintf('\n\t\t . The SPI File does not exist in the current result directory');
+    Message = sprintf('\n\t\t . The PRN File does not exist in the current result directory');
     disp(Message);
-    SPI=1;
-
 end
 
 % --- MISE A JOUR DYNAMIQUE DES PARAMETRES COMSOL ---
@@ -107,8 +141,10 @@ tlm.sol.val(:,8) = imag(Z_complex);
 ii=0;
 
 %ex=round((log10(tlm.var.frequence.max)+log10(tlm.var.frequence.min))/2);
-
-for a=1:1:(log10(tlm.var.frequence.max)-log10(tlm.var.frequence.min))*tlm.var.frequence.step+1
+% Safety check - use actual number of points from Xyce output
+nfreqs = size(tlm.sol.fre, 1);
+%for a=1:1:(log10(tlm.var.frequence.max)-log10(tlm.var.frequence.min))*tlm.var.frequence.step+1
+for a=1:1:nfreqs
        
     f=tlm.sol.fre(a,2);
 
