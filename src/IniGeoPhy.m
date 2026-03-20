@@ -73,12 +73,6 @@ tlm.conf.freq=-1;       % First we simulate the entire frequency range to plot B
 
 unit = model.component('comp1').geom('geom1').lengthUnit();
 
-% Facteur de conversion
-scale = 1e-6;
-
-% Sauvegarder le scale dans tlm
-tlm.var.scale = scale;
-
 if tlm.conf.dim==3
      %geom_component_labels = model.selection.tags;
      geom_component_objects =  model.component('comp1').geom('geom1').feature().tags;
@@ -95,66 +89,66 @@ if tlm.conf.dim==3
 
          if tf == 1
             BoundingBox=model.component('comp1').geom('geom1').obj(geom_component_objects(i)).getBoundingBox;
-            tlm.var.LongueurChambre=(BoundingBox(2)-BoundingBox(1)) * scale;      % Length of the chamber
-            tlm.var.LargeurChambre=(BoundingBox(4)-BoundingBox(3)) * scale;       % Width of the chamber
-            tlm.var.EpaisseurChambre=(BoundingBox(6)-BoundingBox(5)) * scale;     % Thickness of the chamber
-      
+            tlm.var.LongueurChambre=BoundingBox(2)-BoundingBox(1);      % Length of the chamber
+            tlm.var.LargeurChambre=BoundingBox(4)-BoundingBox(3);       % Width of the chamber
+            tlm.var.EpaisseurChambre=BoundingBox(6)-BoundingBox(5);     % Thickness of the chamber
+            
             % Origin is always at the center of the Bioreactor
             
-            tlm.var.OrigineX=((BoundingBox(2)+BoundingBox(1))/2) * scale;         % Origine of coordinates in X
-            tlm.var.OrigineY=((BoundingBox(4)+BoundingBox(3))/2) * scale;         % Origine of coordinates in Y
-            tlm.var.OrigineZ=((BoundingBox(6)+BoundingBox(5))/2) * scale;         % Origine of coordinates in Z
+            tlm.var.OrigineX=(BoundingBox(2)+BoundingBox(1))/2;         % Origine of coordinates in X
+            tlm.var.OrigineY=(BoundingBox(4)+BoundingBox(3))/2;         % Origine of coordinates in Y
+            tlm.var.OrigineZ=(BoundingBox(6)+BoundingBox(5))/2;         % Origine of coordinates in Z
          end
 
          tf=strcmp(Label,'Electrode_1'); %26/02/2025 electrodes are surface and not volume
 
          if tf == 1
             BoundingBox1=model.component('comp1').geom('geom1').obj(geom_component_objects(i)).getBoundingBox;
-            tlm.var.LongueurElectrode=(BoundingBox1(2)-BoundingBox1(1)) * scale;    % Length of the sollicitation electrodes
-            tlm.var.LargeurElectrode=(BoundingBox1(4)-BoundingBox1(3)) * scale;    % Width of the sollicitation electrodes
-            tlm.var.EpaisseurElectrode=(BoundingBox1(6)-BoundingBox1(5)) * scale;   % Thickness of the sollicitation electrodes
+            tlm.var.LongueurElectrode=BoundingBox1(2)-BoundingBox1(1);    % Length of the sollicitation electrodes
+            tlm.var.LargeurElectrode=BoundingBox1(4)-BoundingBox1(3);    % Width of the sollicitation electrodes
+            tlm.var.EpaisseurElectrode=BoundingBox1(6)-BoundingBox1(5);   % Thickness of the sollicitation electrodes
          end
 
           tf=strcmp(Label,'Electrode_2');
 
          if tf == 1
             BoundingBox2=model.component('comp1').geom('geom1').obj(geom_component_objects(i)).getBoundingBox;
-            tlm.var.LongueurElectrode=(BoundingBox2(2)-BoundingBox2(1)) * scale;    % Length of the sollicitation electrodes
-            tlm.var.LargeurElectrode=(BoundingBox2(4)-BoundingBox2(3)) * scale;    % Width of the sollicitation electrodes
-            tlm.var.EpaisseurElectrode=(BoundingBox2(6)-BoundingBox2(5)) * scale;   % Thickness of the sollicitation electrodes
+            tlm.var.LongueurElectrode=BoundingBox2(2)-BoundingBox2(1);    % Length of the sollicitation electrodes
+            tlm.var.LargeurElectrode=BoundingBox2(4)-BoundingBox2(3);    % Width of the sollicitation electrodes
+            tlm.var.EpaisseurElectrode=BoundingBox2(6)-BoundingBox2(5);   % Thickness of the sollicitation electrodes
          end
 
          tf=strcmp(Label,'Pt_bioreactor');
 
          if tf == 1
             Coor_pt_r=model.component('comp1').geom('geom1').obj(geom_component_objects(i)).getVertexCoord;
-            tlm.var.pt_bioreactor_x=Coor_pt_r(1) * scale;      % Length of the chamber
-            tlm.var.pt_bioreactor_y=Coor_pt_r(2) * scale;       % Width of the chamber
-            tlm.var.pt_bioreactor_z=Coor_pt_r(3) * scale;     % Thickness of the chamber
+            tlm.var.pt_bioreactor_x=Coor_pt_r(1);      % Length of the chamber
+            tlm.var.pt_bioreactor_y=Coor_pt_r(2);       % Width of the chamber
+            tlm.var.pt_bioreactor_z=Coor_pt_r(3);     % Thickness of the chamber
          end
 
          tf=strcmp(Label,'Pt_electrode_1');
 
          if tf == 1
             Coor_pt_1=model.component('comp1').geom('geom1').obj(geom_component_objects(i)).getVertexCoord;
-            tlm.var.pt_electrode_1_x=Coor_pt_1(1) * scale;      % Length of the chamber
-            tlm.var.pt_electrode_1_y=Coor_pt_1(2) * scale;       % Width of the chamber
-            tlm.var.pt_electrode_1_z=Coor_pt_1(3) * scale;     % Thickness of the chamber
+            tlm.var.pt_electrode_1_x=Coor_pt_1(1);      % Length of the chamber
+            tlm.var.pt_electrode_1_y=Coor_pt_1(2);       % Width of the chamber
+            tlm.var.pt_electrode_1_z=Coor_pt_1(3);     % Thickness of the chamber
          end
 
          tf=strcmp(Label,'Pt_electrode_2');
 
          if tf == 1
             Coor_pt_2=model.component('comp1').geom('geom1').obj(geom_component_objects(i)).getVertexCoord;
-            tlm.var.pt_electrode_2_x=Coor_pt_2(1) * scale;      % Length of the chamber
-            tlm.var.pt_electrode_2_y=Coor_pt_2(2) * scale;       % Width of the chamber
-            tlm.var.pt_electrode_2_z=Coor_pt_2(3) * scale;     % Thickness of the chamber
+            tlm.var.pt_electrode_2_x=Coor_pt_2(1);      % Length of the chamber
+            tlm.var.pt_electrode_2_y=Coor_pt_2(2);       % Width of the chamber
+            tlm.var.pt_electrode_2_z=Coor_pt_2(3);     % Thickness of the chamber
          end
 
          i=i+1;
      end
 
-     tlm.var.EcartementElectrode=(BoundingBox2(1)-BoundingBox1(2)) * scale;  % Spacing between the sollicitation electrodes
+     tlm.var.EcartementElectrode=BoundingBox2(1)-BoundingBox1(2);  % Spacing between the sollicitation electrodes
 
 
      numdom=model.component('comp1').geom('geom1').getNDomains();

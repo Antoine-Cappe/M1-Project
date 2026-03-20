@@ -111,12 +111,12 @@ end
 
 tlm.var.time_for_geometry=toc;
 
-%Message=sprintf('\n\t * Mesh Statitics: %u ï¿½lï¿½ments, %u nodes',size(fem.mesh.t,2),size(fem.mesh.p,2));
-Message=sprintf('\n\t * Mesh Statitics: %u ï¿½lï¿½ments, %u nodes',numelem,numvertex);
+%Message=sprintf('\n\t * Mesh Statitics: %u éléments, %u nodes',size(fem.mesh.t,2),size(fem.mesh.p,2));
+Message=sprintf('\n\t * Mesh Statitics: %u éléments, %u nodes',numelem,numvertex);
 disp(Message);
 if tlm.conf.log==1
-%    fprintf(fil,'\n\t * Mesh Statitics: %u ï¿½lï¿½ments, %u nodes',size(fem.mesh.t,2),size(fem.mesh.p,2));
-    fprintf(fil,'\n\t * Mesh Statitics: %u ï¿½lï¿½ments, %u nodes',numelem,numvertex);
+%    fprintf(fil,'\n\t * Mesh Statitics: %u éléments, %u nodes',size(fem.mesh.t,2),size(fem.mesh.p,2));
+    fprintf(fil,'\n\t * Mesh Statitics: %u éléments, %u nodes',numelem,numvertex);
     fprintf(fil,'\n ');
 end
 Message=sprintf('\n Generate the Netlist for SPICE simulation (file %s.cir)',tlm.conf.Name);
@@ -134,8 +134,6 @@ end
 %fem_mesh_e(:,:)=fem.mesh.e(:,:);
 
 fem_mesh_p(:,:)=model.component('comp1').mesh('mesh1').getVertex; % coordinates of vertex
-% Convertir les coordonnÃ©es brutes du maillage en mÃ¨tres
-fem_mesh_p(:,:) = fem_mesh_p(:,:) * tlm.var.scale;
 
 if (tlm.conf.dim==2)  
     fem_mesh_t(:,:)=model.component('comp1').mesh('mesh1').getElemEntity('tri');
