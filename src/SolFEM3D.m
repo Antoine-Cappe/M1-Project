@@ -17,6 +17,11 @@ function [tlm,model]=SolFEM3D(tlm,model)
 
 %Initialization
 tlm.sol.fre=[];
+tlm.sol.val = []; % Vide les anciens résultats de Bode/Impédance
+tlm.sol.num = []; % Vide les anciens potentiels électriques
+tlm.var.X   = []; % Vide les anciennes coordonnées X
+tlm.var.Y   = []; % Vide les anciennes coordonnées Y
+tlm.var.Z   = []; % Vide les anciennes coordonnées Z
 
 tlm.conf.Name0=tlm.conf.Name;
 name1=sprintf('%s.spi',tlm.conf.Name0);     % Name of the file
