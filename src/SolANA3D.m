@@ -29,6 +29,7 @@ tlm.conf.Name0=tlm.conf.Name;
 
 name1=sprintf('%s.spi',tlm.conf.Name0);     % Name of the file
 fid=fopen(name1, 'r');                     % Open the File
+xyceCsvName=sprintf('%s.cir.FD.csv',tlm.conf.Name0);
 
 if fid>=0       % The file exists
     
@@ -61,11 +62,29 @@ if fid>=0       % The file exists
     fclose(fid);
 
 else
-    
-    Message=sprintf('\n\t\t . The SPI File does not exist in the current result directory');
-    disp(Message);
-    SPI=1;
+    if exist(xyceCsvName,'file')==2
+        xyceData=readmatrix(xyceCsvName);
+        if ~isempty(xyceData) && size(xyceData,2)>=2
+            tlm.sol.fre(:,1)=xyceData(:,1);
+            tlm.sol.fre(:,2)=xyceData(:,2);
+            Message=sprintf('\n\t\t . The Xyce CSV file has been exploited to extract frequencies');
+            disp(Message);
+            SPI=0;
+        else
+            Message=sprintf('\n\t\t . The Xyce CSV file exists but is malformed');
+            disp(Message);
+            SPI=1;
+        end
+    else
+        Message=sprintf('\n\t\t . The SPI File does not exist in the current result directory');
+        disp(Message);
+        SPI=1;
+    end
 
+end
+
+if isempty(tlm.sol.fre) || size(tlm.sol.fre,2)<2
+    error('No valid frequency list found for analytical study. Expected %s.spi or %s', tlm.conf.Name0, xyceCsvName);
 end
 
 if tlm.conf.points==2               % for 2 points measurement
@@ -87,10 +106,10 @@ end
 
 % Calculate the Electrical Impedance with the Analytical (RC) Model 
 
+nFreq=size(tlm.sol.fre,1);
 cpt=0;
 
-%for a=log10(tlm.var.frequence.min):1:log10(tlm.var.frequence.max)-1
-for a=1:1:(log10(tlm.var.frequence.max)-log10(tlm.var.frequence.min))*tlm.var.frequence.step+1
+for a=1:1:nFreq
  %   for b=1:1:tlm.var.frequence.step
         cpt=cpt+1;
  %       f=b*10^a;
@@ -214,7 +233,7 @@ fprintf(fid, '* Values:\n');
 
 cpt=0;
 
-for a=1:1:(log10(tlm.var.frequence.max)-log10(tlm.var.frequence.min))*tlm.var.frequence.step+1
+for a=1:1:nFreq
 %for a=log10(tlm.var.frequence.min):1:log10(tlm.var.frequence.max)-1
 %    for b=1:1:tlm.var.frequence.step
         cpt=cpt+1;

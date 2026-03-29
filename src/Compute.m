@@ -211,11 +211,33 @@ cd('src');
 
 % Run circuit from shell
 % the command must include the '&' character for matlab to continue running and not wait for the end of the execution
-system(sprintf('ngspice \"%s\\%s\\%s.cir\"', tlm.conf.store, tlm.conf.Name, tlm.conf.Name));
+xycePath = 'C:\Program Files\XyceNF_7.10\bin\Xyce.exe';
+ngspicePath = fullfile(pwd, 'ngspice.exe');
+cirPath = sprintf('%s\\%s\\%s.cir', tlm.conf.store, tlm.conf.Name, tlm.conf.Name);
+
+if exist(xycePath, 'file') == 2
+    system(sprintf('"%s" "%s"', xycePath, cirPath));
+elseif exist(ngspicePath, 'file') == 2
+    warning('Xyce.exe not found in default location. Falling back to ngspice.');
+    system(sprintf('"%s" "%s"', ngspicePath, cirPath));
+else
+    error('Neither Xyce nor ngspice executable was found.');
+end
 
 % move resulting files in tlm.conf.store/tlm.conf.Name ( results directory)
-movefile('*.spi_cou', strcat(tlm.conf.store, "\", tlm.conf.Name));
-movefile('*.spi', strcat(tlm.conf.store, "\", tlm.conf.Name));
+dstDir = strcat(tlm.conf.store, "\\", tlm.conf.Name);
+if ~isempty(dir('*.spi'))
+    movefile('*.spi', dstDir);
+end
+if ~isempty(dir('*.spi_cou'))
+    movefile('*.spi_cou', dstDir);
+end
+if ~isempty(dir('*.prn'))
+    movefile('*.prn', dstDir);
+end
+if ~isempty(dir('*.csv'))
+    movefile('*.csv', dstDir);
+end
 
 % go to said directory
 cd(strcat(tlm.conf.store, "\", tlm.conf.Name));
