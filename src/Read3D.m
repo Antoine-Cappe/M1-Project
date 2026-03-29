@@ -88,6 +88,8 @@ end
 
 name1=sprintf('%s.spi',tlm.conf.Name);     % Name of the file
 fid=fopen(name1, 'r');                     % Open the File
+xyceCsvName=sprintf('%s.cir.FD.csv',tlm.conf.Name);
+xyceData=[];
 
 if fid>=0       % The file exists
     
@@ -189,10 +191,44 @@ if fid>=0       % The file exists
     SPI=0;
 
 else
-    
-    Message=sprintf('\n\t\t . The SPI File does not exist in the current result directory');
-    disp(Message);
-    SPI=1;
+    if exist(xyceCsvName, 'file')==2
+        xyceData=readmatrix(xyceCsvName);
+        if ~isempty(xyceData) && size(xyceData,2)>=4
+            imul=log10(tlm.var.frequence.max)-log10(tlm.var.frequence.min);
+            nPts=min(size(xyceData,1),tlm.var.frequence.step*imul+1);
+            tlm.sol.spi=zeros(nPts,6);
+            tlm.sol.spi(:,1)=xyceData(1:nPts,2);
+            tlm.sol.spi(:,2)=xyceData(1:nPts,3);
+            tlm.sol.spi(:,3)=xyceData(1:nPts,4);
+            for ii=1:1:nPts
+                tlm.sol.spi(ii,4)=real(10^(tlm.sol.spi(ii,2)/20)*exp(j*tlm.sol.spi(ii,3)*pi/180));
+                tlm.sol.spi(ii,5)=imag(10^(tlm.sol.spi(ii,2)/20)*exp(j*tlm.sol.spi(ii,3)*pi/180));
+                tlm.sol.spi(ii,6)=real(10^(tlm.sol.spi(ii,2)/20));
+            end
+
+            if (tlm.sol.spi(1,3)>90)
+                tlm.sol.spi(:,3)=tlm.sol.spi(:,3)-180;
+            elseif (tlm.sol.spi(1,3)<-90)
+                tlm.sol.spi(:,3)=tlm.sol.spi(:,3)+180;
+            end
+
+            semilogx(app.UIAxesMagnitude_Bode_SPICE, tlm.sol.spi(:,1),tlm.sol.spi(:,2));
+            semilogx(app.UIAxesPhase_Bode_SPICE, tlm.sol.spi(:,1),tlm.sol.spi(:,3));
+            plot(app.UIAxes_Nyquist_SPICE, tlm.sol.spi(:,4),-tlm.sol.spi(:,5),'-or');
+
+            Message=sprintf('\n\t\t . The Xyce CSV file (%s) has been exploited',xyceCsvName);
+            disp(Message);
+            SPI=0;
+        else
+            Message=sprintf('\n\t\t . The Xyce CSV file (%s) is empty or malformed',xyceCsvName);
+            disp(Message);
+            SPI=1;
+        end
+    else
+        Message=sprintf('\n\t\t . The SPI File does not exist in the current result directory');
+        disp(Message);
+        SPI=1;
+    end
     
 end
 
@@ -694,15 +730,31 @@ for ii=1:1:3
         SPI_COU=0;
     
     else
-    
-        Message=sprintf('\n\t\t . The SPI_COU File (%s) does not exist in the current result directory',name2);
-        disp(Message);
-        if tlm.conf.log==1
-            fprintf(fil,'\n\t\t . The SPI_COU File (%s) does not exist in the current result directory',name2);
-            fprintf(fil,'\n '); 
+        if isempty(xyceData) && exist(xyceCsvName, 'file')==2
+            xyceData=readmatrix(xyceCsvName);
         end
-        
-        SPI_COU=1;
+
+        nNodes=size(fem_mesh_p,2);
+        firstVrCol=5;
+        lastVrCol=firstVrCol+nNodes-1;
+
+        if ~isempty(xyceData) && size(xyceData,2)>=lastVrCol
+            [~,idxFreq]=min(abs(xyceData(:,2)-f));
+            tlm.var.Volt1=xyceData(idxFreq,firstVrCol:lastVrCol);
+            tlm.var.VoltSpice=tlm.var.Volt1(:);
+
+            Message=sprintf('\n\t\t . The Xyce CSV map data (%s) has been exploited at F=%g Hz',xyceCsvName,xyceData(idxFreq,2));
+            disp(Message);
+            SPI_COU=0;
+        else
+            Message=sprintf('\n\t\t . The SPI_COU File (%s) does not exist in the current result directory',name2);
+            disp(Message);
+            if tlm.conf.log==1
+                fprintf(fil,'\n\t\t . The SPI_COU File (%s) does not exist in the current result directory',name2);
+                fprintf(fil,'\n '); 
+            end
+            SPI_COU=1;
+        end
     
     end
     

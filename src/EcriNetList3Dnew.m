@@ -74,35 +74,27 @@ fprintf(fid, '* Release 1.0 : January 2019\n');
 fprintf(fid, '*\n');            
 fprintf(fid, '********************************************************************************\n');
 
-% Define the type of analysis
-fprintf(fid, '.CONTROL \n');
-fprintf(fid, '  DESTROY ALL \n'); 
-fprintf(fid, '  AC DEC %f %f %f \n', tlm.var.frequence.step, tlm.var.frequence.min, tlm.var.frequence.max);
+% Xyce-compatible analysis and output directives.
+fprintf(fid, '.AC DEC %f %f %f\n', tlm.var.frequence.step, tlm.var.frequence.min, tlm.var.frequence.max);
 
-% Write measurements commands
 if tlm.conf.points == 2
-    fprintf(fid, '  WRITE %s.spi vdb(%u,%u)-vdb(%u)-66 vp(%u,%u)-vp(%u) \n', ...
-            tlm.conf.Name, tlm.ind.pt.elec2, tlm.ind.pt.elec1, tlm.ind.pt.elec1, ...
+    fprintf(fid, '.PRINT AC FORMAT=CSV FREQ {VDB(%u,%u)-VDB(%u)-66} {VP(%u,%u)-VP(%u)}', ...
+            tlm.ind.pt.elec2, tlm.ind.pt.elec1, tlm.ind.pt.elec1, ...
             tlm.ind.pt.elec2, tlm.ind.pt.elec1, tlm.ind.pt.elec1);
 elseif tlm.conf.points == 4
-    fprintf(fid, '  WRITE %s.spi vdb(%u)-vdb(%u)-66 vp(%u,%u)-vp(%u) \n', ...
-            tlm.conf.Name, tlm.ind.pt.mesu2, tlm.ind.pt.mesu1, tlm.ind.pt.elec1, ...
-            tlm.ind.pt.mesu2, tlm.ind.pt.mesu1, tlm.ind.pt.elec1);
+    fprintf(fid, '.PRINT AC FORMAT=CSV FREQ {VDB(%u)-VDB(%u)-66} {VP(%u,%u)-VP(%u)}', ...
+            tlm.ind.pt.mesu2, tlm.ind.pt.mesu1, ...
+            tlm.ind.pt.elec1, tlm.ind.pt.mesu2, tlm.ind.pt.mesu1);
+else
+    fprintf(fid, '.PRINT AC FORMAT=CSV FREQ {VDB(%u,%u)-VDB(%u)-66} {VP(%u,%u)-VP(%u)}', ...
+            tlm.ind.pt.elec2, tlm.ind.pt.elec1, tlm.ind.pt.elec1, ...
+            tlm.ind.pt.elec2, tlm.ind.pt.elec1, tlm.ind.pt.elec1);
 end
 
-fprintf(fid, '  DESTROY ALL \n'); 
-fprintf(fid, '  AC DEC 1 %f %f \n', tlm.var.frequence.min, tlm.var.frequence.min);
-fprintf(fid, '  WRITE %s all \n', strcat(tlm.conf.Name, "_", num2str(tlm.var.frequence.min), "Hz.spi_cou"));
-
-fprintf(fid, '  DESTROY ALL \n'); 
-fprintf(fid, '  AC DEC 1 %f %f \n', tlm.var.frequence.int, tlm.var.frequence.int);
-fprintf(fid, '  WRITE %s.spi_cou all \n', strcat(tlm.conf.Name, "_", num2str(tlm.var.frequence.int), "Hz"));
-
-fprintf(fid, '  DESTROY ALL \n'); 
-fprintf(fid, '  AC DEC 1 %f %f \n', tlm.var.frequence.max, tlm.var.frequence.max);
-fprintf(fid, '  WRITE %s.spi_cou all \n', strcat(tlm.conf.Name, "_", num2str(tlm.var.frequence.max), "Hz"));
-
-fprintf(fid, '.ENDC \n');
+for nodeId = 1:size(fem_mesh_p, 2)
+    fprintf(fid, ' VR(%u)', nodeId);
+end
+fprintf(fid, '\n');
                                                                                             
 fprintf(fid, 'Vin\t%u\t0\tDC 0 AC %f\n', tlm.ind.pt.elec2, tlm.var.v0); % Left outer electrode
 fprintf(fid, 'Rg\t%u\t0\t50e-5\n', tlm.ind.pt.elec1);                   % Right outer electrode
@@ -694,8 +686,6 @@ for i=1:1:size(fem_mesh_p,2)                                        % Loop on th
         end  
         
 end %for i
-
-fprintf(fid, '.control\nquit 13\n\n.endc\n.end\n'); 
 
 fprintf(fid, '.END\n');
 
