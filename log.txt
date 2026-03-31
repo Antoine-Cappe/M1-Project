@@ -1,0 +1,181 @@
+
+ ******* Start the Simulation
+
+ Files are saved in directory: 'C:\Users\AkZer\Documents\GitHub\M1-Project\simulation\Simul30-Mar-2026_20-52-57'
+
+ Draw the Geometry with COMSOL MULTIPHYSICS routines
+
+	 * Mesh Statitics: 422305  l ments, 73482 nodes
+
+ Generate the Netlist for SPICE simulation (file Simul30-Mar-2026_20-52-57.cir)
+
+	 . Recherche des indices du maillage...
+	 * Circuit Statistics: 502304 resistances and 502304 capacitances
+
+ Solve the problem by Transport Lattice Method using SPICE
+Lancement fulgurant de Xyce Parallel (WSL) sur 10 coeurs...
+
+*****
+***** Welcome to the Xyce(TM) Parallel Electronic Simulator
+*****
+***** This is version Xyce Release 7.10.0-opensource
+***** Date: Mon Mar 30 20:54:33 CEST 2026
+
+
+***** Executing netlist /mnt/c/Users/AkZer/Documents/GitHub/M1-Project/simulation/Simul30-Mar-2026_20-52-57/Simul30-Mar-2026_20-52-57.cir
+
+***** Reading and parsing netlist...
+***** Setting up topology...
+
+***** Device Count Summary ...
+       C level 1 (Capacitor)                   502304
+       R level 1 (Resistor)                    502305
+       V level 1 (Independent Voltage Source)       1
+       ----------------------------------------------
+       Total Devices                          1004610
+***** Setting up matrix structure...
+***** Number of Unknowns = 73483
+***** Initializing...
+
+
+Analyzed Singleton Problem:
+---------------------------
+Singletons Detected!
+Num Singletons:      2
+---------------------------
+
+
+ConstructedSingleton Problem:
+---------------------------
+RatioOfDimensions:   0.999973
+RatioOfNonzeros:     0.999968
+---------------------------
+
+ZOLTAN Load balancing method = 10 (HYPERGRAPH)
+
+Analyzed Singleton Problem:
+---------------------------
+No Singletons Detected!
+---------------------------
+
+ZOLTAN Load balancing method = 10 (HYPERGRAPH)
+
+***** Solution Summary *****
+	Number Successful Steps Taken:		64
+	Number Failed Steps Attempted:		0
+	Number Jacobians Evaluated:		1
+	Number Linear Solves:			1
+	Number Failed Linear Solves:		0
+	Number Residual Evaluations:		3
+	Number Nonlinear Convergence Failures:	0
+	Total Residual Load Time:		0.0543966 seconds
+	Total Jacobian Load Time:		0.0389712 seconds
+	Total Linear Solution Time:		0.861675 seconds
+
+
+***** Total Simulation Solvers Run Time: 194.945 seconds
+***** Total Elapsed Run Time:            210.483 seconds
+*****
+***** End of Xyce(TM) Simulation
+*****
+
+Timing summary of processor 0
+                 Stats                   Count       CPU Time              Wall Time
+---------------------------------------- ----- --------------------- ---------------------
+Xyce                                         1     3:24.030 (100.0%)     3:30.830 (100.0%)
+  Analysis                                   1     3:12.599 (94.40%)     3:14.944 (92.47%)
+    AC                                       1     3:12.564 (94.38%)     3:14.907 (92.45%)
+      DC Nonlinear Solve                     1        0.943 ( 0.46%)        0.989 ( 0.47%)
+        Residual                             3        0.054 ( 0.03%)        0.054 ( 0.03%)
+        Jacobian                             1        0.039 ( 0.02%)        0.039 ( 0.02%)
+        Linear Solve                         1        0.820 ( 0.40%)        0.862 ( 0.41%)
+      AC Linear Solve                       64     3:01.845 (89.13%)     3:02.368 (86.50%)
+        Linear Solve                        64     3:01.844 (89.13%)     3:02.368 (86.50%)
+  Netlist Import                             1        7.825 ( 3.84%)       11.932 ( 5.66%)
+    Parse Context                            1        1.505 ( 0.74%)        3.781 ( 1.79%)
+    Distribute Devices                       1        4.776 ( 2.34%)        6.288 ( 2.98%)
+    Verify Devices                           1        0.000 (<0.01%)        0.000 (<0.01%)
+    Instantiate                              1        0.590 ( 0.29%)        0.683 ( 0.32%)
+  Late Initialization                        1        3.556 ( 1.74%)        3.566 ( 1.69%)
+    Global Indices                           1        1.366 ( 0.67%)        1.366 ( 0.65%)
+  Setup Matrix Structure                     1        0.299 ( 0.15%)        0.305 ( 0.14%)
+
+
+Timing summary of 10 processors
+                                                     CPU Time              CPU Time              CPU Time              Wall Time             Wall Time             Wall Time
+                 Stats                   Count   Sum (% of System)     Min (% of System)     Max (% of System)     Sum (% of System)     Min (% of System)     Max (% of System)
+---------------------------------------- ----- --------------------- --------------------- --------------------- --------------------- --------------------- ---------------------
+Xyce                                        10    34:47.145 (100.0%)     3:24.031 ( 9.78%)     3:29.420 (10.03%)    35:07.807 (100.0%)     3:30.774 (10.00%)     3:30.831 (10.00%)
+  Analysis                                  10    32:20.542 (92.98%)     3:12.599 ( 9.23%)     3:14.419 ( 9.32%)    32:28.947 (92.46%)     3:14.889 ( 9.25%)     3:14.944 ( 9.25%)
+    AC                                      10    32:20.198 (92.96%)     3:12.564 ( 9.23%)     3:14.385 ( 9.31%)    32:28.569 (92.45%)     3:14.851 ( 9.24%)     3:14.907 ( 9.25%)
+      DC Nonlinear Solve                    10        9.567 ( 0.46%)        0.943 ( 0.05%)        0.969 ( 0.05%)        9.909 ( 0.47%)        0.989 ( 0.05%)        0.992 ( 0.05%)
+        Residual                            30        0.540 ( 0.03%)        0.054 (<0.01%)        0.054 (<0.01%)        0.544 ( 0.03%)        0.054 (<0.01%)        0.055 (<0.01%)
+        Jacobian                            10        0.383 ( 0.02%)        0.035 (<0.01%)        0.039 (<0.01%)        0.387 ( 0.02%)        0.038 (<0.01%)        0.039 (<0.01%)
+        Linear Solve                        10        8.325 ( 0.40%)        0.820 ( 0.04%)        0.843 ( 0.04%)        8.617 ( 0.41%)        0.862 ( 0.04%)        0.862 ( 0.04%)
+      AC Linear Solve                      640    30:18.539 (87.13%)     3:01.736 ( 8.71%)     3:02.030 ( 8.72%)    30:23.699 (86.52%)     3:02.366 ( 8.65%)     3:02.376 ( 8.65%)
+        Linear Solve                       640    30:18.534 (87.13%)     3:01.735 ( 8.71%)     3:02.029 ( 8.72%)    30:23.697 (86.52%)     3:02.366 ( 8.65%)     3:02.375 ( 8.65%)
+  Netlist Import                            10     1:50.499 ( 5.29%)        7.825 ( 0.37%)       11.511 ( 0.55%)     1:59.317 ( 5.66%)       11.932 ( 0.57%)       11.932 ( 0.57%)
+    Parse Context                           10       35.504 ( 1.70%)        1.505 ( 0.07%)        3.781 ( 0.18%)       37.806 ( 1.79%)        3.780 ( 0.18%)        3.781 ( 0.18%)
+    Distribute Devices                      10       59.761 ( 2.86%)        4.776 ( 0.23%)        6.169 ( 0.30%)     1:03.229 ( 3.00%)        6.277 ( 0.30%)        6.349 ( 0.30%)
+    Verify Devices                          10        0.000 (<0.01%)        0.000 (<0.01%)        0.000 (<0.01%)        0.000 (<0.01%)        0.000 (<0.01%)        0.000 (<0.01%)
+    Instantiate                             10        6.253 ( 0.30%)        0.590 ( 0.03%)        0.680 ( 0.03%)        7.818 ( 0.37%)        0.683 ( 0.03%)        0.799 ( 0.04%)
+  Late Initialization                       10       35.335 ( 1.69%)        3.519 ( 0.17%)        3.556 ( 0.17%)       35.640 ( 1.69%)        3.562 ( 0.17%)        3.566 ( 0.17%)
+    Global Indices                          10       13.793 ( 0.66%)        1.356 ( 0.06%)        1.405 ( 0.07%)       13.805 ( 0.65%)        1.360 ( 0.06%)        1.405 ( 0.07%)
+  Setup Matrix Structure                    10        2.994 ( 0.14%)        0.295 ( 0.01%)        0.301 ( 0.01%)        3.048 ( 0.14%)        0.305 ( 0.01%)        0.305 ( 0.01%)
+
+Simulation Xyce terminée en 212.214 secondes !
+
+	 * Generate ascii file (Simul30-Mar-2026_20-52-57.spi): 'Electrical Impedance versus Frequency'
+
+	 * Generate ascii file (Simul30-Mar-2026_20-52-57_XX.spi_cou): '2D/3D map of the Electric Potential'
+
+ Solve the problem by Finite Element Method using COMSOL MULTIPHYSICS routines
+
+		 . The Xyce CSV file has been exploited to extract frequencies
+	 * Generate ascii file (Simul30-Mar-2026_20-52-57.fem): 'Electrical Impedance versus Frequency'
+
+	 * Generate ascii file (Simul30-Mar-2026_20-52-57_XX.fem_cou): '2D/3D map of the Electric Potential'
+
+ Time for Geometry is: 6.017800e-03; Time for TLM is: 2.122204e+02; Time for FEM is: 3.198428e+02
+
+ ******* End the Simulation
+
+ ******* Start PostProcessing
+
+ Figures are saved in directory: 'C:\Users\AkZer\Documents\GitHub\M1-Project\simulation'
+
+	 * Mesh Statitics: 422305 Elements, 73482 nodes
+
+ Generate Bode and Nyquist Plots for Electrical Impedance
+
+	 * SPICE Simulations
+
+		 . The Xyce CSV file (Simul30-Mar-2026_20-52-57.cir.FD.csv) has been exploited
+
+	 * FEM Simulations
+
+		 . The FEM File has been exploited
+
+	 * Analytical Simulations
+
+		 . The ANA File does not exist in the current result directory
+
+ Generate 2D Map for Electrical Potential
+
+	 * SPICE Simulations
+
+		 . The Xyce CSV map data (Simul30-Mar-2026_20-52-57.cir.FD.csv) has been exploited at F=1000 Hz
+
+		 . The Xyce CSV map data (Simul30-Mar-2026_20-52-57.cir.FD.csv) has been exploited at F=100000 Hz
+
+		 . The Xyce CSV map data (Simul30-Mar-2026_20-52-57.cir.FD.csv) has been exploited at F=1e+10 Hz
+
+	 * FEM Simulations
+
+		 . The FEM file (Simul30-Mar-2026_20-52-57_1000Hz.fem_cou) has been exploited
+
+		 . The FEM file (Simul30-Mar-2026_20-52-57_100000Hz.fem_cou) has been exploited
+
+		 . The FEM file (Simul30-Mar-2026_20-52-57_10000000000Hz.fem_cou) has been exploited
+
+ ******* End PostProcessing

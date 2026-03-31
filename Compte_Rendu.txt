@@ -1,0 +1,24 @@
+Création du repository GitHub
+Nettoyage de l'arborescence du projet
+Créer un dossier pour stocker les résultats des simulations et ajuster biocad en conséquence pour qu'il les écrivent ici
+Créer un .gitignore pour ignorer les fichiers résultants de simulations
+Mis à jour de COMSOL (5.6 to 6.3) et documentation
+
+Résolution à la main de la solution analytique à la main pour servir de référence aux résultats sur biocad
+Mis à jour SOLFEM3D pour rendre la résolution dynamique
+	- Le fichier mph doit être paramétré d'une certaine façon pour que ça fonctionne toujours
+Correction de SOLANA3D car les dimension de la chambre biologique utilisé pour le calcul était en mètre au lieu du micromètre
+Même changement dans Compute, IniGeoPhy et RechercheIndice3D pour la résolution SPICE
+Correction de SOLFEM3D pour la carte en 3D et amélioration des performances + lisibilité 
+A partir d'ici, les 3 modèles convergent vers les mêmes résultats 
+
+Créer une nouvelle géométrie en forme d'altère + celle avec les électrodes au dessus
+Récriture complète de IniGeoPhy et RechercheIndice3Dnew (performance ++)
+Simplifier la première partie de EcritNetlist3D
+
+Changement de Ngspice vers Xyce
+	-Problème : Xyce windows n'est disponible qu'en série
+	-Solution : Compiler le source code de Xyce avec le fonctionnement en parallèle sur LINUX et mis à jour de Compute en conséquence
+	-Résultat : Résolution Spice 33% plus rapide que FEM
+
+

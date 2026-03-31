@@ -215,13 +215,46 @@ xycePath = 'C:\Program Files\XyceNF_7.10\bin\Xyce.exe';
 ngspicePath = fullfile(pwd, 'ngspice.exe');
 cirPath = sprintf('%s\\%s\\%s.cir', tlm.conf.store, tlm.conf.Name, tlm.conf.Name);
 
-if exist(xycePath, 'file') == 2
-    system(sprintf('"%s" "%s"', xycePath, cirPath));
-elseif exist(ngspicePath, 'file') == 2
-    warning('Xyce.exe not found in default location. Falling back to ngspice.');
-    system(sprintf('"%s" "%s"', ngspicePath, cirPath));
+% =========================================================================
+% LANCEMENT DE XYCE EN PARALLÈLE VIA LINUX (WSL)
+% =========================================================================
+
+% 1. Définir le nombre de cœurs à utiliser (on met 10 pour garder de la marge pour Windows)
+num_cores = '10'; 
+
+% 2. Le chemin de ton exécutable Xyce compilé sous Linux
+xyceLinuxPath = '/usr/local/xyce_mpi/bin/Xyce';
+
+% 3. Construire le chemin du fichier .cir sous Windows
+cirPathWindows = sprintf('%s\\%s\\%s.cir', tlm.conf.store, tlm.conf.Name, tlm.conf.Name);
+
+if exist(cirPathWindows, 'file')
+    % 4. Traduire le chemin Windows (C:\...) vers Linux (/mnt/c/...)
+    % "wsl wslpath -a" demande à Ubuntu de faire la traduction
+    [status, cirPathLinux] = system(sprintf('wsl wslpath -a "%s"', cirPathWindows));
+    
+    if status ~= 0
+        error('Erreur lors de la traduction du chemin Windows vers Linux via WSL.');
+    end
+    
+    % Nettoyer le chemin (enlever les retours à la ligne invisibles)
+    cirPathLinux = strtrim(cirPathLinux);
+    
+    % 5. Construire la commande finale de calcul parallèle
+    % - wsl : passe la commande à Linux
+    % - mpirun --use-hwthread-cpus -n 10 : distribue le calcul sur 10 processus isolés
+    commande_xyce = sprintf('wsl mpirun --use-hwthread-cpus -n %s %s "%s"', num_cores, xyceLinuxPath, cirPathLinux);
+    
+    disp(['Lancement fulgurant de Xyce Parallel (WSL) sur ', num_cores, ' coeurs...']);
+    
+    % 6. Lancement de la simulation !
+    tic; % Démarre un chronomètre
+    system(commande_xyce);
+    temps_xyce = toc; % Arrête le chronomètre
+    
+    disp(['Simulation Xyce terminée en ', num2str(temps_xyce), ' secondes !']);
 else
-    error('Neither Xyce nor ngspice executable was found.');
+    error('Le fichier .cir n''a pas été trouvé pour la simulation.');
 end
 
 % move resulting files in tlm.conf.store/tlm.conf.Name ( results directory)
