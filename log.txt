@@ -5,7 +5,7 @@
 
  Draw the Geometry with COMSOL MULTIPHYSICS routines
 
-	 * Mesh Statitics: 422305  l ments, 73482 nodes
+	 * Mesh Statitics: 422305 éléments, 73482 nodes
 
  Generate the Netlist for SPICE simulation (file Simul30-Mar-2026_20-52-57.cir)
 

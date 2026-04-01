@@ -86,9 +86,7 @@ elseif tlm.conf.points == 4
             tlm.ind.pt.mesu2, tlm.ind.pt.mesu1, ...
             tlm.ind.pt.elec1, tlm.ind.pt.mesu2, tlm.ind.pt.mesu1);
 else
-    fprintf(fid, '.PRINT AC FORMAT=CSV FREQ {VDB(%u,%u)-VDB(%u)-66} {VP(%u,%u)-VP(%u)}', ...
-            tlm.ind.pt.elec2, tlm.ind.pt.elec1, tlm.ind.pt.elec1, ...
-            tlm.ind.pt.elec2, tlm.ind.pt.elec1, tlm.ind.pt.elec1);
+    error('Erreur : tlm.conf.points doit être égal à 2 ou 4.');
 end
 
 for nodeId = 1:size(fem_mesh_p, 2)
