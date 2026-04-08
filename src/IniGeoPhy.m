@@ -38,10 +38,10 @@ function tlm = IniGeoPhy(tlm, model, app)
         for i = 1:length(geom_component_objects)
             feat = model.component('comp1').geom('geom1').feature(geom_component_objects(i));
             Label = char(feat.label);
-            obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
             
             switch Label
                 case 'Bioreactor'
+                    obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
                     BoundingBox = obj.getBoundingBox();
                     tlm.var.LongueurChambre  = (BoundingBox(2) - BoundingBox(1)) * scale;
                     tlm.var.LargeurChambre   = (BoundingBox(4) - BoundingBox(3)) * scale;
@@ -53,35 +53,42 @@ function tlm = IniGeoPhy(tlm, model, app)
                     tlm.var.OrigineZ = (BoundingBox(6) + BoundingBox(5)) / 2 * scale;
 
                 case 'Pt_canal_min'
+                    obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
                     Coor_min = obj.getVertexCoord() * scale;
                 case 'Pt_canal_max'
+                    obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
                     Coor_max = obj.getVertexCoord() * scale;
                     
                 case 'Electrode_1'
+                    obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
                     BoundingBox1 = obj.getBoundingBox();
                     tlm.var.LongueurElectrode  = (BoundingBox1(2) - BoundingBox1(1)) * scale;
                     tlm.var.LargeurElectrode   = (BoundingBox1(4) - BoundingBox1(3)) * scale;
                     tlm.var.EpaisseurElectrode = (BoundingBox1(6) - BoundingBox1(5)) * scale;
                     
                 case 'Electrode_2'
+                    obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
                     BoundingBox2 = obj.getBoundingBox();
                     tlm.var.LongueurElectrode  = (BoundingBox2(2) - BoundingBox2(1)) * scale;
                     tlm.var.LargeurElectrode   = (BoundingBox2(4) - BoundingBox2(3)) * scale;
                     tlm.var.EpaisseurElectrode = (BoundingBox2(6) - BoundingBox2(5)) * scale;
                     
                 case 'Pt_bioreactor'
+                    obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
                     Coor_pt = obj.getVertexCoord();
                     tlm.var.pt_bioreactor_x = Coor_pt(1) * scale;
                     tlm.var.pt_bioreactor_y = Coor_pt(2) * scale;
                     tlm.var.pt_bioreactor_z = Coor_pt(3) * scale;
                     
                 case 'Pt_electrode_1'
+                    obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
                     Coor_pt = obj.getVertexCoord();
                     tlm.var.pt_electrode_1_x = Coor_pt(1) * scale;
                     tlm.var.pt_electrode_1_y = Coor_pt(2) * scale;
                     tlm.var.pt_electrode_1_z = Coor_pt(3) * scale;
                     
                 case 'Pt_electrode_2'
+                    obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
                     Coor_pt = obj.getVertexCoord();
                     tlm.var.pt_electrode_2_x = Coor_pt(1) * scale;
                     tlm.var.pt_electrode_2_y = Coor_pt(2) * scale;
