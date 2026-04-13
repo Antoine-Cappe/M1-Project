@@ -76,25 +76,25 @@ if isempty(tlm.sol.fre) || size(tlm.sol.fre,2)<2
 end
 
 % Set the parameters in COMSOL based on the variables in BIOCAD
-model.param.set('sig_elec', num2str(tlm.var.sig.electrode));
-model.param.set('eps_elec', num2str(tlm.var.eps.electrode/tlm.var.eps0));
-model.param.set('sig_med', num2str(tlm.var.sig.MilOrga));
-model.param.set('eps_med', num2str(tlm.var.eps.MilOrga/tlm.var.eps0));
-model.param.set('v_in', num2str(tlm.var.v0));
+%model.param.set('sig_elec', num2str(tlm.var.sig.electrode));
+%model.param.set('eps_elec', num2str(tlm.var.eps.electrode/tlm.var.eps0));
+%model.param.set('sig_med', num2str(tlm.var.sig.MilOrga));
+%model.param.set('eps_med', num2str(tlm.var.eps.MilOrga/tlm.var.eps0));
+%model.param.set('v_in', num2str(tlm.var.v0));
 
 % --- PREPARATION DES FREQUENCES ET RESOLUTION ---
 
 % We add the frequencies from the SPI file to the COMSOL study.
 freq_str = sprintf('%g ', tlm.sol.fre(:,2)); 
-model.study('std1').feature('freq').set('plist', freq_str);
-model.study('std1').feature('freq').set('preusesol', 'no');
+model.study(tlm.conf.study_label).feature('freq').set('plist', freq_str);
+model.study(tlm.conf.study_label).feature('freq').set('preusesol', 'no');
 
 % Run the COMSOL study to compute the solution at the specified frequencies.
-model.study('std1').run;
+model.study(tlm.conf.study_label).run;
 data = mpheval(model,'V');
 
 % Extract the impedance Z
-Y_complex = mphglobal(model, 'ec.Y11');
+Y_complex = mphglobal(model, tlm.conf.admitance); % Admittance Y = 1/Z
 Z_complex = 1 ./ Y_complex;
 Z_complex = Z_complex(:); 
 

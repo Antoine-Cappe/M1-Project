@@ -40,6 +40,16 @@ function assignAndRun(app)
     tlm.conf.Mitocho = 0;
     tlm.conf.points = app.settings.probes;
     tlm.conf.mesh = app.MeshdensitySlider.Value;
+
+    % 1. On récupère les valeurs et on les convertit en texte (string)
+    mesh_val = num2str(app.MeshnumberEditField.Value);
+    study_val = num2str(app.StudynumberEditField.Value);
+    term_val = num2str(app.TerminalnumberEditField.Value); 
+
+    % 2. On les assemble avec des crochets (méthode la plus rapide en MATLAB)
+    tlm.conf.mesh_label = ['mesh', mesh_val];
+    tlm.conf.study_label = ['std', study_val];
+    tlm.conf.admitance = ['ec.Y', term_val, term_val];
         
     TL = 1; % Transport Lattice
     FE = 0; % Finite Elements
@@ -125,8 +135,8 @@ function assignAndRun(app)
     
     
     % Initialize other geometry parameters
-    app.loadedModel.model.mesh('mesh1').feature('size').set('hauto',tlm.conf.mesh);
-    app.loadedModel.model.mesh('mesh1').run;
+    app.loadedModel.model.mesh(tlm.conf.mesh_label).feature('size').set('hauto',tlm.conf.mesh);
+    app.loadedModel.model.mesh(tlm.conf.mesh_label).run;
     
     tlm.model = app.loadedModel.model;
 
@@ -146,8 +156,8 @@ function assignAndRun(app)
     end
     
     % Adapt model mesh density based on user input
-    app.loadedModel.model.mesh('mesh1').feature('size').set('hauto',tlm.conf.mesh);
-    app.loadedModel.model.mesh('mesh1').run;
+    app.loadedModel.model.mesh(tlm.conf.mesh_label).feature('size').set('hauto',tlm.conf.mesh);
+    app.loadedModel.model.mesh(tlm.conf.mesh_label).run;
     
     %tlm.model = app.loadedModel.model;
     
@@ -155,6 +165,8 @@ function assignAndRun(app)
     
     % Postprocess the various analysis
     tlm = Postprocess(tlm,fil, app,model);
+
+    app.tlm = tlm;
     
     if tlm.conf.log == 1
         fclose(fil); % close log file

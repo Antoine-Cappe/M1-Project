@@ -772,14 +772,12 @@ for ii=1:1:3
 
         xlin1=linspace(tlm.var.OrigineX-tlm.var.LongueurChambre/2,tlm.var.OrigineX+tlm.var.LongueurChambre/2,200);
         ylin1=linspace(tlm.var.OrigineY-tlm.var.LargeurChambre/2,tlm.var.OrigineY+tlm.var.LargeurChambre/2,200);
-        zlin1=tlm.var.OrigineZ+tlm.var.EpaisseurChambre/4;
+        zlin1=tlm.var.EpaisseurChambre/2; % La coupe est placée à mi-hauteur de la chambre de culture par défaut
        
         % Define a regular grid
-
         [X1,Y1,Z1]= meshgrid(xlin1,ylin1,zlin1);
     
         % Interpolate the potential on the regular (X1,Y1,Z1) grid
-        
         if size(tlm.var.X1,1)~=size(tlm.var.Volt1,2)
             Message=sprintf('\n\t\t . Error: The %s.cor and %s.spi_cou files doe not correspond',tlm.conf.Name,tlm.conf.Name);
             disp(Message);
@@ -789,7 +787,6 @@ for ii=1:1:3
         end
         
         % Define the axes (interface) to plot on depending on ii
-
         switch ii
             case 1
                 ax = app.UIAxes_PotentialMapfmin_SPICE;

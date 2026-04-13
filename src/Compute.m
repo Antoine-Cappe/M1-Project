@@ -101,12 +101,12 @@ tic;
 
 if (tlm.conf.dim==2)  
     %[tlm,model]=Geom2Dcad(tlm);
-    numelem=model.component('comp1').mesh('mesh1').getNumElem('tri');
-    numvertex=model.component('comp1').mesh('mesh1').getNumVertex();
+    numelem=model.component('comp1').mesh(tlm.conf.mesh_label).getNumElem('tri');
+    numvertex=model.component('comp1').mesh(tlm.conf.mesh_label).getNumVertex();
 else                   
     % [tlm,model]=Geom3Dcad(tlm);
-    numelem=model.component('comp1').mesh('mesh1').getNumElem('tet');
-    numvertex=model.component('comp1').mesh('mesh1').getNumVertex();
+    numelem=model.component('comp1').mesh(tlm.conf.mesh_label).getNumElem('tet');
+    numvertex=model.component('comp1').mesh(tlm.conf.mesh_label).getNumVertex();
 end
 
 tlm.var.time_for_geometry=toc;
@@ -133,16 +133,16 @@ end
 %fem_mesh_t(:,:)=fem.mesh.t(:,:);
 %fem_mesh_e(:,:)=fem.mesh.e(:,:);
 
-fem_mesh_p(:,:)=model.component('comp1').mesh('mesh1').getVertex; % coordinates of vertex
+fem_mesh_p(:,:)=model.component('comp1').mesh(tlm.conf.mesh_label).getVertex; % coordinates of vertex
 % Convertir les coordonnées brutes du maillage en mètres
 fem_mesh_p(:,:) = fem_mesh_p(:,:) * tlm.var.scale;
 
 if (tlm.conf.dim==2)  
-    fem_mesh_t(:,:)=model.component('comp1').mesh('mesh1').getElemEntity('tri');
-    fem_mesh_e(:,:)=model.component('comp1').mesh('mesh1').getElem('tri');
+    fem_mesh_t(:,:)=model.component('comp1').mesh(tlm.conf.mesh_label).getElemEntity('tri');
+    fem_mesh_e(:,:)=model.component('comp1').mesh(tlm.conf.mesh_label).getElem('tri');
 else
-    fem_mesh_t(:,:)=model.component('comp1').mesh('mesh1').getElemEntity('tet');%store for each tetrahedron the domain (number) it belongs to
-    fem_mesh_e(:,:)=model.component('comp1').mesh('mesh1').getElem('tet'); % nodes numbers (from 0) of the 4 nodes of the current elements
+    fem_mesh_t(:,:)=model.component('comp1').mesh(tlm.conf.mesh_label).getElemEntity('tet');%store for each tetrahedron the domain (number) it belongs to
+    fem_mesh_e(:,:)=model.component('comp1').mesh(tlm.conf.mesh_label).getElem('tet'); % nodes numbers (from 0) of the 4 nodes of the current elements
 end
              
 % Search for the numbers of the points PT1, PT2, ... in the global mesh
@@ -153,7 +153,8 @@ tic;
 if (tlm.conf.dim==2)
     [tlm,model]=RechercheIndice2D(tlm,model);
 else
-    [tlm,model]=RechercheIndice3Dnew(tlm,model);
+    % [tlm,model]=RechercheIndice3Dnew(tlm,model);
+    [tlm,model]=SetDomainValues(tlm,model);
 end
 
 % Set up the Spice Data Structure
@@ -220,7 +221,7 @@ cirPath = sprintf('%s\\%s\\%s.cir', tlm.conf.store, tlm.conf.Name, tlm.conf.Name
 % =========================================================================
 
 % 1. Définir le nombre de cœurs à utiliser (on met 10 pour garder de la marge pour Windows)
-num_cores = '4'; 
+num_cores = '10'; % Ajustez selon votre machine (ex: 4, 8, 16, etc.)
 
 % 2. Le chemin de ton exécutable Xyce compilé sous Linux
 xyceLinuxPath = '/usr/local/xyce_mpi/bin/Xyce';

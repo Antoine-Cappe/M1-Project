@@ -28,7 +28,7 @@ function tlm = IniGeoPhy(tlm, model, app)
     % Initialize Geometrical Parameters
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    scale = 1e-6;             % Facteur de conversion
+    scale = 1e-3;             % Facteur de conversion
     tlm.var.scale = scale;    % Sauvegarder le scale dans tlm
     
     if tlm.conf.dim == 3
@@ -40,7 +40,7 @@ function tlm = IniGeoPhy(tlm, model, app)
             Label = char(feat.label);
             
             switch Label
-                case 'Bioreactor'
+                case 'TiC_PDMS'
                     obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
                     BoundingBox = obj.getBoundingBox();
                     tlm.var.LongueurChambre  = (BoundingBox(2) - BoundingBox(1)) * scale;
@@ -183,9 +183,12 @@ function tlm = IniGeoPhy(tlm, model, app)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     % --- Conductivities (S/m) ---
-    tlm.var.sig.electrode = app.Gold_conduct.Value;
-    tlm.var.sig.MilOrga   = app.CM1_conduct.Value;
-    tlm.var.sig.MilOrgb   = app.CM2_conduct.Value;
+    tlm.var.sig.electrode   = app.Gold_conduct.Value;
+    tlm.var.sig.MilOrga     = app.CM1_conduct.Value;
+    tlm.var.sig.MilOrgb     = app.CM2_conduct.Value;
+    tlm.var.sig.PDMS        = app.PDMS_conduct.Value;
+    tlm.var.sig.Plastic_Cap = app.Plastic_Cap_conduct.Value;
+    tlm.var.sig.Glass       = app.Glass_conduct.Value;
     
     % First Cell
     tlm.var.sig.MembCel(1)    = app.BC1_Mem_conduct.Value;
@@ -206,9 +209,12 @@ function tlm = IniGeoPhy(tlm, model, app)
     % --- Permittivities (F/m) ---
     tlm.var.eps0 = 8.854187817e-012; % Dielectric Permittivity of Vacuum
     
-    tlm.var.eps.electrode = app.Gold_permit.Value * tlm.var.eps0;
-    tlm.var.eps.MilOrga   = app.CM1_permit.Value  * tlm.var.eps0;
-    tlm.var.eps.MilOrgb   = app.CM1_permit.Value  * tlm.var.eps0;
+    tlm.var.eps.electrode   = app.Gold_permit.Value * tlm.var.eps0;
+    tlm.var.eps.MilOrga     = app.CM1_permit.Value  * tlm.var.eps0;
+    tlm.var.eps.MilOrgb     = app.CM2_permit.Value  * tlm.var.eps0;
+    tlm.var.eps.PDMS        = app.PDMS_permit.Value  * tlm.var.eps0;
+    tlm.var.eps.Plastic_Cap = app.Plastic_Cap_permit.Value * tlm.var.eps0;
+    tlm.var.eps.Glass       = app.Glass_permit.Value * tlm.var.eps0;
     
     % First Cell
     tlm.var.eps.MembCel(1)    = app.BC1_Mem_permit.Value  * tlm.var.eps0;
