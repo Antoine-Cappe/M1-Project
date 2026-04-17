@@ -773,6 +773,7 @@ for ii=1:1:3
         xlin1=linspace(tlm.var.OrigineX-tlm.var.LongueurChambre/2,tlm.var.OrigineX+tlm.var.LongueurChambre/2,200);
         ylin1=linspace(tlm.var.OrigineY-tlm.var.LargeurChambre/2,tlm.var.OrigineY+tlm.var.LargeurChambre/2,200);
         zlin1=tlm.var.EpaisseurChambre/2; % La coupe est placée à mi-hauteur de la chambre de culture par défaut
+        zlin1=tlm.var.OrigineZ+tlm.var.EpaisseurChambre/4;
        
         % Define a regular grid
         [X1,Y1,Z1]= meshgrid(xlin1,ylin1,zlin1);

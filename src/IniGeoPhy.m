@@ -28,8 +28,32 @@ function tlm = IniGeoPhy(tlm, model, app)
     % Initialize Geometrical Parameters
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    scale = 1e-3;             % Facteur de conversion
-    tlm.var.scale = scale;    % Sauvegarder le scale dans tlm
+    % 1. Récupération de l'unité de longueur de la géométrie COMSOL
+% On utilise char() pour s'assurer que MATLAB le lit comme du texte classique
+unit_str = char(model.component('comp1').geom('geom1').lengthUnit());
+
+% 2. Détermination dynamique du facteur d'échelle (scale)
+switch unit_str
+    case 'm'
+        scale = 1;
+    case 'cm'
+        scale = 1e-2;
+    case 'mm'
+        scale = 1e-3;
+    case {'um', '\mu m', 'µm'} % COMSOL utilise parfois des caractères spéciaux pour micro
+        scale = 1e-6;
+    case 'nm'
+        scale = 1e-9;
+    otherwise
+        warning('Unité de longueur COMSOL non standard (%s). Le scale est forcé à 1 (mètres).', unit_str);
+        scale = 1;
+end
+
+% 3. Sauvegarde dans la structure tlm
+tlm.var.scale = scale;
+
+% (Optionnel) Affichage dans la console pour vérifier que ça marche
+fprintf('\t . Unité de la géométrie détectée : %s (Scale = %g)\n', unit_str, scale);
     
     if tlm.conf.dim == 3
         geom_component_objects = model.component('comp1').geom('geom1').feature().tags;
@@ -40,7 +64,7 @@ function tlm = IniGeoPhy(tlm, model, app)
             Label = char(feat.label);
             
             switch Label
-                case 'TiC_PDMS'
+                case {'TiC_PDMS', 'Bioreactor'}    % a rendre plus robuste en cherchant des mots-clés plutôt que des noms exacts
                     obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
                     BoundingBox = obj.getBoundingBox();
                     tlm.var.LongueurChambre  = (BoundingBox(2) - BoundingBox(1)) * scale;
