@@ -1,4 +1,24 @@
-function [tlm,model]=SetDomainValues(tlm,model)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                              BIOCAD Program
+%                               Release 1.0
+%
+%   Authors: Vincent Senez
+%   
+%   Release 1.0 : January 2019
+%   Refactored  : March 2026
+%
+%   Routine RechercheIndice3D called by Compute.m 
+%
+%   Function:   Look for the number of the Point PT1, PT2, PT3, ... in the
+%               global mesh, Flag the domains, Fix the conductivity & 
+%               & permittivity of each domain
+%
+%   Remark: RAS 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+function [tlm,model]=RechercheIndice3Dnew(tlm,model)
 
     % Récupération des données de maillage globales
     global fem_mesh_p; % Noeuds (coordonnées)
@@ -22,12 +42,13 @@ function [tlm,model]=SetDomainValues(tlm,model)
     % Cette fonction interne trouve l'indice du nœud le plus proche d'une coordonnée [x;y;z]
     find_node = @(target) find_nearest_node(fem_mesh_p, target);
 
-    % Identification des points clés - A inverser selon la geométrie
-    tlm.ind.pt.elec1    = find_node(coord_pt1); % Point sur l'électrode de masse
-    tlm.ind.pt.elec2    = find_node(coord_pt2); % Point sur l'électrode terminale
+    % Identification des points clés 
+    tlm.ind.pt.elec1 = find_node(coord_pt1); % Point sur l'électrode de masse
+    tlm.ind.pt.elec2 = find_node(coord_pt2); % Point sur l'électrode terminale
 
 
-    % --- 3. RÉCUPÉRATION DES STRUCTURES FIXES VIA SÉLECTIONS COMSOL ---
+    % --- 3. RÉCUPÉRATION DES ENSEMNLES DE DOMAINES VIA SÉLECTIONS COMSOL ---
+    % L'ordre des sélections est important sur COMSOL
 
     if max(fem_mesh_t) == 3
         try
@@ -65,6 +86,11 @@ function [tlm,model]=SetDomainValues(tlm,model)
         catch
             error('Erreur : Les sélections (MilOrg, Electrode, PDMS, Plastic, Glass) sont introuvables dans le modèle COMSOL.');
         end
+
+        % Création de variables - Ce sont des vecteurs d'indices de domaines
+        tlm.ind.dom.MilOrga = domaines_MilOrga;
+        tlm.ind.dom.elec1 = domaines_elec1;
+        tlm.ind.dom.elec2 = domaines_elec2;
 
         % Assignation de l'Électrode 
         tlm.dom.sig(domaines_elec1) = tlm.var.sig.electrode;

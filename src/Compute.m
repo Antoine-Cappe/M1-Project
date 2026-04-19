@@ -45,7 +45,7 @@ global fem_mesh_t;
 global fem_mesh_e;
 global fem_mesh_f; % les faces du maillage (pour les conditions aux limites)
 
-[meshstats, meshdata] = mphmeshstats(model, 'mesh1');
+[meshstats, meshdata] = mphmeshstats(tlm.model, tlm.conf.mesh_label);
 
 % Open log file
 
@@ -223,7 +223,7 @@ cirPath = sprintf('%s\\%s\\%s.cir', tlm.conf.store, tlm.conf.Name, tlm.conf.Name
 % =========================================================================
 
 % 1. Définir le nombre de cœurs à utiliser (on met 10 pour garder de la marge pour Windows)
-num_cores = '4'; % Ajustez selon votre machine (ex: 4, 8, 16, etc.)
+num_cores = '8'; % Ajustez selon votre machine (ex: 4, 8, 16, etc.)
 
 % 2. Le chemin de ton exécutable Xyce compilé sous Linux
 xyceLinuxPath = '/usr/local/xyce_mpi/bin/Xyce';

@@ -45,51 +45,102 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
-%function [tlm,fem]=CalculRC3D(tlm,fem)
+% Attention - Cette fonction fonctionnait avec une ancienne version de COMSOL.
+% Le tableau fem_mesh_t avait une structure différente (les domaines étaient dans la 5ème ligne au lieu de la 1ère).
+% Une réécriture complète de cette fonction est nécessaire pour l'adapter à la nouvelle structure du maillage et simuler les effets d'interfaces.
 function [tlm,model]=CalculRC3D(tlm,model)
 
-%Initialization
+    %Initialization
 
-global fem_mesh_p; %coordinates of the vertex
-global fem_mesh_t; %domain number of the tetrahedron
-%global fem_mesh_e;
+    global fem_mesh_p; %coordinates of the vertex
+    global fem_mesh_t; %domain number of the tetrahedron
+    %global fem_mesh_e;
 
-for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
+    for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
 
-    if size(tlm.result{i},2)~=0 % Check whether the node has been selected once as an incident point
-        
-        for j=7:7:size(tlm.result{i},2)
-            if i==0
-                disp(i);
-            end
+        if size(tlm.result{i},2)~=0 % Check whether the node has been selected once as an incident point
             
-              long=sum((fem_mesh_p(:,i)-fem_mesh_p(:,tlm.result{i}{j-6})).^2)^0.5; % Calculation of the size between the 2 nodes
+            for j=7:7:size(tlm.result{i},2)
+                if i==0
+                    disp(i);
+                end
+                
+                long=sum((fem_mesh_p(:,i)-fem_mesh_p(:,tlm.result{i}{j-6})).^2)^0.5; % Calculation of the size between the 2 nodes
 
- % Interface between solicitation electrodes and organic medium              
-              
-              if (size(tlm.geom.boundaryEE{i},1)==1) && (size(tlm.geom.boundaryEE{tlm.result{i}{j-6}},1)==1)   % It is an interface between the organic medium (serum) and the outer electrodes
-                  
-                  % If the segment is at the interface between the left or right outer electrodes - electrolyte
-                    tlm.result{i}{j}=long;                                      % Length of the segment
-                    tlm.geom.boundaryEE{i}=tlm.geom.boundaryEE{i}+tlm.result{i}{j}/2;
-                    tlm.geom.boundaryEE{tlm.result{i}{j-6}}=tlm.geom.boundaryEE{tlm.result{i}{j-6}}+tlm.result{i}{j}/2;
-                        
-                    for k=1:1:size(tlm.result{i}{j-5},2)                        %loop on the number of tetraedron around this segment
-                        if fem_mesh_t(tlm.result{i}{j-5}(k),1)==tlm.ind.dom.MilOrga                          %if tetra is in electrolyte
-                            tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(k),1)).*tlm.geom.airvol(i);
-                            tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(k),1)).*tlm.geom.airvol(i);
-                        else                                                                                  %if the tetra is in the electrode
-                            tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(k),1)).*tlm.geom.airvol(i);
-                            tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(k),1)).*tlm.geom.airvol(i);
-                        end
-                    end
+    % Interface between solicitation electrodes and organic medium              
+                
+                if (size(tlm.geom.boundaryEE{i},1)==1) && (size(tlm.geom.boundaryEE{tlm.result{i}{j-6}},1)==1)   % It is an interface between the organic medium (serum) and the outer electrodes
                     
-                    if tlm.result{i}{j-4}==0 || tlm.result{i}{j-3}==0  % case of narrow electrodes where nodes i and tlm.result{i}{j-6} are on both sides of the electrodes qnd on the side of the simulation domain
-                        tlm.result{i}{j}=1; % this segment is in the electrode (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
+                    % If the segment is at the interface between the left or right outer electrodes - electrolyte
+                        tlm.result{i}{j}=long;                                      % Length of the segment
+                        tlm.geom.boundaryEE{i}=tlm.geom.boundaryEE{i}+tlm.result{i}{j}/2;
+                        tlm.geom.boundaryEE{tlm.result{i}{j-6}}=tlm.geom.boundaryEE{tlm.result{i}{j-6}}+tlm.result{i}{j}/2;
+                            
+                        for k=1:1:size(tlm.result{i}{j-5},2)                        %loop on the number of tetraedron around this segment
+                            if fem_mesh_t(tlm.result{i}{j-5}(k),1)==tlm.ind.dom.MilOrga                          %if tetra is in electrolyte
+                                tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(k),1)).*tlm.geom.airvol(i);
+                                tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(k),1)).*tlm.geom.airvol(i);
+                            else                                                                                  %if the tetra is in the electrode
+                                tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(k),1)).*tlm.geom.airvol(i);
+                                tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(k),1)).*tlm.geom.airvol(i);
+                            end
+                        end
+                        
+                        if tlm.result{i}{j-4}==0 || tlm.result{i}{j-3}==0  % case of narrow electrodes where nodes i and tlm.result{i}{j-6} are on both sides of the electrodes qnd on the side of the simulation domain
+                            tlm.result{i}{j}=1; % this segment is in the electrode (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
+                            % Resistance
+                            tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/3;
+                            % Capacit�
+                            tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/long^2*3;
+                        else
+                            % Resistance R1
+                            tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
+                            % Capacit� C1
+                            tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
+                            % Resistance R2
+                            tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
+                            % Capacit� C2
+                            tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
+                        end
+        
+                elseif (size(tlm.geom.boundaryEE{i},1)==1) || (size(tlm.geom.boundaryEE{tlm.result{i}{j-6}},1)==1)
+                    
+                        if fem_mesh_t(tlm.result{i}{j-5}(1),1)==tlm.ind.dom.MilOrga
+                            tlm.result{i}{j}=2; %this segment is in the electrolyte
+                        else
+                            tlm.result{i}{j}=1; %this segment is in the electrode
+                        end
+                        
                         % Resistance
                         tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/3;
                         % Capacit�
                         tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/long^2*3;
+                end
+                
+    % Interface between cytoplasm of first cell and organic medium
+                            
+                if (size(tlm.geom.boundaryEC{1,i},1)==1) && (size(tlm.geom.boundaryEC{1,tlm.result{i}{j-6}},1)==1)   % It is an interface between the organic medium (serum) and the cytoplasm(1)
+
+                    tlm.result{i}{j}=long;                                      % Length of the segment
+                    tlm.geom.boundaryEC{1,i}=tlm.geom.boundaryEC{1,i}+tlm.result{i}{j}/2;
+                    tlm.geom.boundaryEC{1,tlm.result{i}{j-6}}=tlm.geom.boundaryEC{1,tlm.result{i}{j-6}}+tlm.result{i}{j}/2;
+                            
+                    for k=1:1:size(tlm.result{i}{j-5},2) %loop on the number of tetraedra around this segment
+                        if fem_mesh_t(5,tlm.result{i}{j-5}(k))==tlm.ind.dom.MilOrga                          %if the tetrahedron is in electrolyte
+                            tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                            tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                        else                                                                                 %if the tetrahedron is in cytoplasm(1)
+                            tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                            tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                        end
+                    end
+                        
+                    if tlm.result{i}{j-2}==0 || tlm.result{i}{j-1}==0
+                        tlm.result{i}{j}=4; % this segment is in the electrolyte (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
+                        % Resistance
+                        tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
+                        % Capacit�
+                        tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
                     else
                         % Resistance R1
                         tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
@@ -100,335 +151,319 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                         % Capacit� C2
                         tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
                     end
-      
-              elseif (size(tlm.geom.boundaryEE{i},1)==1) || (size(tlm.geom.boundaryEE{tlm.result{i}{j-6}},1)==1)
-                  
-                    if fem_mesh_t(tlm.result{i}{j-5}(1),1)==tlm.ind.dom.MilOrga
-                        tlm.result{i}{j}=2; %this segment is in the electrolyte
+            
+                elseif (size(tlm.geom.boundaryEC{1,i},1)==1) || (size(tlm.geom.boundaryEC{1,tlm.result{i}{j-6}},1)==1)
+            
+                    if fem_mesh_t(5,tlm.result{i}{j-5}(1))==tlm.ind.dom.MilOrga
+                        tlm.result{i}{j}=4; %this segment is in the electrolyte
                     else
-                        tlm.result{i}{j}=1; %this segment is in the electrode
+                        tlm.result{i}{j}=3; %this segment is in the cytoplasm(1)
+                    end
+                        
+                    % Resistance
+                    tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
+                    % Capacit�
+                    tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
+                        
+                end
+                
+    % Interface between cytoplasm of second cell and organic medium
+
+                if (size(tlm.geom.boundaryEC{2,i},1)==1) && (size(tlm.geom.boundaryEC{2,tlm.result{i}{j-6}},1)==1)   % It is an interface between the organic medium (serum) and the cytoplasm(2)
+
+                    tlm.result{i}{j}=long;                                      % Length of the segment
+                    tlm.geom.boundaryEC{2,i}=tlm.geom.boundaryEC{2,i}+tlm.result{i}{j}/2;
+                    tlm.geom.boundaryEC{2,tlm.result{i}{j-6}}=tlm.geom.boundaryEC{2,tlm.result{i}{j-6}}+tlm.result{i}{j}/2;
+                            
+                    for k=1:1:size(tlm.result{i}{j-5},2) %loop on the number of tetraedra around this segment
+                        if fem_mesh_t(5,tlm.result{i}{j-5}(k))==tlm.ind.dom.MilOrga                          %if the tetrahedron is in electrolyte
+                            tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                            tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                        else                                                                                 %if the tetrahedron is in cytoplasm(2)
+                            tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                            tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                        end
+                    end
+                        
+                    if tlm.result{i}{j-2}==0 || tlm.result{i}{j-1}==0
+                        tlm.result{i}{j}=10; % this segment is in the electrolyte (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
+                        % Resistance
+                        tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
+                        % Capacit�
+                        tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
+                    else
+                        % Resistance R1
+                        tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
+                        % Capacit� C1
+                        tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
+                        % Resistance R2
+                        tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
+                        % Capacit� C2
+                        tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
+                    end
+            
+                elseif (size(tlm.geom.boundaryEC{2,i},1)==1) || (size(tlm.geom.boundaryEC{2,tlm.result{i}{j-6}},1)==1)
+            
+                    if fem_mesh_t(5,tlm.result{i}{j-5}(1))==tlm.ind.dom.MilOrga
+                        tlm.result{i}{j}=10; %this segment is in the electrolyte
+                    else
+                        tlm.result{i}{j}=9; %this segment is in the cytoplasm(2)
+                    end
+                        
+                    % Resistance
+                    tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
+                    % Capacit�
+                    tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
+                        
+                end
+                
+    % Interface between cytoplasm of first cell and nucleus(1)
+
+                if (size(tlm.geom.boundaryEN{1,i},1)==1) && (size(tlm.geom.boundaryEN{1,tlm.result{i}{j-6}},1)==1)   % It is an interface between the nucleus(1) and the cytoplasm(1)
+
+                    tlm.result{i}{j}=long;                                      % Length of the segment
+                    tlm.geom.boundaryEN{1,i}=tlm.geom.boundaryEN{1,i}+tlm.result{i}{j}/2;
+                    tlm.geom.boundaryEN{1,tlm.result{i}{j-6}}=tlm.geom.boundaryEN{1,tlm.result{i}{j-6}}+tlm.result{i}{j}/2;
+                            
+                    for k=1:1:size(tlm.result{i}{j-5},2) %loop on the number of tetraedra around this segment
+                        if fem_mesh_t(5,tlm.result{i}{j-5}(k))==tlm.ind.dom.Cytoplasme(1)                         %if the tetrahedron is in nucleus(1)
+                            tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                            tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                        else                                                                                 %if the tetrahedron is in cytoplasm(1)
+                            tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                            tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                        end 
+                    end
+                        
+                    if tlm.result{i}{j-4}==0 || tlm.result{i}{j-3}==0
+                        tlm.result{i}{j}=6; % this segment is in the nucleus(1) (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
+                        % Resistance
+                        tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
+                        % Capacit�
+                        tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
+                    else
+                        % Resistance R1
+                        tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
+                        % Capacit� C1
+                        tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
+                        % Resistance R2
+                        tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
+                        % Capacit� C2
+                        tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
+                    end
+            
+                elseif (size(tlm.geom.boundaryEN{1,i},1)==1) || (size(tlm.geom.boundaryEN{1,tlm.result{i}{j-6}},1)==1)
+            
+                    if fem_mesh_t(5,tlm.result{i}{j-5}(1))==tlm.ind.dom.Nucleus(1)
+                        tlm.result{i}{j}=6; %this segment is in the nucleus
+                    else
+                        tlm.result{i}{j}=5; %this segment is in the cytoplasm(1)
+                    end
+                        
+                    % Resistance
+                    tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
+                    % Capacit�
+                    tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
+                        
+                end
+                
+    % Interface between cytoplasm of second cell and nucleus(2)
+
+                if (size(tlm.geom.boundaryEN{2,i},1)==1) && (size(tlm.geom.boundaryEN{2,tlm.result{i}{j-6}},1)==1)   % It is an interface between the nucleus(2) and the cytoplasm(2)
+
+                    tlm.result{i}{j}=long;                                      % Length of the segment
+                    tlm.geom.boundaryEN{2,i}=tlm.geom.boundaryEN{2,i}+tlm.result{i}{j}/2;
+                    tlm.geom.boundaryEN{2,tlm.result{i}{j-6}}=tlm.geom.boundaryEN{2,tlm.result{i}{j-6}}+tlm.result{i}{j}/2;
+                            
+                    for k=1:1:size(tlm.result{i}{j-5},2) %loop on the number of tetraedra around this segment
+                        if fem_mesh_t(5,tlm.result{i}{j-5}(k))==tlm.ind.dom.Cytoplasme(2)                         %if the tetrahedron is in nucleus(1)
+                            tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                            tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                        else                                                                                 %if the tetrahedron is in cytoplasm(1)
+                            tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                            tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                        end 
+                    end
+                        
+                    if tlm.result{i}{j-4}==0 || tlm.result{i}{j-3}==0
+                        tlm.result{i}{j}=12; % this segment is in the cytoplasm(2) (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
+                        % Resistance
+                        tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
+                        % Capacit�
+                        tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
+                    else
+                        % Resistance R1
+                        tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
+                        % Capacit� C1
+                        tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
+                        % Resistance R2
+                        tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
+                        % Capacit� C2
+                        tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
+                    end
+            
+                elseif (size(tlm.geom.boundaryEN{2,i},1)==1) || (size(tlm.geom.boundaryEN{2,tlm.result{i}{j-6}},1)==1)
+            
+                    if fem_mesh_t(5,tlm.result{i}{j-5}(1))==tlm.ind.dom.Nucleus(2)
+                        tlm.result{i}{j}=12; %this segment is in the nucleus(2)
+                    else
+                        tlm.result{i}{j}=11; %this segment is in the cytoplasm(2)
+                    end
+                        
+                    % Resistance
+                    tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
+                    % Capacit�
+                    tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
+                        
+                end
+
+    % Interface between cytoplasm of first cell and mitochondria(1)
+
+                if (size(tlm.geom.boundaryEM{1,i},1)==1) && (size(tlm.geom.boundaryEM{1,tlm.result{i}{j-6}},1)==1)   % It is an interface between the mitochondria(1) and the cytoplasm(1)
+
+                    tlm.result{i}{j}=long;                                      % Length of the segment
+                    tlm.geom.boundaryEM{1,i}=tlm.geom.boundaryEM{1,i}+tlm.result{i}{j}/2;
+                    tlm.geom.boundaryEM{1,tlm.result{i}{j-6}}=tlm.geom.boundaryEM{1,tlm.result{i}{j-6}}+tlm.result{i}{j}/2;
+                            
+                    for k=1:1:size(tlm.result{i}{j-5},2) %loop on the number of tetraedra around this segment
+                        if fem_mesh_t(5,tlm.result{i}{j-5}(k))==tlm.ind.dom.Cytoplasme(1)                         %if the tetrahedron is in mitochondria(1)
+                            tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                            tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                        else                                                                                 %if the tetrahedron is in cytoplasm(1)
+                            tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                            tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                        end
+                    end
+
+                    if tlm.result{i}{j-4}==0 || tlm.result{i}{j-3}==0
+                        tlm.result{i}{j}=8; % this segment is in the mitochon(1) (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
+                        % Resistance
+                        tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
+                        % Capacit�
+                        tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
+                    else
+                        % Resistance R1
+                        tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
+                        % Capacit� C1
+                        tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
+                        % Resistance R2
+                        tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
+                        % Capacit� C2
+                        tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
+                    end
+            
+                elseif (size(tlm.geom.boundaryEM{1,i},1)==1) || (size(tlm.geom.boundaryEM{1,tlm.result{i}{j-6}},1)==1)
+            
+                    if fem_mesh_t(5,tlm.result{i}{j-5}(1))==tlm.ind.dom.Mitocho(1)
+                        tlm.result{i}{j}=8; %this segment is in the mitochondria(1)
+                    else
+                        tlm.result{i}{j}=7; %this segment is in the cytoplasm(1)
+                    end
+                        
+                    % Resistance
+                    tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
+                    % Capacit�
+                    tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
+                    
+                end
+
+    % Interface between cytoplasm of second cell and mitochondria(2)
+
+                if (size(tlm.geom.boundaryEM{2,i},1)==1) && (size(tlm.geom.boundaryEM{2,tlm.result{i}{j-6}},1)==1)   % It is an interface between the mitochondria(2) and the cytoplasm(2)
+
+                    tlm.result{i}{j}=long;                                      % Length of the segment
+                    tlm.geom.boundaryEM{2,i}=tlm.geom.boundaryEM{2,i}+tlm.result{i}{j}/2;
+                    tlm.geom.boundaryEM{2,tlm.result{i}{j-6}}=tlm.geom.boundaryEM{2,tlm.result{i}{j-6}}+tlm.result{i}{j}/2;
+                            
+                    for k=1:1:size(tlm.result{i}{j-5},2) %loop on the number of tetraedra around this segment
+                        if fem_mesh_t(5,tlm.result{i}{j-5}(k))==tlm.ind.dom.Cytoplasme(2)                         %if the tetrahedron is in mitochondria(2)
+                            tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                            tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                        else                                                                                 %if the tetrahedron is in cytoplasm(2)
+                            tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                            tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                        end
+                    end
+                        
+                    if tlm.result{i}{j-4}==0 || tlm.result{i}{j-3}==0
+                        tlm.result{i}{j}=14; % this segment is in the mitocho(2) (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
+                        % Resistance
+                        tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
+                        % Capacit�
+                        tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
+                    else
+                        % Resistance R1
+                        tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
+                        % Capacit� C1
+                        tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
+                        % Resistance R2
+                        tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
+                        % Capacit� C2
+                        tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
+                    end
+            
+                elseif (size(tlm.geom.boundaryEM{2,i},1)==1) || (size(tlm.geom.boundaryEM{2,tlm.result{i}{j-6}},1)==1)
+            
+                    if fem_mesh_t(5,tlm.result{i}{j-5}(1))==tlm.ind.dom.Mitocho(2)
+                        tlm.result{i}{j}=14; %this segment is in the mitochondria(2)
+                    else
+                        tlm.result{i}{j}=13; %this segment is in the cytoplasm(2)
+                    end
+                        
+                    % Resistance
+                    tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
+                    % Capacit�
+                    tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
+                    
+                end
+                
+                if tlm.result{i}{j}==0 % if we are not at an interface
+                    
+                    % Resistance
+                    
+                    if tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(:),1))~=0 
+                        tlm.result{i}{j-4}=(long^2/(sum(tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))))/3;
+                    else
+                        tlm.result{i}{j-4}=-1;
                     end
                     
-                    % Resistance
-                    tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/3;
                     % Capacit�
-                    tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/long^2*3;
-              end
-              
-% Interface between cytoplasm of first cell and organic medium
+                    tlm.result{i}{j-3}=(sum(tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/long^2)*3;
                         
-              if (size(tlm.geom.boundaryEC{1,i},1)==1) && (size(tlm.geom.boundaryEC{1,tlm.result{i}{j-6}},1)==1)   % It is an interface between the organic medium (serum) and the cytoplasm(1)
+                end
 
-                 tlm.result{i}{j}=long;                                      % Length of the segment
-                 tlm.geom.boundaryEC{1,i}=tlm.geom.boundaryEC{1,i}+tlm.result{i}{j}/2;
-                 tlm.geom.boundaryEC{1,tlm.result{i}{j-6}}=tlm.geom.boundaryEC{1,tlm.result{i}{j-6}}+tlm.result{i}{j}/2;
-                        
-                 for k=1:1:size(tlm.result{i}{j-5},2) %loop on the number of tetraedra around this segment
-                    if fem_mesh_t(5,tlm.result{i}{j-5}(k))==tlm.ind.dom.MilOrga                          %if the tetrahedron is in electrolyte
-                        tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                        tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                    else                                                                                 %if the tetrahedron is in cytoplasm(1)
-                        tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                        tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                % =========================================================
+                % AJOUT : BLOC DE LISSAGE ET NETTOYAGE NUMERIQUE
+                % =========================================================
+                R_max = 1e11;  % Seuil max de rsistance (circuit ouvert)
+                R_min = 1e-3;  % Seuil min de rsistance (court-circuit)
+                C_min = 1e-15; % Seuil min de capacit (valeur ignore)
+
+                % 1. Filtrage de R1 (j-4) et C1 (j-3) - Toujours presents
+                if tlm.result{i}{j-4} > R_max
+                    tlm.result{i}{j-4} = -1; % Marqueur pour ignorer la R
+                elseif tlm.result{i}{j-4} > 0 && tlm.result{i}{j-4} < R_min
+                    tlm.result{i}{j-4} = R_min; % Ramene au seuil min
+                end
+                
+                if tlm.result{i}{j-3} > 0 && tlm.result{i}{j-3} < C_min
+                    tlm.result{i}{j-3} = 0; % Marqueur pour ignorer la C
+                end
+
+                % 2. Filtrage de R2 (j-2) et C2 (j-1) - Presents uniquement aux interfaces
+                % Si j n'est pas 0, cela signifie qu'on est sur une interface (ex: 1, 2, 3...)
+                if tlm.result{i}{j} ~= 0 
+                    if tlm.result{i}{j-2} > R_max
+                        tlm.result{i}{j-2} = -1;
+                    elseif tlm.result{i}{j-2} > 0 && tlm.result{i}{j-2} < R_min
+                        tlm.result{i}{j-2} = R_min;
                     end
-                 end
                     
-                 if tlm.result{i}{j-2}==0 || tlm.result{i}{j-1}==0
-                    tlm.result{i}{j}=4; % this segment is in the electrolyte (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
-                    % Resistance
-                    tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                    % Capacit�
-                    tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
-                 else
-                    % Resistance R1
-                    tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
-                    % Capacit� C1
-                    tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
-                    % Resistance R2
-                    tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
-                    % Capacit� C2
-                    tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
-                 end
-          
-              elseif (size(tlm.geom.boundaryEC{1,i},1)==1) || (size(tlm.geom.boundaryEC{1,tlm.result{i}{j-6}},1)==1)
-           
-                 if fem_mesh_t(5,tlm.result{i}{j-5}(1))==tlm.ind.dom.MilOrga
-                     tlm.result{i}{j}=4; %this segment is in the electrolyte
-                 else
-                     tlm.result{i}{j}=3; %this segment is in the cytoplasm(1)
-                 end
-                    
-                 % Resistance
-                 tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                 % Capacit�
-                 tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
-                    
-              end
-              
-% Interface between cytoplasm of second cell and organic medium
-
-              if (size(tlm.geom.boundaryEC{2,i},1)==1) && (size(tlm.geom.boundaryEC{2,tlm.result{i}{j-6}},1)==1)   % It is an interface between the organic medium (serum) and the cytoplasm(2)
-
-                 tlm.result{i}{j}=long;                                      % Length of the segment
-                 tlm.geom.boundaryEC{2,i}=tlm.geom.boundaryEC{2,i}+tlm.result{i}{j}/2;
-                 tlm.geom.boundaryEC{2,tlm.result{i}{j-6}}=tlm.geom.boundaryEC{2,tlm.result{i}{j-6}}+tlm.result{i}{j}/2;
-                        
-                 for k=1:1:size(tlm.result{i}{j-5},2) %loop on the number of tetraedra around this segment
-                    if fem_mesh_t(5,tlm.result{i}{j-5}(k))==tlm.ind.dom.MilOrga                          %if the tetrahedron is in electrolyte
-                        tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                        tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                    else                                                                                 %if the tetrahedron is in cytoplasm(2)
-                        tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                        tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                    if tlm.result{i}{j-1} > 0 && tlm.result{i}{j-1} < C_min
+                        tlm.result{i}{j-1} = 0;
                     end
-                 end
-                    
-                 if tlm.result{i}{j-2}==0 || tlm.result{i}{j-1}==0
-                    tlm.result{i}{j}=10; % this segment is in the electrolyte (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
-                    % Resistance
-                    tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                    % Capacit�
-                    tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
-                 else
-                    % Resistance R1
-                    tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
-                    % Capacit� C1
-                    tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
-                    % Resistance R2
-                    tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
-                    % Capacit� C2
-                    tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
-                 end
-          
-              elseif (size(tlm.geom.boundaryEC{2,i},1)==1) || (size(tlm.geom.boundaryEC{2,tlm.result{i}{j-6}},1)==1)
-           
-                 if fem_mesh_t(5,tlm.result{i}{j-5}(1))==tlm.ind.dom.MilOrga
-                     tlm.result{i}{j}=10; %this segment is in the electrolyte
-                 else
-                     tlm.result{i}{j}=9; %this segment is in the cytoplasm(2)
-                 end
-                    
-                 % Resistance
-                 tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                 % Capacit�
-                 tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
-                    
-              end
-              
-% Interface between cytoplasm of first cell and nucleus(1)
-
-              if (size(tlm.geom.boundaryEN{1,i},1)==1) && (size(tlm.geom.boundaryEN{1,tlm.result{i}{j-6}},1)==1)   % It is an interface between the nucleus(1) and the cytoplasm(1)
-
-                 tlm.result{i}{j}=long;                                      % Length of the segment
-                 tlm.geom.boundaryEN{1,i}=tlm.geom.boundaryEN{1,i}+tlm.result{i}{j}/2;
-                 tlm.geom.boundaryEN{1,tlm.result{i}{j-6}}=tlm.geom.boundaryEN{1,tlm.result{i}{j-6}}+tlm.result{i}{j}/2;
-                        
-                 for k=1:1:size(tlm.result{i}{j-5},2) %loop on the number of tetraedra around this segment
-                    if fem_mesh_t(5,tlm.result{i}{j-5}(k))==tlm.ind.dom.Cytoplasme(1)                         %if the tetrahedron is in nucleus(1)
-                        tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                        tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                    else                                                                                 %if the tetrahedron is in cytoplasm(1)
-                        tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                        tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                    end 
-                 end
-                    
-                 if tlm.result{i}{j-4}==0 || tlm.result{i}{j-3}==0
-                    tlm.result{i}{j}=6; % this segment is in the nucleus(1) (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
-                    % Resistance
-                    tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                    % Capacit�
-                    tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
-                 else
-                    % Resistance R1
-                    tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
-                    % Capacit� C1
-                    tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
-                    % Resistance R2
-                    tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
-                    % Capacit� C2
-                    tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
-                 end
-          
-              elseif (size(tlm.geom.boundaryEN{1,i},1)==1) || (size(tlm.geom.boundaryEN{1,tlm.result{i}{j-6}},1)==1)
-           
-                  if fem_mesh_t(5,tlm.result{i}{j-5}(1))==tlm.ind.dom.Nucleus(1)
-                    tlm.result{i}{j}=6; %this segment is in the nucleus
-                  else
-                    tlm.result{i}{j}=5; %this segment is in the cytoplasm(1)
-                  end
-                    
-                  % Resistance
-                  tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                  % Capacit�
-                  tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
-                    
-              end
-              
-% Interface between cytoplasm of second cell and nucleus(2)
-
-              if (size(tlm.geom.boundaryEN{2,i},1)==1) && (size(tlm.geom.boundaryEN{2,tlm.result{i}{j-6}},1)==1)   % It is an interface between the nucleus(2) and the cytoplasm(2)
-
-                 tlm.result{i}{j}=long;                                      % Length of the segment
-                 tlm.geom.boundaryEN{2,i}=tlm.geom.boundaryEN{2,i}+tlm.result{i}{j}/2;
-                 tlm.geom.boundaryEN{2,tlm.result{i}{j-6}}=tlm.geom.boundaryEN{2,tlm.result{i}{j-6}}+tlm.result{i}{j}/2;
-                        
-                 for k=1:1:size(tlm.result{i}{j-5},2) %loop on the number of tetraedra around this segment
-                    if fem_mesh_t(5,tlm.result{i}{j-5}(k))==tlm.ind.dom.Cytoplasme(2)                         %if the tetrahedron is in nucleus(1)
-                        tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                        tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                    else                                                                                 %if the tetrahedron is in cytoplasm(1)
-                        tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                        tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                    end 
-                 end
-                    
-                 if tlm.result{i}{j-4}==0 || tlm.result{i}{j-3}==0
-                    tlm.result{i}{j}=12; % this segment is in the cytoplasm(2) (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
-                    % Resistance
-                    tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                    % Capacit�
-                    tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
-                 else
-                    % Resistance R1
-                    tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
-                    % Capacit� C1
-                    tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
-                    % Resistance R2
-                    tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
-                    % Capacit� C2
-                    tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
-                 end
-          
-              elseif (size(tlm.geom.boundaryEN{2,i},1)==1) || (size(tlm.geom.boundaryEN{2,tlm.result{i}{j-6}},1)==1)
-           
-                  if fem_mesh_t(5,tlm.result{i}{j-5}(1))==tlm.ind.dom.Nucleus(2)
-                    tlm.result{i}{j}=12; %this segment is in the nucleus(2)
-                  else
-                    tlm.result{i}{j}=11; %this segment is in the cytoplasm(2)
-                  end
-                    
-                  % Resistance
-                  tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                  % Capacit�
-                  tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
-                    
-              end
-
-% Interface between cytoplasm of first cell and mitochondria(1)
-
-              if (size(tlm.geom.boundaryEM{1,i},1)==1) && (size(tlm.geom.boundaryEM{1,tlm.result{i}{j-6}},1)==1)   % It is an interface between the mitochondria(1) and the cytoplasm(1)
-
-                  tlm.result{i}{j}=long;                                      % Length of the segment
-                  tlm.geom.boundaryEM{1,i}=tlm.geom.boundaryEM{1,i}+tlm.result{i}{j}/2;
-                  tlm.geom.boundaryEM{1,tlm.result{i}{j-6}}=tlm.geom.boundaryEM{1,tlm.result{i}{j-6}}+tlm.result{i}{j}/2;
-                        
-                  for k=1:1:size(tlm.result{i}{j-5},2) %loop on the number of tetraedra around this segment
-                    if fem_mesh_t(5,tlm.result{i}{j-5}(k))==tlm.ind.dom.Cytoplasme(1)                         %if the tetrahedron is in mitochondria(1)
-                        tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                        tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                    else                                                                                 %if the tetrahedron is in cytoplasm(1)
-                        tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                        tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                    end
-                  end
-
-                  if tlm.result{i}{j-4}==0 || tlm.result{i}{j-3}==0
-                    tlm.result{i}{j}=8; % this segment is in the mitochon(1) (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
-                    % Resistance
-                    tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                    % Capacit�
-                    tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
-                  else
-                    % Resistance R1
-                    tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
-                    % Capacit� C1
-                    tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
-                    % Resistance R2
-                    tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
-                    % Capacit� C2
-                    tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
-                  end
-          
-              elseif (size(tlm.geom.boundaryEM{1,i},1)==1) || (size(tlm.geom.boundaryEM{1,tlm.result{i}{j-6}},1)==1)
-           
-                  if fem_mesh_t(5,tlm.result{i}{j-5}(1))==tlm.ind.dom.Mitocho(1)
-                    tlm.result{i}{j}=8; %this segment is in the mitochondria(1)
-                  else
-                    tlm.result{i}{j}=7; %this segment is in the cytoplasm(1)
-                  end
-                    
-                  % Resistance
-                  tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                  % Capacit�
-                  tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
-                   
-              end
-
-% Interface between cytoplasm of second cell and mitochondria(2)
-
-              if (size(tlm.geom.boundaryEM{2,i},1)==1) && (size(tlm.geom.boundaryEM{2,tlm.result{i}{j-6}},1)==1)   % It is an interface between the mitochondria(2) and the cytoplasm(2)
-
-                  tlm.result{i}{j}=long;                                      % Length of the segment
-                  tlm.geom.boundaryEM{2,i}=tlm.geom.boundaryEM{2,i}+tlm.result{i}{j}/2;
-                  tlm.geom.boundaryEM{2,tlm.result{i}{j-6}}=tlm.geom.boundaryEM{2,tlm.result{i}{j-6}}+tlm.result{i}{j}/2;
-                        
-                  for k=1:1:size(tlm.result{i}{j-5},2) %loop on the number of tetraedra around this segment
-                    if fem_mesh_t(5,tlm.result{i}{j-5}(k))==tlm.ind.dom.Cytoplasme(2)                         %if the tetrahedron is in mitochondria(2)
-                        tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                        tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                    else                                                                                 %if the tetrahedron is in cytoplasm(2)
-                        tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                        tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
-                    end
-                  end
-                    
-                  if tlm.result{i}{j-4}==0 || tlm.result{i}{j-3}==0
-                    tlm.result{i}{j}=14; % this segment is in the mitocho(2) (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
-                    % Resistance
-                    tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                    % Capacit�
-                    tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;                        
-                  else
-                    % Resistance R1
-                    tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
-                    % Capacit� C1
-                    tlm.result{i}{j-3}=tlm.result{i}{j-3}/long^2*3;
-                    % Resistance R2
-                    tlm.result{i}{j-2}=long^2/tlm.result{i}{j-2}/3;
-                    % Capacit� C2
-                    tlm.result{i}{j-1}=tlm.result{i}{j-1}/long^2*3;
-                  end
-          
-              elseif (size(tlm.geom.boundaryEM{2,i},1)==1) || (size(tlm.geom.boundaryEM{2,tlm.result{i}{j-6}},1)==1)
-           
-                  if fem_mesh_t(5,tlm.result{i}{j-5}(1))==tlm.ind.dom.Mitocho(2)
-                    tlm.result{i}{j}=14; %this segment is in the mitochondria(2)
-                  else
-                    tlm.result{i}{j}=13; %this segment is in the cytoplasm(2)
-                  end
-                    
-                  % Resistance
-                  tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
-                  % Capacit�
-                  tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(5,tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3; 
-                   
-              end
-              
-              if tlm.result{i}{j}==0 % if we are not at an interface
-                 
-                  % Resistance
-                  
-                  if tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(:),1))~=0 
-                      tlm.result{i}{j-4}=(long^2/(sum(tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))))/3;
-                  else
-                      tlm.result{i}{j-4}=-1;
-                  end
-                  
-                  % Capacit�
-                  tlm.result{i}{j-3}=(sum(tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/long^2)*3;
-                    
-              end
-        end      
+                end
+                % =========================================================
+            end      
+        end
     end
-end

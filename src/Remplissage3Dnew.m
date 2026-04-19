@@ -106,7 +106,7 @@ function [tlm,model]=Remplissage3Dnew(tlm,model)
 
     % --- Interface Électrodes / Milieu Organique (boundaryEE) ---
     idx_elec = (fem_mesh_t(:) == tlm.ind.dom.elec1) | (fem_mesh_t(:) == tlm.ind.dom.elec2);
-    idx_mil  = (fem_mesh_t(:) == tlm.ind.dom.MilOrga); % Est-ce que ça marche si on a plusieurs domaines pour le milieu organique ?
+    idx_mil = ismember(fem_mesh_t(:), tlm.ind.dom.MilOrga); % On utilise ismember pour gérer les cas où il y a plusieurs domaines MilOrga
         
     nodes_elec = unique(fem_mesh_e(:, idx_elec));
     nodes_mil  = unique(fem_mesh_e(:, idx_mil));

@@ -91,7 +91,7 @@ else
 end
 
 for nodeId = 1:size(fem_mesh_p, 2)
-    fprintf(fid, ' VR(%u)', nodeId); % Utile pour l'affichage de la carte de potentiel
+    fprintf(fid, ' VM(%u)', nodeId); % Utile pour l'affichage de la carte de potentiel
 end
 fprintf(fid, '\n');
                                                                                             
@@ -590,7 +590,7 @@ for i=1:1:size(fem_mesh_p,2)                                        % Loop on th
             if aire == 0
                 % Si le noeud est "orphelin" :
                 % On crée un pont court-circuit pour que la matrice SPICE reste stable
-                fprintf(fid, 'R_short%u\t%ubis\t%uter\t1e-6\n', i, i, i);
+                fprintf(fid, 'R_short%u\t%ubis\t%uter\t1\n', i, i, i);
                 tlm.conf.Resistor = tlm.conf.Resistor + 1;
             else
                 % Si on a une vraie aire : On écrit le modèle de Randles (les parasites)
@@ -611,7 +611,7 @@ for i=1:1:size(fem_mesh_p,2)                                        % Loop on th
             % Que l'on ait mis un parasite ou un court-circuit, le noeud 'i' de base
             % a été effacé du circuit (remplacé par ibis/iter). On le recrée ici 
             % en le reliant avec un fil parfait pour que la commande .PRINT puisse le lire !
-            fprintf(fid, 'R_print%u\t%u\t%ubis\t1e-6\n', i, i, i);
+            fprintf(fid, 'R_print%u\t%u\t%ubis\t1\n', i, i, i);
             tlm.conf.Resistor = tlm.conf.Resistor + 1;
         
         

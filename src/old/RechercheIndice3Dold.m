@@ -18,7 +18,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [tlm,model]=RechercheIndice3Dnew(tlm,model)
+function [tlm,model]=RechercheIndice3Dold(tlm,model)
 
 % Récupération des données de maillage globales
     global fem_mesh_p; % Noeuds (coordonnées)
