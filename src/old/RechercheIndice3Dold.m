@@ -6,6 +6,7 @@
 %   Authors: Vincent Senez
 %   
 %   Release 1.0 : January 2019
+%   Refactored  : March 2026
 %
 %   Routine RechercheIndice3D called by Compute.m 
 %
@@ -17,9 +18,9 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [tlm, model] = temp(tlm, model)
+function [tlm,model]=RechercheIndice3Dnew(tlm,model)
 
-    % Récupération des données de maillage globales
+% Récupération des données de maillage globales
     global fem_mesh_p; % Noeuds (coordonnées)
     global fem_mesh_t; % Éléments (tétraèdres - 5ème ligne = domaine)
     global fem_mesh_e; % Éléments de bordure

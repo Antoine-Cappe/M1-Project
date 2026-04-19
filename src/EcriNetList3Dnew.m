@@ -49,6 +49,7 @@ function [tlm,model]=EcriNetList3Dnew(tlm,model)
 global fem_mesh_p;
 global fem_mesh_e;
 global fem_mesh_t;
+global fem_mesh_f;
 
 tlm.conf.Resistor = 0;
 tlm.conf.Capacitor = 0;
@@ -90,7 +91,7 @@ else
 end
 
 for nodeId = 1:size(fem_mesh_p, 2)
-    fprintf(fid, ' VR(%u)', nodeId);
+    fprintf(fid, ' VR(%u)', nodeId); % Utile pour l'affichage de la carte de potentiel
 end
 fprintf(fid, '\n');
                                                                                             
@@ -401,28 +402,28 @@ for i=1:1:size(fem_mesh_p,2)                                        % Loop on th
                             tlm.conf.Capacitor=tlm.conf.Capacitor+1;
                         end
                     end
-                elseif (fem_mesh_t(5,i)==tlm.ind.dom.elec1)||...            % Here we are exactly on the special boundary (solicitation electrode)
-                       (fem_mesh_t(5,tlm.result{i}{j-6})==tlm.ind.dom.elec1)||...
-                       (fem_mesh_t(5,tlm.result{i}{j-5})==tlm.ind.dom.elec2)||...
-                       (fem_mesh_t(5,tlm.result{i}{j-6})==tlm.ind.dom.elec2)
-                        % Impedance in the organic medium
-                        if tlm.result{i}{j-4}~=-1
-                            fprintf(fid, 'Rter%u_%u\t%uter\t%uter\t%17.16e\n',i, tlm.result{i}{j-6}, i, tlm.result{i}{j-6}, tlm.result{i}{j-4});
-                            tlm.conf.Resistor=tlm.conf.Resistor+1;
-                        end
-                        if tlm.result{i}{j-3}~=0
-                            fprintf(fid, 'Cter%u_%u\t%uter\t%uter\t%17.16e\n',i, tlm.result{i}{j-6}, i, tlm.result{i}{j-6}, tlm.result{i}{j-3});
-                            tlm.conf.Capacitor=tlm.conf.Capacitor+1;
-                        end
-                        % Impedance in the solicitation electrode
-                        if tlm.result{i}{j-2}~=-1
-                            fprintf(fid, 'Rbis%u_%u\t%ubis\t%ubis\t%17.16e\n',i, tlm.result{i}{j-6}, i, tlm.result{i}{j-6}, tlm.result{i}{j-2});
-                            tlm.conf.Resistor=tlm.conf.Resistor+1;
-                        end
-                        if tlm.result{i}{j-1}~=0
-                            fprintf(fid, 'Cbis%u_%u\t%ubis\t%ubis\t%17.16e\n',i, tlm.result{i}{j-6}, i, tlm.result{i}{j-6}, tlm.result{i}{j-1});
-                            tlm.conf.Capacitor=tlm.conf.Capacitor+1;
-                        end
+                elseif any(fem_mesh_t(tlm.result{i}{j-5}, 1) == tlm.ind.dom.elec1) || any(fem_mesh_t(tlm.result{i}{j-5}, 1) == tlm.ind.dom.elec2)
+                    % Impedance in the organic medium
+                    if tlm.result{i}{j-4} ~= -1
+                        fprintf(fid, 'Rter%u_%u\t%uter\t%uter\t%17.16e\n',i, tlm.result{i}{j-6}, i, tlm.result{i}{j-6}, tlm.result{i}{j-4});
+                        tlm.conf.Resistor = tlm.conf.Resistor + 1;
+                    end
+                    
+                    if tlm.result{i}{j-3} ~= 0
+                        fprintf(fid, 'Cter%u_%u\t%uter\t%uter\t%17.16e\n',i, tlm.result{i}{j-6}, i, tlm.result{i}{j-6}, tlm.result{i}{j-3});
+                        tlm.conf.Capacitor = tlm.conf.Capacitor + 1;
+                    end
+                    
+                    % Impedance in the solicitation electrode
+                    if tlm.result{i}{j-2} ~= -1
+                        fprintf(fid, 'Rbis%u_%u\t%ubis\t%ubis\t%17.16e\n',i, tlm.result{i}{j-6}, i, tlm.result{i}{j-6}, tlm.result{i}{j-2});
+                        tlm.conf.Resistor = tlm.conf.Resistor + 1;
+                    end
+                    
+                    if tlm.result{i}{j-1} ~= 0
+                        fprintf(fid, 'Cbis%u_%u\t%ubis\t%ubis\t%17.16e\n',i, tlm.result{i}{j-6}, i, tlm.result{i}{j-6}, tlm.result{i}{j-1});
+                        tlm.conf.Capacitor = tlm.conf.Capacitor + 1;
+                    end
                 elseif ((fem_mesh_t(5,tlm.result{i}{j-5})==tlm.ind.dom.Cytoplasme(1))&&...     % Here we are exactly on the special boundary (cell membrane)
                         (fem_mesh_t(5,tlm.result{i}{j-6})==tlm.ind.dom.MilOrga))||...                 
                        ((fem_mesh_t(5,tlm.result{i}{j-6})==tlm.ind.dom.Cytoplasme(1))&&...
@@ -559,31 +560,60 @@ for i=1:1:size(fem_mesh_p,2)                                        % Loop on th
             end %for j=7:7:size(tlm.result{i},2)
         end %if size(tlm.result{i},2)~=0
                             
-        % Ajout des �l�ments parasites
-        
-        aire=0;
-        
-        if (size(tlm.geom.boundaryEE{i},1)==1) %parasite of the outer electrode
-            for j=1:1:size(fem_mesh_e,2) %loop on the triangles at interface
-                if i==fem_mesh_e(1,j)||i==fem_mesh_e(2,j)||i==fem_mesh_e(3,j)
-                    %if the node is in this boundary triangle
-                    % calcul de l'aire du triangle
-                    d12=sum((fem_mesh_p(:,fem_mesh_e(1,j))-fem_mesh_p(:,fem_mesh_e(2,j))).^2)^0.5;
-                    d23=sum((fem_mesh_p(:,fem_mesh_e(2,j))-fem_mesh_p(:,fem_mesh_e(3,j))).^2)^0.5;
-                    d13=sum((fem_mesh_p(:,fem_mesh_e(1,j))-fem_mesh_p(:,fem_mesh_e(3,j))).^2)^0.5;
-                    s=0.5*(d12+d23+d13);
-                    aire=aire+((s*(s-d12)*(s-d13)*(s-d23))^0.5)/3;
+        % =========================================================================
+        % AJOUT DES ÉLÉMENTS PARASITES - A GRANDEMENT VERIFIER
+        % =========================================================================
+
+        aire = 0;
+
+        if (size(tlm.geom.boundaryEE{i},1) == 1) % parasite of the outer electrode
+    
+            % --- 1. Boucle sur les faces (au format N x 3) pour calculer l'aire ---
+            for j = 1:1:size(fem_mesh_f, 1) 
+                idx1 = fem_mesh_f(j, 1) + 1;
+                idx2 = fem_mesh_f(j, 2) + 1;
+                idx3 = fem_mesh_f(j, 3) + 1;
+                
+                if i == idx1 || i == idx2 || i == idx3
+                    d12 = sum((fem_mesh_p(:, idx1) - fem_mesh_p(:, idx2)).^2)^0.5;
+                    d23 = sum((fem_mesh_p(:, idx2) - fem_mesh_p(:, idx3)).^2)^0.5;
+                    d13 = sum((fem_mesh_p(:, idx1) - fem_mesh_p(:, idx3)).^2)^0.5;
+                    s = 0.5 * (d12 + d23 + d13);
+                    aire_triangle = s * (s - d12) * (s - d13) * (s - d23);
+                    if aire_triangle > 0
+                        aire = aire + (aire_triangle^0.5) / 3;
+                    end
                 end  
             end
             
-            fprintf(fid,'Ci%u\t%ubis\t%uter\t%17.16e\n',i,i,i,tlm.var.Ci*aire);
-            tlm.conf.Capacitor=tlm.conf.Capacitor+1;
-            fprintf(fid,'Rw%u\t%uquad\t%uter\tr=''%17.16e/sqrt(FREQ)''\n',i,i,i,tlm.var.Rwf/aire);
-            tlm.conf.Resistor=tlm.conf.Resistor+1;            
-            fprintf(fid,'Cw%u\t%uquad\t%uter\tc=''%17.16e*sqrt(FREQ)''\n',i,i,i,tlm.var.Cwf*aire);
-            tlm.conf.Capacitor=tlm.conf.Capacitor+1;
-            fprintf(fid,'Rt%u\t%ubis\t%uquad\t%17.16e\n',i,i,i,tlm.var.Rt/aire);
-            tlm.conf.Resistor=tlm.conf.Resistor+1;
+            % --- 2. ÉCRITURE SPICE ET SÉCURITÉS ---
+            if aire == 0
+                % Si le noeud est "orphelin" :
+                % On crée un pont court-circuit pour que la matrice SPICE reste stable
+                fprintf(fid, 'R_short%u\t%ubis\t%uter\t1e-6\n', i, i, i);
+                tlm.conf.Resistor = tlm.conf.Resistor + 1;
+            else
+                % Si on a une vraie aire : On écrit le modèle de Randles (les parasites)
+                fprintf(fid,'Ci%u\t%ubis\t%uter\t%17.16e\n',i,i,i,tlm.var.Ci*aire);
+                tlm.conf.Capacitor=tlm.conf.Capacitor+1;
+                
+                fprintf(fid,'Rw%u\t%uquad\t%uter\tr=''%17.16e/sqrt(FREQ)''\n',i,i,i,tlm.var.Rwf/aire);
+                tlm.conf.Resistor=tlm.conf.Resistor+1; 
+                        
+                fprintf(fid,'Cw%u\t%uquad\t%uter\tc=''%17.16e*sqrt(FREQ)''\n',i,i,i,tlm.var.Cwf*aire);
+                tlm.conf.Capacitor=tlm.conf.Capacitor+1;
+                
+                fprintf(fid,'Rt%u\t%ubis\t%uquad\t%17.16e\n',i,i,i,tlm.var.Rt/aire);
+                tlm.conf.Resistor=tlm.conf.Resistor+1;
+            end
+            
+            % --- 3. LA CORRECTION DU .PRINT (Le "fantôme" ressuscité) ---
+            % Que l'on ait mis un parasite ou un court-circuit, le noeud 'i' de base
+            % a été effacé du circuit (remplacé par ibis/iter). On le recrée ici 
+            % en le reliant avec un fil parfait pour que la commande .PRINT puisse le lire !
+            fprintf(fid, 'R_print%u\t%u\t%ubis\t1e-6\n', i, i, i);
+            tlm.conf.Resistor = tlm.conf.Resistor + 1;
+        
         
         elseif (size(tlm.geom.boundaryEC{1,i},1)==1)               % cell membrane modele
             for j=1:1:size(fem_mesh_e,2) %loop on the triangles at interface

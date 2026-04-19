@@ -1,126 +1,97 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%                              BIOCAD Program
-%                               Release 1.0
-%
-%   Authors: Vincent Senez
-%   
-%   Release 1.0 : January 2019
-%   Refactored  : March 2026
-%
-%   Routine RechercheIndice3D called by Compute.m 
-%
-%   Function:   Look for the number of the Point PT1, PT2, PT3, ... in the
-%               global mesh, Flag the domains, Fix the conductivity & 
-%               & permittivity of each domain
-%
-%   Remark: RAS 
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [tlm,model]=SetDomainValues(tlm,model)
 
-function [tlm,model]=RechercheIndice3Dnew(tlm,model)
-
-% Récupération des données de maillage globales
+    % Récupération des données de maillage globales
     global fem_mesh_p; % Noeuds (coordonnées)
-    global fem_mesh_t; % Éléments (tétraèdres - 5ème ligne = domaine)
-    global fem_mesh_e; % Éléments de bordure
+    global fem_mesh_t; % Domaines
 
-    fprintf('\n\t . Recherche des indices du maillage...');
+    fprintf('\n\t . Recherche des indices du maillage ...');
 
     % --- 1. EXTRACTION DES COORDONNÉES CIBLES (HORS BOUCLE) ---
     % On récupère les coordonnées une seule fois pour gagner en vitesse
     scale = tlm.var.scale;
     
-    % Points d'intérêt (basés sur vos Labels COMSOL)
+    % Points d'intérêt 
     try
         coord_pt1 = model.component('comp1').geom('geom1').obj('pt1').getVertexCoord() * scale;
         coord_pt2 = model.component('comp1').geom('geom1').obj('pt2').getVertexCoord() * scale;
-        coord_pt3 = model.component('comp1').geom('geom1').obj('pt3').getVertexCoord() * scale;
     catch
-        error('Erreur : Les points de repère (pt1, pt2, pt3) sont introuvables dans le modèle COMSOL.');
+        error('Erreur : Les points de repère (pt1, pt2) sont introuvables dans le modèle COMSOL.');
     end
 
     % --- 2. FONCTION DE RECHERCHE DE NOEUD (VECTORISÉE) ---
     % Cette fonction interne trouve l'indice du nœud le plus proche d'une coordonnée [x;y;z]
     find_node = @(target) find_nearest_node(fem_mesh_p, target);
 
-    % Identification des points clés
-    tlm.ind.pt.elec2    = find_node(coord_pt2); % Point sur l'électrode 2
-    tlm.ind.pt.elec1    = find_node(coord_pt3); % Point sur l'électrode 1
-    tlm.ind.pt.MilOrga  = find_node(coord_pt1); % Point dans le milieu organique
+    % Identification des points clés - A inverser selon la geométrie
+    tlm.ind.pt.elec1    = find_node(coord_pt1); % Point sur l'électrode de masse
+    tlm.ind.pt.elec2    = find_node(coord_pt2); % Point sur l'électrode terminale
 
-    % Identification des points dans les cellules
-    if tlm.conf.Cell >= 1
-        % Pour la cellule 1, on utilise souvent le même point que l'électrode ou un point dédié
-        tlm.ind.pt.Cytoplasme(1) = find_node(coord_pt2); 
-        
-        % Coordonnées calculées pour Noyau/Mito (selon IniGeoPhy)
-        if tlm.conf.Nucleus == 1
-            target_nuc = [ (tlm.var.OrigineX + tlm.var.DecentrageYCellule(1) + tlm.var.DecentrageYNoyau(1)); ...
-                           (tlm.var.OrigineY + tlm.var.DecentrageXCellule(1) + tlm.var.DecentrageXNoyau(1)); ...
-                           (tlm.var.OrigineZ + tlm.var.DecentrageZCellule(1) + tlm.var.DecentrageZNoyau(1)) ];
-            tlm.ind.pt.Nucleus(1) = find_node(target_nuc);
-        end
-    end
 
-    if tlm.conf.Cell == 2
-        % Coordonnées centre Cellule 2
-        target_c2 = [ (tlm.var.OrigineX + tlm.var.DecentrageYCellule(2)); ...
-                      (tlm.var.OrigineY + tlm.var.DecentrageXCellule(2)); ...
-                      (tlm.var.OrigineZ + tlm.var.DecentrageZCellule(2)) ];
-        tlm.ind.pt.Cytoplasme(2) = find_node(target_c2);
-    end
+    % --- 3. RÉCUPÉRATION DES STRUCTURES FIXES VIA SÉLECTIONS COMSOL ---
 
-    % --- 3. IDENTIFICATION DES DOMAINES (BOUCLE SUR LES ÉLÉMENTS) ---
-    % On parcourt les éléments pour voir à quel domaine (matière) appartient chaque point
-    num_elements = size(fem_mesh_t, 1);
-    flags = false(1, 15); % Suivi des domaines trouvés
-
-    for i = 1:num_elements
-        nodes_in_elem = fem_mesh_e(1:4, i); % Les 4 sommets du tétraèdre
-        domain_id     = fem_mesh_t(i);   % Le numéro du domaine COMSOL
-
-        % Identification Electrode 2
-        if ~flags(1) && any(nodes_in_elem == tlm.ind.pt.elec2)
-            tlm.ind.dom.elec2 = domain_id;
-            tlm.dom.sig(domain_id) = tlm.var.sig.electrode;
-            tlm.dom.eps(domain_id) = tlm.var.eps.electrode;
-            flags(1) = true;
+    if max(fem_mesh_t) == 3
+        try
+            domaines_MilOrga = double(model.component('comp1').selection('sel1').entities());
+            domaines_elec1   = double(model.component('comp1').selection('sel2').entities());
+            domaines_elec2   = double(model.component('comp1').selection('sel3').entities());
+        catch
+            error('Erreur : Les sélections (MilOrg, Electrode1, Electrode2) sont introuvables dans le modèle COMSOL.');
         end
 
-        % Identification Electrode 1
-        if ~flags(2) && any(nodes_in_elem == tlm.ind.pt.elec1)
-            tlm.ind.dom.elec1 = domain_id;
-            tlm.dom.sig(domain_id) = tlm.var.sig.electrode;
-            tlm.dom.eps(domain_id) = tlm.var.eps.electrode;
-            flags(2) = true;
+        % Création de variables - Ce sont des vecteurs d'indices de domaines
+        tlm.ind.dom.MilOrga = domaines_MilOrga;
+        tlm.ind.dom.elec1 = domaines_elec1;
+        tlm.ind.dom.elec2 = domaines_elec2;
+
+        % Assignation de l'Électrode 1 
+        tlm.dom.sig(domaines_elec1) = tlm.var.sig.electrode;
+        tlm.dom.eps(domaines_elec1) = tlm.var.eps.electrode;
+
+        % Assignation de l'Électrode 2
+        tlm.dom.sig(domaines_elec2) = tlm.var.sig.electrode;
+        tlm.dom.eps(domaines_elec2) = tlm.var.eps.electrode;
+
+        % Assignation du Milieu Organique (Fluide)
+        tlm.dom.sig(domaines_MilOrga) = tlm.var.sig.MilOrga;
+        tlm.dom.eps(domaines_MilOrga) = tlm.var.eps.MilOrga;
+    else
+        try
+            domaines_MilOrga = double(model.component('comp1').selection('sel1').entities());
+            domaines_elec1   = double(model.component('comp1').selection('sel2').entities());
+            domaines_elec2   = double(model.component('comp1').selection('sel3').entities());
+            domaines_PDMS   = double(model.component('comp1').selection('sel4').entities());
+            domaines_Glass  = double(model.component('comp1').selection('sel5').entities());
+            domaines_Cap    = double(model.component('comp1').selection('sel6').entities());
+        catch
+            error('Erreur : Les sélections (MilOrg, Electrode, PDMS, Plastic, Glass) sont introuvables dans le modèle COMSOL.');
         end
 
-        % Identification Milieu Organique
-        if ~flags(11) && any(nodes_in_elem == tlm.ind.pt.MilOrga)
-            tlm.ind.dom.MilOrga = domain_id;
-            tlm.dom.sig(domain_id) = tlm.var.sig.MilOrga;
-            tlm.dom.eps(domain_id) = tlm.var.eps.MilOrga;
-            flags(11) = true;
-        end
+        % Assignation de l'Électrode 
+        tlm.dom.sig(domaines_elec1) = tlm.var.sig.electrode;
+        tlm.dom.eps(domaines_elec1) = tlm.var.eps.electrode;
+        tlm.dom.sig(domaines_elec2) = tlm.var.sig.electrode;
+        tlm.dom.eps(domaines_elec2) = tlm.var.eps.electrode;
 
-        % Identification Cellules (Cytoplasme)
-        for c = 1:tlm.conf.Cell
-            if any(nodes_in_elem == tlm.ind.pt.Cytoplasme(c))
-                tlm.ind.dom.Cytoplasme(c) = domain_id;
-                tlm.dom.sig(domain_id) = tlm.var.sig.Cytoplasme(c);
-                tlm.dom.eps(domain_id) = tlm.var.eps.Cytoplasme(c);
-            end
-        end
+        % Assignation du Milieu Organique (Fluide)
+        tlm.dom.sig(domaines_MilOrga) = tlm.var.sig.MilOrga;
+        tlm.dom.eps(domaines_MilOrga) = tlm.var.eps.MilOrga;
 
-        % Sortie anticipée si tout est trouvé (optionnel)
-        if all(flags([1, 2, 11])) && (tlm.conf.Cell == 0 || isfield(tlm.ind.dom, 'Cytoplasme'))
-             % break; % Décommentez pour plus de vitesse si sûr de vos points
-        end
+        % Assignation du PDMS
+        tlm.dom.sig(domaines_PDMS) = tlm.var.sig.PDMS;
+        tlm.dom.eps(domaines_PDMS) = tlm.var.eps.PDMS;
+
+        % Assignation du Plastic Cap
+        tlm.dom.sig(domaines_Cap) = tlm.var.sig.Plastic_Cap;
+        tlm.dom.eps(domaines_Cap) = tlm.var.eps.Plastic_Cap;
+
+        % Assignation du Glass
+        tlm.dom.sig(domaines_Glass) = tlm.var.sig.Glass;
+        tlm.dom.eps(domaines_Glass) = tlm.var.eps.Glass;
+
     end
 end
 
-% --- FONCTION AUXILIAIRE DE RECHERCHE ---
+    % --- FONCTION AUXILIAIRE DE RECHERCHE ---
 function idx = find_nearest_node(mesh_p, target)
     % Calcule la distance euclidienne carrée entre le target et tous les points du maillage
     % mesh_p est 3xN, target est 3x1

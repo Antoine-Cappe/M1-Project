@@ -22,6 +22,8 @@
 
 function tlm=Calibration(tlm)
 
+tlm.conf.Test=0;
+
 if tlm.conf.Test==1         %2D case - without cell - Medium is purely resistive
                             %refine =0
                             
@@ -1614,11 +1616,11 @@ end
 
 % Directories Configuration
 
-if tlm.conf.points==2
-    tlm.conf.result=[tlm.conf.result '\nocell\2points\' tlm.conf.Name];
-elseif tlm.conf.points==4
-    tlm.conf.result=[tlm.conf.result '\nocell\4points\' tlm.conf.Name];
-end
+% if tlm.conf.points==2
+%     tlm.conf.result=[tlm.conf.result '\nocell\2points\' tlm.conf.Name];
+% elseif tlm.conf.points==4
+%     tlm.conf.result=[tlm.conf.result '\nocell\4points\' tlm.conf.Name];
+% end
 
 % Parameters of the Warburg Element (electrode polarisation)
 
@@ -1635,5 +1637,5 @@ tlm.var.Rwf=1e3*tlm.var.Vt/tlm.var.z^2/tlm.var.q/tlm.var.n0/(pi*tlm.var.D)^0.5/1
 tlm.var.Cwf=1/2/pi/tlm.var.Rwf;                 %(F/m/Hz^0.5)
 
 % String definition for Nyquist Plot
-data=['   1    Hz';'   10   Hz';'   100  Hz';'   10  KHz';'   100 KHz';'   1   MHz';'   10  MHz';'   100 MHz';'   1   GHz';'   10  GHz'];
-tlm.conf.f=cellstr(data);
+% data=['   1    Hz';'   10   Hz';'   100  Hz';'   10  KHz';'   100 KHz';'   1   MHz';'   10  MHz';'   100 MHz';'   1   GHz';'   10  GHz'];
+% tlm.conf.f=cellstr(data);

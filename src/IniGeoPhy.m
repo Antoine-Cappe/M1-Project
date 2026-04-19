@@ -29,31 +29,30 @@ function tlm = IniGeoPhy(tlm, model, app)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     % 1. Récupération de l'unité de longueur de la géométrie COMSOL
-% On utilise char() pour s'assurer que MATLAB le lit comme du texte classique
-unit_str = char(model.component('comp1').geom('geom1').lengthUnit());
+    unit_str = char(model.component('comp1').geom('geom1').lengthUnit());
 
-% 2. Détermination dynamique du facteur d'échelle (scale)
-switch unit_str
-    case 'm'
-        scale = 1;
-    case 'cm'
-        scale = 1e-2;
-    case 'mm'
-        scale = 1e-3;
-    case {'um', '\mu m', 'µm'} % COMSOL utilise parfois des caractères spéciaux pour micro
-        scale = 1e-6;
-    case 'nm'
-        scale = 1e-9;
-    otherwise
-        warning('Unité de longueur COMSOL non standard (%s). Le scale est forcé à 1 (mètres).', unit_str);
-        scale = 1;
-end
+    % 2. Détermination dynamique du facteur d'échelle (scale)
+    switch unit_str
+        case 'm'
+            scale = 1;
+        case 'cm'
+            scale = 1e-2;
+        case 'mm'
+            scale = 1e-3;
+        case {'um', '\mu m', 'µm'} % COMSOL utilise parfois des caractères spéciaux pour micro
+            scale = 1e-6;
+        case 'nm'
+            scale = 1e-9;
+        otherwise
+            warning('Unité de longueur COMSOL non standard (%s). Le scale est forcé à 1 (mètres).', unit_str);
+            scale = 1;
+    end
 
-% 3. Sauvegarde dans la structure tlm
-tlm.var.scale = scale;
+    % 3. Sauvegarde dans la structure tlm
+    tlm.var.scale = scale;
 
-% (Optionnel) Affichage dans la console pour vérifier que ça marche
-fprintf('\t . Unité de la géométrie détectée : %s (Scale = %g)\n', unit_str, scale);
+    % (Optionnel) Affichage dans la console pour vérifier que ça marche
+    % fprintf('\t . Unité de la géométrie détectée : %s (Scale = %g)\n', unit_str, scale);
     
     if tlm.conf.dim == 3
         geom_component_objects = model.component('comp1').geom('geom1').feature().tags;
@@ -64,7 +63,7 @@ fprintf('\t . Unité de la géométrie détectée : %s (Scale = %g)\n', unit_str
             Label = char(feat.label);
             
             switch Label
-                case {'TiC_PDMS', 'Bioreactor'}    % a rendre plus robuste en cherchant des mots-clés plutôt que des noms exacts
+                case {'TiC_PDMS', 'Bioreactor'}   
                     obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
                     BoundingBox = obj.getBoundingBox();
                     tlm.var.LongueurChambre  = (BoundingBox(2) - BoundingBox(1)) * scale;
@@ -75,13 +74,6 @@ fprintf('\t . Unité de la géométrie détectée : %s (Scale = %g)\n', unit_str
                     tlm.var.OrigineX = (BoundingBox(2) + BoundingBox(1)) / 2 * scale;
                     tlm.var.OrigineY = (BoundingBox(4) + BoundingBox(3)) / 2 * scale;
                     tlm.var.OrigineZ = (BoundingBox(6) + BoundingBox(5)) / 2 * scale;
-
-                case 'Pt_canal_min'
-                    obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
-                    Coor_min = obj.getVertexCoord() * scale;
-                case 'Pt_canal_max'
-                    obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
-                    Coor_max = obj.getVertexCoord() * scale;
                     
                 case 'Electrode_1'
                     obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
@@ -89,28 +81,32 @@ fprintf('\t . Unité de la géométrie détectée : %s (Scale = %g)\n', unit_str
                     tlm.var.LongueurElectrode  = (BoundingBox1(2) - BoundingBox1(1)) * scale;
                     tlm.var.LargeurElectrode   = (BoundingBox1(4) - BoundingBox1(3)) * scale;
                     tlm.var.EpaisseurElectrode = (BoundingBox1(6) - BoundingBox1(5)) * scale;
-                    
+                
+                % Ce cas remplace les valeurs de l'électrode 1 - pourquoi ?
                 case 'Electrode_2'
                     obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
                     BoundingBox2 = obj.getBoundingBox();
                     tlm.var.LongueurElectrode  = (BoundingBox2(2) - BoundingBox2(1)) * scale;
                     tlm.var.LargeurElectrode   = (BoundingBox2(4) - BoundingBox2(3)) * scale;
                     tlm.var.EpaisseurElectrode = (BoundingBox2(6) - BoundingBox2(5)) * scale;
-                    
+                
+                % Les valeurs ne sont utilisées nulle part
                 case 'Pt_bioreactor'
                     obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
                     Coor_pt = obj.getVertexCoord();
                     tlm.var.pt_bioreactor_x = Coor_pt(1) * scale;
                     tlm.var.pt_bioreactor_y = Coor_pt(2) * scale;
                     tlm.var.pt_bioreactor_z = Coor_pt(3) * scale;
-                    
+
+                % Pareil   
                 case 'Pt_electrode_1'
                     obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
                     Coor_pt = obj.getVertexCoord();
                     tlm.var.pt_electrode_1_x = Coor_pt(1) * scale;
                     tlm.var.pt_electrode_1_y = Coor_pt(2) * scale;
                     tlm.var.pt_electrode_1_z = Coor_pt(3) * scale;
-                    
+                
+                % Pareil
                 case 'Pt_electrode_2'
                     obj = model.component('comp1').geom('geom1').obj(geom_component_objects(i));
                     Coor_pt = obj.getVertexCoord();
@@ -118,16 +114,6 @@ fprintf('\t . Unité de la géométrie détectée : %s (Scale = %g)\n', unit_str
                     tlm.var.pt_electrode_2_y = Coor_pt(2) * scale;
                     tlm.var.pt_electrode_2_z = Coor_pt(3) * scale;
             end
-        end
-
-        % --- LOGIQUE HALTÈRE ---
-        if exist('Coor_min', 'var') && exist('Coor_max', 'var')
-            tlm.var.LongueurChambre = abs(Coor_max(1) - Coor_min(1));
-            tlm.var.LargeurChambre  = abs(Coor_max(2) - Coor_min(2));
-            % On recentre l'origine sur le tunnel central
-            tlm.var.OrigineX = (Coor_max(1) + Coor_min(1)) / 2;
-            tlm.var.OrigineY = (Coor_max(2) + Coor_min(2)) / 2;
-            tlm.var.OrigineZ = (Coor_max(3) + Coor_min(3)) / 2;
         end
         
         % Ecartement calculé si les deux électrodes ont été trouvées

@@ -144,7 +144,7 @@ function assignAndRun(app)
     
     tlm.conf.Init = 1;
     if tlm.conf.Init == 1
-        % calibration
+        tlm = Calibration(tlm);
         % TODO : run adequate IniPara function
     end
     
@@ -165,8 +165,6 @@ function assignAndRun(app)
     
     % Postprocess the various analysis
     tlm = Postprocess(tlm,fil, app,model);
-
-    app.tlm = tlm;
     
     if tlm.conf.log == 1
         fclose(fil); % close log file

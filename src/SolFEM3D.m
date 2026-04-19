@@ -14,6 +14,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Cette fonction utilise les paramètres rentrés dans COMSOL et non ceux de BIOCAD. Il est nécessaire de faire le lien entre les deux pour que les résultats soient cohérents.
 function [tlm,model]=SolFEM3D(tlm,model)
 
 %Initialization
@@ -75,7 +76,7 @@ if isempty(tlm.sol.fre) || size(tlm.sol.fre,2)<2
     error('No valid frequency list found for FEM study. Expected %s.spi or %s', tlm.conf.Name0, xyceCsvName);
 end
 
-% Set the parameters in COMSOL based on the variables in BIOCAD
+% Set the parameters in COMSOL based on the variables in BIOCAD (ces variables convennaient à un modèle COMSOL plus simple.)
 %model.param.set('sig_elec', num2str(tlm.var.sig.electrode));
 %model.param.set('eps_elec', num2str(tlm.var.eps.electrode/tlm.var.eps0));
 %model.param.set('sig_med', num2str(tlm.var.sig.MilOrga));
@@ -94,7 +95,7 @@ model.study(tlm.conf.study_label).run;
 data = mpheval(model,'V');
 
 % Extract the impedance Z
-Y_complex = mphglobal(model, tlm.conf.admitance); % Admittance Y = 1/Z
+Y_complex = mphglobal(model, tlm.conf.admitance);
 Z_complex = 1 ./ Y_complex;
 Z_complex = Z_complex(:); 
 

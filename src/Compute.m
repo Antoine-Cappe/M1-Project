@@ -38,10 +38,14 @@ disp(Message);
 clear global fem_mesh_p;
 clear global fem_mesh_t;
 clear global fem_mesh_e;
+clear global fem_mesh_f;
 
 global fem_mesh_p;
 global fem_mesh_t;
 global fem_mesh_e;
+global fem_mesh_f; % les faces du maillage (pour les conditions aux limites)
+
+[meshstats, meshdata] = mphmeshstats(model, 'mesh1');
 
 % Open log file
 
@@ -143,6 +147,7 @@ if (tlm.conf.dim==2)
 else
     fem_mesh_t(:,:)=model.component('comp1').mesh(tlm.conf.mesh_label).getElemEntity('tet');%store for each tetrahedron the domain (number) it belongs to
     fem_mesh_e(:,:)=model.component('comp1').mesh(tlm.conf.mesh_label).getElem('tet'); % nodes numbers (from 0) of the 4 nodes of the current elements
+    fem_mesh_f(:,:)=meshdata.elem{3};
 end
              
 % Search for the numbers of the points PT1, PT2, ... in the global mesh
@@ -153,8 +158,7 @@ tic;
 if (tlm.conf.dim==2)
     [tlm,model]=RechercheIndice2D(tlm,model);
 else
-    % [tlm,model]=RechercheIndice3Dnew(tlm,model);
-    [tlm,model]=SetDomainValues(tlm,model);
+    [tlm,model]=RechercheIndice3Dnew(tlm,model);
 end
 
 % Set up the Spice Data Structure
@@ -162,7 +166,7 @@ end
 if (tlm.conf.dim==2)
     [tlm,model]=Remplissage2D(tlm,model);
 else
-    [tlm,model]=Remplissage3D(tlm,model);
+    [tlm,model]=Remplissage3Dnew(tlm,model);
 end
 
 % Calculation of the values & parameters of the electrical elements
@@ -191,7 +195,7 @@ end
 
 % Solve the Problem by Transport Lattice Method using SPICE
 
-Message=sprintf('\n Solve the problem by Transport Lattice Method using SPICE');
+Message=sprintf('\n Solve the problem by Transport Lattice Method');
 disp(Message);
 if tlm.conf.log==1
     fprintf(fil,'\n Solve the problem by Transport Lattice Method using SPICE');
@@ -210,8 +214,6 @@ end
 cd(tlm.conf.src);
 cd('src');
 
-% Run circuit from shell
-% the command must include the '&' character for matlab to continue running and not wait for the end of the execution
 xycePath = 'C:\Program Files\XyceNF_7.10\bin\Xyce.exe';
 ngspicePath = fullfile(pwd, 'ngspice.exe');
 cirPath = sprintf('%s\\%s\\%s.cir', tlm.conf.store, tlm.conf.Name, tlm.conf.Name);
@@ -221,7 +223,7 @@ cirPath = sprintf('%s\\%s\\%s.cir', tlm.conf.store, tlm.conf.Name, tlm.conf.Name
 % =========================================================================
 
 % 1. Définir le nombre de cœurs à utiliser (on met 10 pour garder de la marge pour Windows)
-num_cores = '10'; % Ajustez selon votre machine (ex: 4, 8, 16, etc.)
+num_cores = '4'; % Ajustez selon votre machine (ex: 4, 8, 16, etc.)
 
 % 2. Le chemin de ton exécutable Xyce compilé sous Linux
 xyceLinuxPath = '/usr/local/xyce_mpi/bin/Xyce';
@@ -242,11 +244,9 @@ if exist(cirPathWindows, 'file')
     cirPathLinux = strtrim(cirPathLinux);
     
     % 5. Construire la commande finale de calcul parallèle
-    % - wsl : passe la commande à Linux
-    % - mpirun --use-hwthread-cpus -n 10 : distribue le calcul sur 10 processus isolés
     commande_xyce = sprintf('wsl mpirun --use-hwthread-cpus -n %s %s "%s"', num_cores, xyceLinuxPath, cirPathLinux);
     
-    disp(['Lancement fulgurant de Xyce Parallel (WSL) sur ', num_cores, ' coeurs...']);
+    disp(['Lancement de Xyce Parallel (WSL) sur ', num_cores, ' coeurs...']);
     
     % 6. Lancement de la simulation !
     tic; % Démarre un chronomètre
@@ -255,7 +255,8 @@ if exist(cirPathWindows, 'file')
     
     disp(['Simulation Xyce terminée en ', num2str(temps_xyce), ' secondes !']);
 else
-    error('Le fichier .cir n''a pas été trouvé pour la simulation.');
+    warning('Le chemin de Xyce n''a pas été trouvé. Lancement de ngspice à la place.');
+    system(sprintf('ngspice \"%s\\%s\\%s.cir\"', tlm.conf.store, tlm.conf.Name, tlm.conf.Name));
 end
 
 % move resulting files in tlm.conf.store/tlm.conf.Name ( results directory)
