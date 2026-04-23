@@ -97,27 +97,27 @@ function [tlm,model]=Remplissage3Dnew(tlm,model)
     % Ajouter les autres cas d'interfaces
     % =========================================================================
 
-    % 1. Trouver le nombre total de noeuds
-    nb_total_nodes = size(fem_mesh_p, 2); % Nombre total de noeuds dans le maillage
+    % % 1. Trouver le nombre total de noeuds
+    % nb_total_nodes = size(fem_mesh_p, 2); % Nombre total de noeuds dans le maillage
 
-    % 2. PRÉ-ALLOCATION OBLIGATOIRE (pour éviter les crashs avec 'size')
-    % Crée un tableau de cellules vides.
-    tlm.geom.boundaryEE = cell(nb_total_nodes, 1); 
+    % % 2. PRÉ-ALLOCATION OBLIGATOIRE (pour éviter les crashs avec 'size')
+    % % Crée un tableau de cellules vides.
+    % tlm.geom.boundaryEE = cell(nb_total_nodes, 1); 
 
-    % --- Interface Électrodes / Milieu Organique (boundaryEE) ---
-    idx_elec = (fem_mesh_t(:) == tlm.ind.dom.elec1) | (fem_mesh_t(:) == tlm.ind.dom.elec2);
-    idx_mil = ismember(fem_mesh_t(:), tlm.ind.dom.MilOrga); % On utilise ismember pour gérer les cas où il y a plusieurs domaines MilOrga
+    % % --- Interface Électrodes / Milieu Organique (boundaryEE) ---
+    % idx_elec = (fem_mesh_t(:) == tlm.ind.dom.elec1) | (fem_mesh_t(:) == tlm.ind.dom.elec2);
+    % idx_mil = ismember(fem_mesh_t(:), tlm.ind.dom.MilOrga); % On utilise ismember pour gérer les cas où il y a plusieurs domaines MilOrga
         
-    nodes_elec = unique(fem_mesh_e(:, idx_elec));
-    nodes_mil  = unique(fem_mesh_e(:, idx_mil));
+    % nodes_elec = unique(fem_mesh_e(:, idx_elec));
+    % nodes_mil  = unique(fem_mesh_e(:, idx_mil));
         
-    boundary_nodes = intersect(nodes_elec, nodes_mil);
+    % boundary_nodes = intersect(nodes_elec, nodes_mil);
         
-    % +1 pour l'indexation MATLAB
-    matlab_indices = boundary_nodes + 1;
+    % % +1 pour l'indexation MATLAB
+    % matlab_indices = boundary_nodes + 1;
         
-    % On place un 0 dans les cellules frontières.
-    [tlm.geom.boundaryEE{matlab_indices}] = deal(0);
+    % % On place un 0 dans les cellules frontières.
+    % [tlm.geom.boundaryEE{matlab_indices}] = deal(0);
 
     % Calculation of the 1/6 of the volume of each element (tetrahedron)
     % because there is 6 edge on a tetrahedron, so the volume will be
@@ -135,4 +135,4 @@ function [tlm,model]=Remplissage3Dnew(tlm,model)
         V33=fem_mesh_p(3,fem_mesh_e(1,i)+1)-fem_mesh_p(3,fem_mesh_e(4,i)+1);
         MV=[V11 V12 V13;V21 V22 V23;V31 V32 V33];
         tlm.geom.airvol(i)=-det(MV)/36;  % 1/6 of element volume 
-    end
+    end 

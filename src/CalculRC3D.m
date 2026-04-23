@@ -435,34 +435,34 @@ function [tlm,model]=CalculRC3D(tlm,model)
                 % =========================================================
                 % AJOUT : BLOC DE LISSAGE ET NETTOYAGE NUMERIQUE
                 % =========================================================
-                R_max = 1e11;  % Seuil max de rsistance (circuit ouvert)
-                R_min = 1e-3;  % Seuil min de rsistance (court-circuit)
-                C_min = 1e-15; % Seuil min de capacit (valeur ignore)
+                % R_max = 1e11;  % Seuil max de rsistance (circuit ouvert)
+                % R_min = 1e-3;  % Seuil min de rsistance (court-circuit)
+                % C_min = 1e-15; % Seuil min de capacit (valeur ignore)
 
-                % 1. Filtrage de R1 (j-4) et C1 (j-3) - Toujours presents
-                if tlm.result{i}{j-4} > R_max
-                    tlm.result{i}{j-4} = -1; % Marqueur pour ignorer la R
-                elseif tlm.result{i}{j-4} > 0 && tlm.result{i}{j-4} < R_min
-                    tlm.result{i}{j-4} = R_min; % Ramene au seuil min
-                end
+                % % 1. Filtrage de R1 (j-4) et C1 (j-3) - Toujours presents
+                % if tlm.result{i}{j-4} > R_max
+                %     tlm.result{i}{j-4} = -1; % Marqueur pour ignorer la R
+                % elseif tlm.result{i}{j-4} > 0 && tlm.result{i}{j-4} < R_min
+                %     tlm.result{i}{j-4} = R_min; % Ramene au seuil min
+                % end
                 
-                if tlm.result{i}{j-3} > 0 && tlm.result{i}{j-3} < C_min
-                    tlm.result{i}{j-3} = 0; % Marqueur pour ignorer la C
-                end
+                % if tlm.result{i}{j-3} > 0 && tlm.result{i}{j-3} < C_min
+                %     tlm.result{i}{j-3} = 0; % Marqueur pour ignorer la C
+                % end
 
-                % 2. Filtrage de R2 (j-2) et C2 (j-1) - Presents uniquement aux interfaces
-                % Si j n'est pas 0, cela signifie qu'on est sur une interface (ex: 1, 2, 3...)
-                if tlm.result{i}{j} ~= 0 
-                    if tlm.result{i}{j-2} > R_max
-                        tlm.result{i}{j-2} = -1;
-                    elseif tlm.result{i}{j-2} > 0 && tlm.result{i}{j-2} < R_min
-                        tlm.result{i}{j-2} = R_min;
-                    end
+                % % 2. Filtrage de R2 (j-2) et C2 (j-1) - Presents uniquement aux interfaces
+                % % Si j n'est pas 0, cela signifie qu'on est sur une interface (ex: 1, 2, 3...)
+                % if tlm.result{i}{j} ~= 0 
+                %     if tlm.result{i}{j-2} > R_max
+                %         tlm.result{i}{j-2} = -1;
+                %     elseif tlm.result{i}{j-2} > 0 && tlm.result{i}{j-2} < R_min
+                %         tlm.result{i}{j-2} = R_min;
+                %     end
                     
-                    if tlm.result{i}{j-1} > 0 && tlm.result{i}{j-1} < C_min
-                        tlm.result{i}{j-1} = 0;
-                    end
-                end
+                %     if tlm.result{i}{j-1} > 0 && tlm.result{i}{j-1} < C_min
+                %         tlm.result{i}{j-1} = 0;
+                %     end
+                % end
                 % =========================================================
             end      
         end

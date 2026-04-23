@@ -402,6 +402,7 @@ for i=1:1:size(fem_mesh_p,2)                                        % Loop on th
                             tlm.conf.Capacitor=tlm.conf.Capacitor+1;
                         end
                     end
+                % New way to write the impedance of the segments in the organic medium and on the special boundary (electrode/organic medium)
                 elseif any(fem_mesh_t(tlm.result{i}{j-5}, 1) == tlm.ind.dom.elec1) || any(fem_mesh_t(tlm.result{i}{j-5}, 1) == tlm.ind.dom.elec2)
                     % Impedance in the organic medium
                     if tlm.result{i}{j-4} ~= -1
@@ -568,51 +569,51 @@ for i=1:1:size(fem_mesh_p,2)                                        % Loop on th
 
         if (size(tlm.geom.boundaryEE{i},1) == 1) % parasite of the outer electrode
     
-            % --- 1. Boucle sur les faces (au format N x 3) pour calculer l'aire ---
-            for j = 1:1:size(fem_mesh_f, 1) 
-                idx1 = fem_mesh_f(j, 1) + 1;
-                idx2 = fem_mesh_f(j, 2) + 1;
-                idx3 = fem_mesh_f(j, 3) + 1;
+            % % --- 1. Boucle sur les faces (au format N x 3) pour calculer l'aire ---
+            % for j = 1:1:size(fem_mesh_f, 1) 
+            %     idx1 = fem_mesh_f(j, 1) + 1;
+            %     idx2 = fem_mesh_f(j, 2) + 1;
+            %     idx3 = fem_mesh_f(j, 3) + 1;
                 
-                if i == idx1 || i == idx2 || i == idx3
-                    d12 = sum((fem_mesh_p(:, idx1) - fem_mesh_p(:, idx2)).^2)^0.5;
-                    d23 = sum((fem_mesh_p(:, idx2) - fem_mesh_p(:, idx3)).^2)^0.5;
-                    d13 = sum((fem_mesh_p(:, idx1) - fem_mesh_p(:, idx3)).^2)^0.5;
-                    s = 0.5 * (d12 + d23 + d13);
-                    aire_triangle = s * (s - d12) * (s - d13) * (s - d23);
-                    if aire_triangle > 0
-                        aire = aire + (aire_triangle^0.5) / 3;
-                    end
-                end  
-            end
+            %     if i == idx1 || i == idx2 || i == idx3
+            %         d12 = sum((fem_mesh_p(:, idx1) - fem_mesh_p(:, idx2)).^2)^0.5;
+            %         d23 = sum((fem_mesh_p(:, idx2) - fem_mesh_p(:, idx3)).^2)^0.5;
+            %         d13 = sum((fem_mesh_p(:, idx1) - fem_mesh_p(:, idx3)).^2)^0.5;
+            %         s = 0.5 * (d12 + d23 + d13);
+            %         aire_triangle = s * (s - d12) * (s - d13) * (s - d23);
+            %         if aire_triangle > 0
+            %             aire = aire + (aire_triangle^0.5) / 3;
+            %         end
+            %     end  
+            % end
             
-            % --- 2. ÉCRITURE SPICE ET SÉCURITÉS ---
-            if aire == 0
-                % Si le noeud est "orphelin" :
-                % On crée un pont court-circuit pour que la matrice SPICE reste stable
-                fprintf(fid, 'R_short%u\t%ubis\t%uter\t1\n', i, i, i);
-                tlm.conf.Resistor = tlm.conf.Resistor + 1;
-            else
-                % Si on a une vraie aire : On écrit le modèle de Randles (les parasites)
-                fprintf(fid,'Ci%u\t%ubis\t%uter\t%17.16e\n',i,i,i,tlm.var.Ci*aire);
-                tlm.conf.Capacitor=tlm.conf.Capacitor+1;
+            % % --- 2. ÉCRITURE SPICE ET SÉCURITÉS ---
+            % if aire == 0
+            %     % Si le noeud est "orphelin" :
+            %     % On crée un pont court-circuit pour que la matrice SPICE reste stable
+            %     fprintf(fid, 'R_short%u\t%ubis\t%uter\t1\n', i, i, i);
+            %     tlm.conf.Resistor = tlm.conf.Resistor + 1;
+            % else
+            %     % Si on a une vraie aire : On écrit le modèle de Randles (les parasites)
+            %     fprintf(fid,'Ci%u\t%ubis\t%uter\t%17.16e\n',i,i,i,tlm.var.Ci*aire);
+            %     tlm.conf.Capacitor=tlm.conf.Capacitor+1;
                 
-                fprintf(fid,'Rw%u\t%uquad\t%uter\tr=''%17.16e/sqrt(FREQ)''\n',i,i,i,tlm.var.Rwf/aire);
-                tlm.conf.Resistor=tlm.conf.Resistor+1; 
+            %     fprintf(fid,'Rw%u\t%uquad\t%uter\tr=''%17.16e/sqrt(FREQ)''\n',i,i,i,tlm.var.Rwf/aire);
+            %     tlm.conf.Resistor=tlm.conf.Resistor+1; 
                         
-                fprintf(fid,'Cw%u\t%uquad\t%uter\tc=''%17.16e*sqrt(FREQ)''\n',i,i,i,tlm.var.Cwf*aire);
-                tlm.conf.Capacitor=tlm.conf.Capacitor+1;
+            %     fprintf(fid,'Cw%u\t%uquad\t%uter\tc=''%17.16e*sqrt(FREQ)''\n',i,i,i,tlm.var.Cwf*aire);
+            %     tlm.conf.Capacitor=tlm.conf.Capacitor+1;
                 
-                fprintf(fid,'Rt%u\t%ubis\t%uquad\t%17.16e\n',i,i,i,tlm.var.Rt/aire);
-                tlm.conf.Resistor=tlm.conf.Resistor+1;
-            end
+            %     fprintf(fid,'Rt%u\t%ubis\t%uquad\t%17.16e\n',i,i,i,tlm.var.Rt/aire);
+            %     tlm.conf.Resistor=tlm.conf.Resistor+1;
+            % end
             
-            % --- 3. LA CORRECTION DU .PRINT (Le "fantôme" ressuscité) ---
-            % Que l'on ait mis un parasite ou un court-circuit, le noeud 'i' de base
-            % a été effacé du circuit (remplacé par ibis/iter). On le recrée ici 
-            % en le reliant avec un fil parfait pour que la commande .PRINT puisse le lire !
-            fprintf(fid, 'R_print%u\t%u\t%ubis\t1\n', i, i, i);
-            tlm.conf.Resistor = tlm.conf.Resistor + 1;
+            % % --- 3. LA CORRECTION DU .PRINT (Le "fantôme" ressuscité) ---
+            % % Que l'on ait mis un parasite ou un court-circuit, le noeud 'i' de base
+            % % a été effacé du circuit (remplacé par ibis/iter). On le recrée ici 
+            % % en le reliant avec un fil parfait pour que la commande .PRINT puisse le lire !
+            % fprintf(fid, 'R_print%u\t%u\t%ubis\t1\n', i, i, i);
+            % tlm.conf.Resistor = tlm.conf.Resistor + 1;
         
         
         elseif (size(tlm.geom.boundaryEC{1,i},1)==1)               % cell membrane modele

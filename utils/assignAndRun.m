@@ -165,6 +165,8 @@ function assignAndRun(app)
     
     % Postprocess the various analysis
     tlm = Postprocess(tlm,fil, app,model);
+
+    app.tlm = tlm;
     
     if tlm.conf.log == 1
         fclose(fil); % close log file

@@ -35,8 +35,6 @@ function tlm = IniGeoPhy(tlm, model, app)
     switch unit_str
         case 'm'
             scale = 1;
-        case 'cm'
-            scale = 1e-2;
         case 'mm'
             scale = 1e-3;
         case {'um', '\mu m', 'µm'} % COMSOL utilise parfois des caractères spéciaux pour micro
