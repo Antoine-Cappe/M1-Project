@@ -768,7 +768,28 @@ for ii=1:1:3
             return
         end
 
-% Plot one specific slice (at zlin1) of the SPICE values in a 2D figure 
+% Plot one specific slice (at zlin1) of the SPICE values in a 2D figure
+        
+        % Modified by: Tina - Add fallback for missing geometry fields
+        if ~isfield(tlm.var, 'OrigineX') || ~isfield(tlm.var, 'LongueurChambre')
+            % Calculate from mesh coordinates if not set by IniGeoPhy
+            X_range = max(tlm.var.X1) - min(tlm.var.X1);
+            Y_range = max(tlm.var.Y1) - min(tlm.var.Y1);
+            
+            if isfield(tlm.var, 'Z1')
+                Z_range = max(tlm.var.Z1) - min(tlm.var.Z1);
+            else
+                Z_range = 1e-5;  % Default small range if Z not available
+            end
+            
+            tlm.var.OrigineX = (max(tlm.var.X1) + min(tlm.var.X1)) / 2;
+            tlm.var.OrigineY = (max(tlm.var.Y1) + min(tlm.var.Y1)) / 2;
+            tlm.var.OrigineZ = 0;  % Default Z origin for SPICE visualization
+            
+            tlm.var.LongueurChambre = X_range;
+            tlm.var.LargeurChambre = Y_range;
+            tlm.var.EpaisseurChambre = Z_range;
+        end
 
         xlin1=linspace(tlm.var.OrigineX-tlm.var.LongueurChambre/2,tlm.var.OrigineX+tlm.var.LongueurChambre/2,200);
         ylin1=linspace(tlm.var.OrigineY-tlm.var.LargeurChambre/2,tlm.var.OrigineY+tlm.var.LargeurChambre/2,200);
@@ -890,7 +911,28 @@ for ii=1:1:3
         %    tlm.var.VoltFem(k,ii)=tlm.var.Volt2(k);
         %end
 
-% Plot one specific slice (at zlin2) of the FEM values in a 2D figure 
+% Plot one specific slice (at zlin2) of the FEM values in a 2D figure
+        
+        % Modified by: Tina - Add fallback for missing geometry fields
+        if ~isfield(tlm.var, 'OrigineX') || ~isfield(tlm.var, 'LongueurChambre')
+            % Calculate from mesh coordinates if not set by IniGeoPhy
+            X_range = max(tlm.var.X2) - min(tlm.var.X2);
+            Y_range = max(tlm.var.Y2) - min(tlm.var.Y2);
+            Z_range = max(tlm.var.Z2) - min(tlm.var.Z2);
+            
+            tlm.var.OrigineX = (max(tlm.var.X2) + min(tlm.var.X2)) / 2;
+            tlm.var.OrigineY = (max(tlm.var.Y2) + min(tlm.var.Y2)) / 2;
+            tlm.var.OrigineZ = (max(tlm.var.Z2) + min(tlm.var.Z2)) / 2;
+            
+            tlm.var.LongueurChambre = X_range;
+            tlm.var.LargeurChambre = Y_range;
+            tlm.var.EpaisseurChambre = Z_range;
+            
+            fprintf('\n\t . Fallback: Geometry parameters calculated from mesh coordinates');
+            fprintf('\n\t\t - OrigineX/Y/Z: [%.2e, %.2e, %.2e] m', tlm.var.OrigineX, tlm.var.OrigineY, tlm.var.OrigineZ);
+            fprintf('\n\t\t - LongueurChambre/LargeurChambre/EpaisseurChambre: [%.2e, %.2e, %.2e] m', ...
+                tlm.var.LongueurChambre, tlm.var.LargeurChambre, tlm.var.EpaisseurChambre);
+        end
 
         xlin2=linspace(tlm.var.OrigineX-tlm.var.LongueurChambre/2,tlm.var.OrigineX+tlm.var.LongueurChambre/2,200);
         ylin2=linspace(tlm.var.OrigineY-tlm.var.LargeurChambre/2,tlm.var.OrigineY+tlm.var.LargeurChambre/2,200);

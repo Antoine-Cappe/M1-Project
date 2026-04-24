@@ -220,7 +220,7 @@ cirPath = sprintf('%s\\%s\\%s.cir', tlm.conf.store, tlm.conf.Name, tlm.conf.Name
 % =========================================================================
 
 % 1. Définir le nombre de cœurs à utiliser (on met 10 pour garder de la marge pour Windows)
-num_cores = '10'; 
+num_cores = '4'; 
 
 % 2. Le chemin de ton exécutable Xyce compilé sous Linux
 xyceLinuxPath = '/usr/local/xyce_mpi/bin/Xyce';

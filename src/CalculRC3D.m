@@ -54,6 +54,41 @@ global fem_mesh_p; %coordinates of the vertex
 global fem_mesh_t; %domain number of the tetrahedron
 %global fem_mesh_e;
 
+% Ensure material arrays are large enough for all mesh domain IDs.
+if size(fem_mesh_t, 1) >= 5 && size(fem_mesh_t, 2) > size(fem_mesh_t, 1)
+    max_domain_id = max(fem_mesh_t(5, :));
+    get_tet_domain_ids = @(tet_idx) fem_mesh_t(5, tet_idx);
+else
+    max_domain_id = max(fem_mesh_t(:, 1));
+    get_tet_domain_ids = @(tet_idx) fem_mesh_t(tet_idx, 1);
+end
+
+if isempty(max_domain_id) || ~isfinite(max_domain_id) || max_domain_id < 0
+    max_domain_id = 0;
+else
+    max_domain_id = floor(double(max_domain_id));
+end
+
+if ~isfield(tlm, 'dom') || ~isfield(tlm.dom, 'sig') || ~isfield(tlm.dom, 'eps')
+    tlm.dom.sig = zeros(1, max_domain_id);
+    tlm.dom.eps = zeros(1, max_domain_id);
+    if isfield(tlm.conf, 'complexGeometry') && tlm.conf.complexGeometry == 1
+        tlm.dom.sig(:) = tlm.var.sig.CultureMedium;
+        tlm.dom.eps(:) = tlm.var.eps.CultureMedium;
+    end
+end
+
+if isfield(tlm.conf, 'complexGeometry') && tlm.conf.complexGeometry == 1 && (~isfield(tlm.ind, 'dom') || ~isfield(tlm.ind.dom, 'MilOrga'))
+    tlm.ind.dom.MilOrga = min(3, max_domain_id);
+end
+
+if numel(tlm.dom.sig) < max_domain_id
+    tlm.dom.sig(max_domain_id) = 0;
+end
+if numel(tlm.dom.eps) < max_domain_id
+    tlm.dom.eps(max_domain_id) = 0;
+end
+
 for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
 
     if size(tlm.result{i},2)~=0 % Check whether the node has been selected once as an incident point
@@ -75,21 +110,21 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                     tlm.geom.boundaryEE{tlm.result{i}{j-6}}=tlm.geom.boundaryEE{tlm.result{i}{j-6}}+tlm.result{i}{j}/2;
                         
                     for k=1:1:size(tlm.result{i}{j-5},2)                        %loop on the number of tetraedron around this segment
-                        if fem_mesh_t(tlm.result{i}{j-5}(k),1)==tlm.ind.dom.MilOrga                          %if tetra is in electrolyte
-                            tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(k),1)).*tlm.geom.airvol(i);
-                            tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(k),1)).*tlm.geom.airvol(i);
+                        if get_tet_domain_ids(tlm.result{i}{j-5}(k))==tlm.ind.dom.MilOrga                          %if tetra is in electrolyte
+                            tlm.result{i}{j-4}=tlm.result{i}{j-4}+tlm.dom.sig(get_tet_domain_ids(tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                            tlm.result{i}{j-3}=tlm.result{i}{j-3}+tlm.dom.eps(get_tet_domain_ids(tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
                         else                                                                                  %if the tetra is in the electrode
-                            tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(k),1)).*tlm.geom.airvol(i);
-                            tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(k),1)).*tlm.geom.airvol(i);
+                            tlm.result{i}{j-2}=tlm.result{i}{j-2}+tlm.dom.sig(get_tet_domain_ids(tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
+                            tlm.result{i}{j-1}=tlm.result{i}{j-1}+tlm.dom.eps(get_tet_domain_ids(tlm.result{i}{j-5}(k))).*tlm.geom.airvol(i);
                         end
                     end
                     
                     if tlm.result{i}{j-4}==0 || tlm.result{i}{j-3}==0  % case of narrow electrodes where nodes i and tlm.result{i}{j-6} are on both sides of the electrodes qnd on the side of the simulation domain
                         tlm.result{i}{j}=1; % this segment is in the electrode (&&&&&&&&&&&&&&&&&&check the effect in EcritNetlist)
                         % Resistance
-                        tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/3;
+                        tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(get_tet_domain_ids(tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
                         % Capacit�
-                        tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/long^2*3;
+                        tlm.result{i}{j-3}=sum(tlm.dom.eps(get_tet_domain_ids(tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;
                     else
                         % Resistance R1
                         tlm.result{i}{j-4}=long^2/tlm.result{i}{j-4}/3;
@@ -103,16 +138,16 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
       
               elseif (size(tlm.geom.boundaryEE{i},1)==1) || (size(tlm.geom.boundaryEE{tlm.result{i}{j-6}},1)==1)
                   
-                    if fem_mesh_t(tlm.result{i}{j-5}(1),1)==tlm.ind.dom.MilOrga
+                    if get_tet_domain_ids(tlm.result{i}{j-5}(1))==tlm.ind.dom.MilOrga
                         tlm.result{i}{j}=2; %this segment is in the electrolyte
                     else
                         tlm.result{i}{j}=1; %this segment is in the electrode
                     end
                     
                     % Resistance
-                    tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/3;
+                    tlm.result{i}{j-4}=long^2/sum(tlm.dom.sig(get_tet_domain_ids(tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/3;
                     % Capacit�
-                    tlm.result{i}{j-3}=sum(tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/long^2*3;
+                    tlm.result{i}{j-3}=sum(tlm.dom.eps(get_tet_domain_ids(tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2*3;
               end
               
 % Interface between cytoplasm of first cell and organic medium
@@ -419,14 +454,15 @@ for i=1:1:size(fem_mesh_p,2)    % Loop on the number of nodes
                  
                   % Resistance
                   
-                  if tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(:),1))~=0 
-                      tlm.result{i}{j-4}=(long^2/(sum(tlm.dom.sig(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))))/3;
+                  sig_vals = tlm.dom.sig(get_tet_domain_ids(tlm.result{i}{j-5}(:)));
+                  if any(sig_vals~=0)
+                      tlm.result{i}{j-4}=(long^2/(sum(sig_vals.*tlm.geom.airvol(i))))/3;
                   else
                       tlm.result{i}{j-4}=-1;
                   end
                   
                   % Capacit�
-                  tlm.result{i}{j-3}=(sum(tlm.dom.eps(fem_mesh_t(tlm.result{i}{j-5}(:),1)).*tlm.geom.airvol(i))/long^2)*3;
+                  tlm.result{i}{j-3}=(sum(tlm.dom.eps(get_tet_domain_ids(tlm.result{i}{j-5}(:))).*tlm.geom.airvol(i))/long^2)*3;
                     
               end
         end      

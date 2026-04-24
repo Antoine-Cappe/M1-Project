@@ -46,6 +46,11 @@ function [tlm,model]=Remplissage3D(tlm,model)
 
 %Initialization
 
+% Ensure Parasite field exists (for backward compatibility)
+if ~isfield(tlm.conf, 'Parasite')
+    tlm.conf.Parasite = 0;  % Default: don't account for hydration layer around electrodes
+end
+
 global fem_mesh_p;
 global fem_mesh_t;
 global fem_mesh_e;
@@ -94,17 +99,17 @@ for i=1:1:size(fem_mesh_t,1)                        %For each tetrahedron
     end % for n=1:1:3
 end %for i=1:1:size(fem_mesh_t,1) 
 
-% for i=1:1:size(fem_mesh_e,2) %For each triangle at the interface
+for i=1:1:size(fem_mesh_e,2) %For each triangle at the interface
 
-   % if (tlm.conf.Parasite==1) && ...
-   %    ((fem_mesh_t(11,i)==tlm.ind.dom.elec1 && fem_mesh_t(12,i)==tlm.ind.dom.MilOrga) || ...
-   %     (fem_mesh_t(11,i)==tlm.ind.dom.MilOrga && fem_mesh_t(12,i)==tlm.ind.dom.elec1) || ...
-   %     (fem_mesh_t(11,i)==tlm.ind.dom.elec2 && fem_mesh_t(12,i)==tlm.ind.dom.MilOrga) || ...
-   %     (fem_mesh_t(11,i)==tlm.ind.dom.MilOrga && fem_mesh_t(12,i)==tlm.ind.dom.elec2))
-      % If the segment is at the interface between the left or right outer electrodes and the electrolyte    
-           % tlm.geom.boundaryEE{fem_mesh_t(1,i)}=0;  % At the initialization, the array is empty and its size is 0
-           % tlm.geom.boundaryEE{fem_mesh_e(2,i)}=0;
-           % tlm.geom.boundaryEE{fem_mesh_e(3,i)}=0;
+   if (tlm.conf.Parasite==1) && ...
+      ((fem_mesh_t(11,i)==tlm.ind.dom.elec1 && fem_mesh_t(12,i)==tlm.ind.dom.MilOrga) || ...
+       (fem_mesh_t(11,i)==tlm.ind.dom.MilOrga && fem_mesh_t(12,i)==tlm.ind.dom.elec1) || ...
+       (fem_mesh_t(11,i)==tlm.ind.dom.elec2 && fem_mesh_t(12,i)==tlm.ind.dom.MilOrga) || ...
+       (fem_mesh_t(11,i)==tlm.ind.dom.MilOrga && fem_mesh_t(12,i)==tlm.ind.dom.elec2))
+        % If the segment is at the interface between the left or right outer electrodes and the electrolyte    
+        tlm.geom.boundaryEE{fem_mesh_t(1,i)}=0;  % At the initialization, the array is empty and its size is 0
+        tlm.geom.boundaryEE{fem_mesh_e(2,i)}=0;
+        tlm.geom.boundaryEE{fem_mesh_e(3,i)}=0;
 %    elseif (tlm.conf.Parasite==1) && ...
 %       ((fem_mesh_e(11,i)==tlm.ind.dom.elec1 && fem_mesh_e(12,i)==tlm.ind.dom.MilOrgb) || ...
 %        (fem_mesh_e(11,i)==tlm.ind.dom.MilOrgb && fem_mesh_e(12,i)==tlm.ind.dom.elec1) || ...
@@ -114,93 +119,79 @@ end %for i=1:1:size(fem_mesh_t,1)
 %            tlm.geom.boundaryEE{fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
 %            tlm.geom.boundaryEE{fem_mesh_e(2,i)}=0;
 %            tlm.geom.boundaryEE{fem_mesh_e(3,i)}=0;
-%    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==1) && ... 
-%           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(1) && fem_mesh_e(12,i)==tlm.ind.dom.MilOrga) || ...
-%           (fem_mesh_e(11,i)==tlm.ind.dom.MilOrga && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(1)))
-%       % If the segment is at the interface between the cytoplasm and the electrolyte 
-%            tlm.geom.boundaryEC{1,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
-%            tlm.geom.boundaryEC{1,fem_mesh_e(2,i)}=0;
-%            tlm.geom.boundaryEC{1,fem_mesh_e(3,i)}=0;
-%    elseif (tlm.conf.Membrane==1) & (tlm.conf.Cell==1) & ... 
-%           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(1) & fem_mesh_e(12,i)==tlm.ind.dom.MilOrgb) | ...
-%           (fem_mesh_e(11,i)==tlm.ind.dom.MilOrgb & fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(1)))
-%       % If the segment is at the interface between the cytoplasm and the electrolyte 
-%            tlm.geom.boundaryEC{1,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
-%            tlm.geom.boundaryEC{1,fem_mesh_e(2,i)}=0;
-%            tlm.geom.boundaryEC{1,fem_mesh_e(3,i)}=0;
-%    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==2) && ...
-%           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(1) && fem_mesh_e(12,i)==tlm.ind.dom.MilOrga) || ...
-%           (fem_mesh_e(11,i)==tlm.ind.dom.MilOrga && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(1)))
-%       % If the segment is at the interface between the cytoplasm and the electrolyte 
-%            tlm.geom.boundaryEC{1,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
-%            tlm.geom.boundaryEC{1,fem_mesh_e(2,i)}=0;
-%            tlm.geom.boundaryEC{1,fem_mesh_e(3,i)}=0;
-% %   elseif (tlm.conf.Membrane==1) & (tlm.conf.Cell==2) & ...
- %          ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(1) & fem_mesh_e(12,i)==tlm.ind.dom.MilOrgb) | ...
- %          (fem_mesh_e(11,i)==tlm.ind.dom.MilOrgb & fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(1)))
- %      % If the segment is at the interface between the cytoplasm and the electrolyte 
- %           tlm.geom.boundaryEC{1,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
- %           tlm.geom.boundaryEC{1,fem_mesh_e(2,i)}=0;
- %           tlm.geom.boundaryEC{1,fem_mesh_e(3,i)}=0;
-%    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==2) && ...
-%           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(2) && fem_mesh_e(12,i)==tlm.ind.dom.MilOrga) || ...
-%           (fem_mesh_e(11,i)==tlm.ind.dom.MilOrga && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(2)))
-%       % If the segment is at the interface between the cytoplasm and the electrolyte 
-%            tlm.geom.boundaryEC{2,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
-%            tlm.geom.boundaryEC{2,fem_mesh_e(2,i)}=0;
-%            tlm.geom.boundaryEC{2,fem_mesh_e(3,i)}=0;
-  %  elseif (tlm.conf.Membrane==1) & (tlm.conf.Cell==2) & ...
-  %         ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(2) & fem_mesh_e(12,i)==tlm.ind.dom.MilOrgb) | ...
-  %         (fem_mesh_e(11,i)==tlm.ind.dom.MilOrgb & fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(2)))
-  %     % If the segment is at the interface between the cytoplasm and the electrolyte 
-  %          tlm.geom.boundaryEC{2,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
-  %          tlm.geom.boundaryEC{2,fem_mesh_e(2,i)}=0;
-  %          tlm.geom.boundaryEC{2,fem_mesh_e(3,i)}=0;
-%    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==1) && (tlm.conf.Nucleus==1) && ...
-%           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(1) && fem_mesh_e(12,i)==tlm.ind.dom.Nucleus(1)) || ...
-%          (fem_mesh_e(11,i)==tlm.ind.dom.Nucleus(1) && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(1)))
-       % If the segment is at the interface between nucleus1 - cytoplasme1
-%            tlm.geom.boundaryEN{1,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
-%            tlm.geom.boundaryEN{1,fem_mesh_e(2,i)}=0;
-%            tlm.geom.boundaryEN{1,fem_mesh_e(3,i)}=0;
-%    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==2) && (tlm.conf.Nucleus==1) && ...
-%           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(1) && fem_mesh_e(12,i)==tlm.ind.dom.Nucleus(1)) || ...
-%           (fem_mesh_e(11,i)==tlm.ind.dom.Nucleus(1) && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(1)))
-       % If the segment is at the interface between nucleus (1) or (2) - cytoplasme (1) or (2)
-%            tlm.geom.boundaryEN{1,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
-%            tlm.geom.boundaryEN{1,fem_mesh_e(2,i)}=0;
-%            tlm.geom.boundaryEN{1,fem_mesh_e(3,i)}=0;
-%    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==2) && (tlm.conf.Nucleus==1) && ...
-%           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(2) && fem_mesh_e(12,i)==tlm.ind.dom.Nucleus(2)) || ...
-%           (fem_mesh_e(11,i)==tlm.ind.dom.Nucleus(2) && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(2)))
-%       % If the segment is at the interface between nucleus (1) or (2) - cytoplasme (1) or (2)
-%            tlm.geom.boundaryEN{2,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
-%            tlm.geom.boundaryEN{2,fem_mesh_e(2,i)}=0;
-%            tlm.geom.boundaryEN{2,fem_mesh_e(3,i)}=0;
-%    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==1) && (tlm.conf.Mitocho==1) && ...
-%           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(1) && fem_mesh_e(12,i)==tlm.ind.dom.Mitocho(1)) || ...
-%           (fem_mesh_e(11,i)==tlm.ind.dom.Mitocho(1) && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(1)))
-%       % If the segment is at the interface between nucleus(1) - cytoplasme(1)
-%            tlm.geom.boundaryEM{1,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
-%            tlm.geom.boundaryEM{1,fem_mesh_e(2,i)}=0;
-%            tlm.geom.boundaryEM{1,fem_mesh_e(3,i)}=0;
-%    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==2) && (tlm.conf.Mitocho==1) && ...
-%           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(1) && fem_mesh_e(12,i)==tlm.ind.dom.Mitocho(1)) || ...
-%           (fem_mesh_e(11,i)==tlm.ind.dom.Mitocho(1) && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(1)))
-       % If the segment is at the interface between nucleus (1) or (2) - cytoplasme (1) or (2)
-%            tlm.geom.boundaryEM{1,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
-%            tlm.geom.boundaryEM{1,fem_mesh_e(2,i)}=0;
-%            tlm.geom.boundaryEM{1,fem_mesh_e(3,i)}=0;
-%    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==2) && (tlm.conf.Mitocho==1) && ...
-%           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(2) && fem_mesh_e(12,i)==tlm.ind.dom.Mitocho(2)) || ...
-%           (fem_mesh_e(11,i)==tlm.ind.dom.Mitocho(2) && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(2)))
-       % If the segment is at the interface between nucleus (1) or (2) - cytoplasme (1) or (2)
-%            tlm.geom.boundaryEM{2,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
-%            tlm.geom.boundaryEM{2,fem_mesh_e(2,i)}=0;
-%            tlm.geom.boundaryEM{2,fem_mesh_e(3,i)}=0;
-%     end
-% 
-% end
+    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==1) && ... 
+           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(1) && fem_mesh_e(12,i)==tlm.ind.dom.MilOrga) || ...
+           (fem_mesh_e(11,i)==tlm.ind.dom.MilOrga && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(1)))
+        % If the segment is at the interface between the cytoplasm and the electrolyte 
+        tlm.geom.boundaryEC{1,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
+        tlm.geom.boundaryEC{1,fem_mesh_e(2,i)}=0;
+        tlm.geom.boundaryEC{1,fem_mesh_e(3,i)}=0;
+    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==2) && ...
+           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(1) && fem_mesh_e(12,i)==tlm.ind.dom.MilOrga) || ...
+           (fem_mesh_e(11,i)==tlm.ind.dom.MilOrga && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(1)))
+        % If the segment is at the interface between the cytoplasm and the electrolyte 
+        tlm.geom.boundaryEC{1,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
+        tlm.geom.boundaryEC{1,fem_mesh_e(2,i)}=0;
+        tlm.geom.boundaryEC{1,fem_mesh_e(3,i)}=0;
+    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==2) && ...
+           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(2) && fem_mesh_e(12,i)==tlm.ind.dom.MilOrga) || ...
+           (fem_mesh_e(11,i)==tlm.ind.dom.MilOrga && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(2)))
+        % If the segment is at the interface between the cytoplasm and the electrolyte 
+        tlm.geom.boundaryEC{2,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
+        tlm.geom.boundaryEC{2,fem_mesh_e(2,i)}=0;
+        tlm.geom.boundaryEC{2,fem_mesh_e(3,i)}=0;
+    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==1) && (tlm.conf.Nucleus==1) && ...
+           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(1) && fem_mesh_e(12,i)==tlm.ind.dom.Nucleus(1)) || ...
+           (fem_mesh_e(11,i)==tlm.ind.dom.Nucleus(1) && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(1)))
+        % If the segment is at the interface between nucleus1 - cytoplasme1
+        tlm.geom.boundaryEN{1,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
+        tlm.geom.boundaryEN{1,fem_mesh_e(2,i)}=0;
+        tlm.geom.boundaryEN{1,fem_mesh_e(3,i)}=0;
+    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==2) && (tlm.conf.Nucleus==1) && ...
+           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(1) && fem_mesh_e(12,i)==tlm.ind.dom.Nucleus(1)) || ...
+           (fem_mesh_e(11,i)==tlm.ind.dom.Nucleus(1) && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(1)))
+        % If the segment is at the interface between nucleus (1) or (2) - cytoplasme (1) or (2)
+            tlm.geom.boundaryEN{1,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
+            tlm.geom.boundaryEN{1,fem_mesh_e(2,i)}=0;
+            tlm.geom.boundaryEN{1,fem_mesh_e(3,i)}=0;
+    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==2) && (tlm.conf.Nucleus==1) && ...
+           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(2) && fem_mesh_e(12,i)==tlm.ind.dom.Nucleus(2)) || ...
+           (fem_mesh_e(11,i)==tlm.ind.dom.Nucleus(2) && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(2)))
+        % If the segment is at the interface between nucleus (1) or (2) - cytoplasme (1) or (2)
+        tlm.geom.boundaryEN{1,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
+        tlm.geom.boundaryEN{1,fem_mesh_e(2,i)}=0;
+        tlm.geom.boundaryEN{1,fem_mesh_e(3,i)}=0;
+    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==2) && (tlm.conf.Nucleus==1) && ...
+           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(2) && fem_mesh_e(12,i)==tlm.ind.dom.Nucleus(2)) || ...
+           (fem_mesh_e(11,i)==tlm.ind.dom.Nucleus(2) && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(2)))
+        % If the segment is at the interface between nucleus (1) or (2) - cytoplasme (1) or (2)
+        tlm.geom.boundaryEN{2,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
+        tlm.geom.boundaryEN{2,fem_mesh_e(2,i)}=0;
+        tlm.geom.boundaryEN{2,fem_mesh_e(3,i)}=0;
+    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==1) && (tlm.conf.Mitocho==1) && ...
+           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(1) && fem_mesh_e(12,i)==tlm.ind.dom.Mitocho(1)) || ...
+           (fem_mesh_e(11,i)==tlm.ind.dom.Mitocho(1) && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(1)))
+        % If the segment is at the interface between mitochondria - cytoplasme
+        tlm.geom.boundaryEM{1,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
+        tlm.geom.boundaryEM{1,fem_mesh_e(2,i)}=0;
+        tlm.geom.boundaryEM{1,fem_mesh_e(3,i)}=0;
+    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==2) && (tlm.conf.Mitocho==1) && ...
+           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(1) && fem_mesh_e(12,i)==tlm.ind.dom.Mitocho(1)) || ...
+           (fem_mesh_e(11,i)==tlm.ind.dom.Mitocho(1) && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(1)))
+        % If the segment is at the interface between mitochondria - cytoplasme
+        tlm.geom.boundaryEM{1,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
+        tlm.geom.boundaryEM{1,fem_mesh_e(2,i)}=0;
+        tlm.geom.boundaryEM{1,fem_mesh_e(3,i)}=0;
+    elseif (tlm.conf.Membrane==1) && (tlm.conf.Cell==2) && (tlm.conf.Mitocho==1) && ...
+           ((fem_mesh_e(11,i)==tlm.ind.dom.Cytoplasme(2) && fem_mesh_e(12,i)==tlm.ind.dom.Mitocho(2)) || ...
+           (fem_mesh_e(11,i)==tlm.ind.dom.Mitocho(2) && fem_mesh_e(12,i)==tlm.ind.dom.Cytoplasme(2)))
+        % If the segment is at the interface between mitochondria - cytoplasme
+        tlm.geom.boundaryEM{2,fem_mesh_e(1,i)}=0;  % At the initialization, the array is empty and its size is 0
+        tlm.geom.boundaryEM{2,fem_mesh_e(2,i)}=0;
+        tlm.geom.boundaryEM{2,fem_mesh_e(3,i)}=0;
+    end
+
+end
 
 % Calculation of the 1/6 of the volume of each element (tetrahedron)
 % because there is 6 edge on a tetrahedron, so the volume will be

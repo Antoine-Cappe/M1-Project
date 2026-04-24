@@ -19,7 +19,7 @@ function WritePara(tlm,fil)
     fprintf(fil,'\n\n System:');
     fprintf(fil,'\n\t Space Dimension: %u, \t Fluid: %u,',tlm.conf.dim,tlm.conf.Milo);
     fprintf(fil,'\n\t Number of Cell: %u, \t Cell Shape: %d, \t Nucleus: %u, \t Mitochondria: %u',tlm.conf.Cell,tlm.conf.Shape,tlm.conf.Nucleus,tlm.conf.Mitocho);
-    fprintf(fil,'\n\t Probe: %u',tlm.conf.points);
+    fprintf(fil,'\n\t Measurement points: %u',tlm.conf.points);
     
     if tlm.conf.Init==1
 

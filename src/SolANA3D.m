@@ -87,14 +87,14 @@ if isempty(tlm.sol.fre) || size(tlm.sol.fre,2)<2
     error('No valid frequency list found for analytical study. Expected %s.spi or %s', tlm.conf.Name0, xyceCsvName);
 end
 
-if tlm.conf.points==2               % for 2 points measurement
+if tlm.conf.points==4           % for 4 points measurement
+
+    long=tlm.var.LongueurChambre;
+            
+else                          % default to 2-point spacing for 2-point mode or unexpected values
                 
 %    long=tlm.var.EcartementElectrode+tlm.var.LargeurElectrode;
     long=tlm.var.EcartementElectrode;
-            
-elseif tlm.conf.points==4           % for 4 points measurement
-
-    long=tlm.var.LongueurChambre;
             
 end
 

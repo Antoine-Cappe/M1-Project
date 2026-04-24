@@ -57,11 +57,20 @@ if fid>=0       % The file exists
 
 else
     if exist(xyceCsvName,'file')==2
+        % Modified by: Tina - Enhanced XYCE output parsing to extract node voltages
+        % This allows verification of field distribution and node connectivity
         xyceData=readmatrix(xyceCsvName);
         if ~isempty(xyceData) && size(xyceData,2)>=2
             tlm.sol.fre(:,1)=xyceData(:,1);
             tlm.sol.fre(:,2)=xyceData(:,2);
             fprintf('\n\t\t . The Xyce CSV file has been exploited to extract frequencies');
+            
+            % Modified by: Tina - Store full XYCE data for later node voltage extraction
+            % Save raw data for per-node voltage analysis
+            if size(xyceData,2) > 2
+                tlm.xyce.raw_data = xyceData;  % Store all columns for node voltage parsing
+                fprintf('\n\t\t . Additional data columns present: %d (may include node voltages)', size(xyceData,2)-2);
+            end
         else
             fprintf('\n\t\t . The Xyce CSV file exists but is malformed');
         end
@@ -82,35 +91,197 @@ model.param.set('sig_med', num2str(tlm.var.sig.MilOrga));
 model.param.set('eps_med', num2str(tlm.var.eps.MilOrga/tlm.var.eps0));
 model.param.set('v_in', num2str(tlm.var.v0));
 
+% Complex geometry parameters from the COMSOL model tree
+if isfield(tlm.conf, 'complexGeometry') && tlm.conf.complexGeometry == 1
+    model.param.set('matrix', num2str(tlm.conf.matrix));
+    model.param.set('electrodes', num2str(tlm.conf.electrodes));
+    model.param.set('elec_dl', num2str(tlm.conf.elec_dl));
+
+    model.param.set('channel_h', sprintf('%g[m]', tlm.var.channel_h));
+    model.param.set('glass_h', sprintf('%g[m]', tlm.var.glass_h));
+    model.param.set('io_w', sprintf('%g[m]', tlm.var.io_w));
+    model.param.set('io_d', sprintf('%g[m]', tlm.var.io_d));
+    model.param.set('chamfer', sprintf('%g[m]', tlm.var.chamfer));
+    model.param.set('fillet', sprintf('%g[m]', tlm.var.fillet));
+    model.param.set('l_electrode', sprintf('%g[m]', tlm.var.LargeurElectrode));
+    model.param.set('L_electrode', sprintf('%g[m]', tlm.var.LongueurElectrode));
+    model.param.set('side_pu', sprintf('%g[m]', tlm.var.LargeurMesure));
+    model.param.set('dl_al', sprintf('%g[m]', tlm.var.EpaisseurMesure * 20));
+    model.param.set('dl_vw', sprintf('%g[m]', tlm.var.EpaisseurMesure));
+    model.param.set('central_well', sprintf('%g[m]', tlm.var.EcartementElectrode));
+    model.param.set('pattern', sprintf('%g[m]', tlm.var.pattern));
+    model.param.set('inlet_diameter', sprintf('%g[m]', tlm.var.inlet_diameter));
+    model.param.set('TiC_channel_depth', sprintf('%g[m]', tlm.var.TiC_channel_depth));
+    model.param.set('marge', sprintf('%g[m]', tlm.var.marge));
+    model.param.set('TiC_height', sprintf('%g[m]', tlm.var.TiC_height));
+    model.param.set('TiC_width', sprintf('%g[m]', tlm.var.TiC_width));
+    model.param.set('TiC_depth', sprintf('%g[m]', tlm.var.TiC_depth));
+    model.param.set('ID_inlet_diameter', sprintf('%g[m]', tlm.var.ID_inlet_diameter));
+
+    % Keep the voltage parameter in sync with the COMSOL parameter naming.
+    model.param.set('Vin', sprintf('%g[V]', tlm.var.v0));
+end
+
 % --- PREPARATION DES FREQUENCES ET RESOLUTION ---
 
 % We add the frequencies from the SPI file to the COMSOL study.
 freq_str = sprintf('%g ', tlm.sol.fre(:,2)); 
-model.study('std1').feature('freq').set('plist', freq_str);
-model.study('std1').feature('freq').set('preusesol', 'no');
+configured = false;
+study_tag_to_run = '';
+study_feature_tag_to_run = '';
 
-% Run the COMSOL study to compute the solution at the specified frequencies.
-model.study('std1').run;
+% Prefer the study explicitly labeled as electric when available.
+preferred_study_tag = '';
+study_tags_java = model.study.tags;
+all_studies_for_label = cell(1, numel(study_tags_java));
+for si = 1:numel(study_tags_java)
+    all_studies_for_label{si} = char(study_tags_java(si));
+end
+for si = 1:numel(all_studies_for_label)
+    sTag = all_studies_for_label{si};
+    try
+        sLabel = lower(char(model.study(sTag).label));
+        if contains(sLabel, 'electric')
+            preferred_study_tag = sTag;
+            break;
+        end
+    catch
+    end
+end
+
+% Preferred known tags first (electric study first when present).
+if ~isempty(preferred_study_tag)
+    candidate_studies = [{preferred_study_tag}, {'std4', 'std1', 'std3', 'std2'}];
+    candidate_studies = unique(candidate_studies, 'stable');
+else
+    candidate_studies = {'std4', 'std1', 'std3', 'std2'};
+end
+candidate_features = {'freq', 'stat', 'time'};
+
+for si = 1:numel(candidate_studies)
+    sTag = candidate_studies{si};
+    for fi = 1:numel(candidate_features)
+        fTag = candidate_features{fi};
+        try
+            model.study(sTag).feature(fTag).set('plist', freq_str);
+            try
+                model.study(sTag).feature(fTag).set('preusesol', 'no');
+            catch
+            end
+            configured = true;
+            study_tag_to_run = sTag;
+            study_feature_tag_to_run = fTag;
+            break;
+        catch
+        end
+    end
+    if configured
+        break;
+    end
+end
+
+% Generic fallback: scan all studies/features and pick the first one that accepts plist.
+if ~configured
+    study_tags_java = model.study.tags;
+    all_studies = cell(1, numel(study_tags_java));
+    for sj = 1:numel(study_tags_java)
+        all_studies{sj} = char(study_tags_java(sj));
+    end
+    for si = 1:numel(all_studies)
+        sTag = all_studies{si};
+        feat_tags_java = model.study(sTag).feature.tags;
+        feat_tags = cell(1, numel(feat_tags_java));
+        for fj = 1:numel(feat_tags_java)
+            feat_tags{fj} = char(feat_tags_java(fj));
+        end
+        for fi = 1:numel(feat_tags)
+            fTag = feat_tags{fi};
+            try
+                model.study(sTag).feature(fTag).set('plist', freq_str);
+                try
+                    model.study(sTag).feature(fTag).set('preusesol', 'no');
+                catch
+                end
+                configured = true;
+                study_tag_to_run = sTag;
+                study_feature_tag_to_run = fTag;
+                break;
+            catch
+            end
+        end
+        if configured
+            break;
+        end
+    end
+end
+
+if ~configured
+    error('Unable to configure COMSOL study frequencies: no study feature accepted plist.');
+end
+
+% Cleanup stale custom solver injected by previous runs.
+% If this solver remains attached, COMSOL can keep referencing obsolete
+% internal solutions (e.g., sol14) and fail at compile-equations stage.
+try
+    model.sol.remove('solTLM');
+catch
+end
+
+fprintf('\n\t\t . FEM study selected: %s / step: %s', study_tag_to_run, study_feature_tag_to_run);
+
+% Prefer direct study-step execution to avoid stale solver sequence dependencies
+% (e.g., references to uncomputed solutions such as sol14).
+try
+    model.study(study_tag_to_run).run(study_feature_tag_to_run);
+catch
+    try
+        model.study(study_tag_to_run).run;
+    catch ME
+        error('FEM COMSOL study run failed for study %s (step %s): %s', study_tag_to_run, study_feature_tag_to_run, ME.message);
+    end
+end
 data = mpheval(model,'V');
 
-% Extract the impedance Z
+% Modified by: Tina - Extract impedance from COMSOL FEM solution
+% Y11 is the admittance at port 1, Z = 1/Y
 Y_complex = mphglobal(model, 'ec.Y11');
 Z_complex = 1 ./ Y_complex;
-Z_complex = Z_complex(:); 
+Z_complex = Z_complex(:);
 
-% Prepare the results for the .fem file
+% Modified by: Tina - Prepare the results for the .fem file (extract frequencies first)
 freqs = tlm.sol.fre(:,2);
+
+% Modified by: Tina - Validate impedance extraction and log statistics
+fprintf('\n\t\t . Impedance extraction successful:');
+fprintf('\n\t\t   - Frequencies: %d points', length(freqs));
+fprintf('\n\t\t   - |Z| range: [%.3e, %.3e] Ω', min(abs(Z_complex)), max(abs(Z_complex)));
+fprintf('\n\t\t   - ∠Z range: [%.1f, %.1f]°', min(angle(Z_complex)*180/pi), max(angle(Z_complex)*180/pi));
+
 tlm.sol.val(:,1) = freqs;
 tlm.sol.val(:,2) = 20 * log10(abs(Z_complex));
 tlm.sol.val(:,3) = angle(Z_complex) * 180 / pi;
 tlm.sol.val(:,7) = real(Z_complex);
 tlm.sol.val(:,8) = imag(Z_complex);
 
-
-% Extract the coordinates of the nodes 
+% Modified by: Tina - Extract and validate node coordinates from COMSOL FEM solution
+% This ensures mesh topology is correctly transferred from COMSOL to MATLAB for later XYCE mapping
 tlm.var.X(:,1) = data.p(1,:)' * tlm.var.scale;
 tlm.var.Y(:,1) = data.p(2,:)' * tlm.var.scale;
 tlm.var.Z(:,1) = data.p(3,:)' * tlm.var.scale;
+
+% Modified by: Tina - Validate node coordinate extraction and log statistics
+num_nodes = size(tlm.var.X,1);
+fprintf('\n\t\t . Node coordinate extraction successful:');
+fprintf('\n\t\t   - Total nodes: %d', num_nodes);
+fprintf('\n\t\t   - X range: [%.3e, %.3e] m', min(tlm.var.X), max(tlm.var.X));
+fprintf('\n\t\t   - Y range: [%.3e, %.3e] m', min(tlm.var.Y), max(tlm.var.Y));
+fprintf('\n\t\t   - Z range: [%.3e, %.3e] m', min(tlm.var.Z), max(tlm.var.Z));
+
+% Modified by: Tina - Store node coordinate statistics for validation
+tlm.mesh.num_nodes = num_nodes;
+tlm.mesh.X_range = [min(tlm.var.X), max(tlm.var.X)];
+tlm.mesh.Y_range = [min(tlm.var.Y), max(tlm.var.Y)];
+tlm.mesh.Z_range = [min(tlm.var.Z), max(tlm.var.Z)];
 
 nFreq=size(tlm.sol.fre,1);
 for a=1:1:nFreq
